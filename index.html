@@ -1,19 +1,692 @@
-<!-- PROJETOS -->
-<div class="projeto-card">
-    <img src="image_2e177c.png" alt="NeuroFocus - Aprende" />
-    <div class="projeto-info">
-        <h3>NeuroFocus - Aprende</h3>
-        <p>
-            Plataforma especializada em triagem e diagnóstico educacional. O sistema auxilia na identificação de perfis cognitivos e sinais de transtornos como:
-        </p>
-        <ul style="color: var(--cor-texto-secundaria); font-size: 0.85rem; margin-bottom: 1rem; padding-left: 1.2rem;">
-            <li><strong>Discalculia:</strong> Dificuldades com números e conceitos matemáticos.</li>
-            <li><strong>Disgrafia:</strong> Desafios na escrita e coordenação motora fina.</li>
-            <li><strong>Dislexia:</strong> Dificuldades no reconhecimento de palavras e leitura.</li>
-            <li><strong>TDAH:</strong> Padrões de desatenção, inquietude e impulsividade.</li>
-        </ul>
-        <div class="projeto-links">
-            <a href="https://neurofocus.vercel.app" target="_blank">Visitar Site <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Perfil de Aprendizagem</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0b10;--surface:#13131a;--card:#1a1a24;--card2:#1f1f2c;
+  --border:#252535;--border2:#303045;
+  --av:#6ee8c4;--aa:#ffb347;--ac:#ff7eb3;
+  --text:#dddded;--muted:#6a6a88;--white:#fff;
+  --radius:14px;--shadow:0 12px 48px rgba(0,0,0,.5);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 10%,rgba(110,232,196,.08) 0%,transparent 65%),
+    radial-gradient(ellipse 55% 50% at 85% 85%,rgba(255,126,179,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 40% at 55% 50%,rgba(255,179,71,.05) 0%,transparent 55%)}
+
+/* ── SCREENS ── */
+.screen{display:none;position:relative;z-index:1;min-height:100vh}
+.screen.active{display:flex}
+.auth-screen{align-items:center;justify-content:center;padding:24px}
+.main-screen{flex-direction:column;align-items:stretch}
+
+/* ── AUTH CARD ── */
+.auth-card{
+  background:var(--card);border:1px solid var(--border2);border-radius:20px;
+  padding:44px 40px 36px;width:100%;max-width:440px;
+  box-shadow:var(--shadow);animation:fadeUp .6s ease both;
+}
+.auth-logo{text-align:center;margin-bottom:30px}
+.auth-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(110,232,196,.1);border:1px solid rgba(110,232,196,.25);
+  color:var(--av);border-radius:999px;padding:6px 16px;
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin-bottom:16px;
+}
+.auth-logo h2{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:var(--white);margin-bottom:7px}
+.auth-logo p{font-size:.87rem;color:var(--muted);line-height:1.65}
+
+/* ── FORM ── */
+.form-group{margin-bottom:17px}
+.form-label{display:block;font-size:.77rem;font-weight:500;color:var(--text);margin-bottom:7px;letter-spacing:.02em}
+.form-input{
+  width:100%;background:var(--surface);border:1.5px solid var(--border2);border-radius:10px;
+  padding:13px 16px;font-size:.9rem;color:var(--white);
+  font-family:'DM Sans',sans-serif;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.form-input:focus{border-color:var(--av);box-shadow:0 0 0 3px rgba(110,232,196,.12)}
+.form-input.err{border-color:var(--ac)}
+.form-input::placeholder{color:var(--muted)}
+.field-err{font-size:.73rem;color:var(--ac);margin-top:5px;display:none}
+.field-err.show{display:block}
+.pw-wrap{position:relative}
+.pw-wrap .form-input{padding-right:44px}
+.pw-eye{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--muted);
+  font-size:.95rem;line-height:1;transition:color .2s;padding:0;
+}
+.pw-eye:hover{color:var(--text)}
+.strength-wrap{margin-top:6px;display:none}
+.strength-wrap.show{display:block}
+.strength-track{height:3px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:4px}
+.strength-fill{height:100%;width:0;border-radius:99px;transition:width .35s,background .35s}
+.strength-text{font-size:.7rem;color:var(--muted)}
+.btn-auth{
+  width:100%;padding:14px;border-radius:10px;border:none;
+  font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;
+  transition:all .2s;background:linear-gradient(135deg,var(--av),#48d8a8);color:#0b0b10;margin-top:4px;
+}
+.btn-auth:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-auth:active{transform:translateY(0)}
+.btn-auth:disabled{opacity:.4;cursor:not-allowed;transform:none;filter:none}
+.auth-switch{text-align:center;margin-top:20px;font-size:.83rem;color:var(--muted)}
+.auth-switch a{color:var(--av);text-decoration:none;font-weight:500;cursor:pointer}
+.auth-switch a:hover{text-decoration:underline}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);font-size:.74rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:10;
+  background:rgba(11,11,16,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 28px;
+}
+.topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white)}
+.topbar-brand span{color:var(--av)}
+.topbar-right{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--muted)}
+.avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--av),var(--aa));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.73rem;font-weight:700;color:#0b0b10;flex-shrink:0;
+}
+.btn-logout{
+  background:transparent;border:1px solid var(--border2);color:var(--muted);
+  border-radius:8px;padding:5px 12px;font-size:.74rem;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s;
+}
+.btn-logout:hover{border-color:var(--ac);color:var(--ac)}
+
+/* ── MAIN CONTENT ── */
+.main-content{max-width:780px;width:100%;margin:0 auto;padding:52px 24px 80px;flex:1}
+
+/* ── QUIZ HEADER ── */
+.quiz-header{text-align:center;margin-bottom:50px;animation:fadeUp .8s ease both}
+.tag{
+  display:inline-block;font-size:.67rem;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--av);
+  border:1px solid rgba(110,232,196,.35);border-radius:999px;padding:5px 16px;margin-bottom:17px;
+}
+.quiz-header h1{
+  font-family:'Playfair Display',serif;font-size:clamp(1.85rem,5vw,2.9rem);
+  font-weight:900;line-height:1.15;color:var(--white);margin-bottom:12px;
+}
+.quiz-header h1 em{font-style:normal;color:var(--av)}
+.quiz-header p{font-size:.93rem;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.75}
+
+/* ── PROGRESS ── */
+.progress-wrap{margin-bottom:34px;animation:fadeUp .8s .1s ease both}
+.progress-meta{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-bottom:8px}
+.progress-track{height:4px;background:var(--border);border-radius:99px;overflow:hidden}
+.progress-fill{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--av),var(--aa));
+  border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── QUESTION CARD ── */
+.question-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:36px 32px 28px;margin-bottom:20px;
+  opacity:0;transform:translateY(18px);
+  transition:opacity .4s ease,transform .4s ease;
+}
+.question-card.visible{opacity:1;transform:translateY(0)}
+.q-num{font-size:.69rem;letter-spacing:.14em;text-transform:uppercase;color:var(--av);font-weight:500;margin-bottom:10px}
+.q-text{font-family:'Playfair Display',serif;font-size:1.16rem;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:25px}
+.options{display:flex;flex-direction:column;gap:11px}
+.option{
+  display:flex;align-items:flex-start;gap:14px;background:var(--surface);
+  border:1.5px solid var(--border);border-radius:12px;padding:15px 18px;
+  cursor:pointer;transition:all .22s ease;position:relative;overflow:hidden;user-select:none;
+}
+.option::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .22s;background:rgba(110,232,196,.04)}
+.option:hover{border-color:var(--av);transform:translateX(4px)}
+.option:hover::after{opacity:1}
+.opt-letter{
+  min-width:32px;height:32px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-size:.77rem;font-weight:700;flex-shrink:0;transition:all .22s;
+}
+.opt-a .opt-letter{background:rgba(110,232,196,.15);color:var(--av)}
+.opt-b .opt-letter{background:rgba(255,179,71,.15);color:var(--aa)}
+.opt-c .opt-letter{background:rgba(255,126,179,.15);color:var(--ac)}
+.opt-text{font-size:.89rem;color:var(--text);line-height:1.6;padding-top:5px}
+.option.selected{transform:translateX(6px)}
+.opt-a.selected{border-color:var(--av);background:rgba(110,232,196,.08)}
+.opt-b.selected{border-color:var(--aa);background:rgba(255,179,71,.08)}
+.opt-c.selected{border-color:var(--ac);background:rgba(255,126,179,.08)}
+.opt-a.selected .opt-letter{background:var(--av);color:#0b0b10}
+.opt-b.selected .opt-letter{background:var(--aa);color:#0b0b10}
+.opt-c.selected .opt-letter{background:var(--ac);color:#0b0b10}
+
+/* ── NAV ── */
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:12px}
+.btn{font-family:'DM Sans',sans-serif;font-size:.87rem;font-weight:500;padding:13px 26px;border-radius:10px;border:none;cursor:pointer;transition:all .2s}
+.btn-back{background:transparent;border:1.5px solid var(--border);color:var(--muted)}
+.btn-back:hover{border-color:var(--text);color:var(--text)}
+.btn-next{background:var(--av);color:#0b0b10;font-weight:600}
+.btn-next:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
+.btn-next:disabled{opacity:.35;cursor:not-allowed}
+.btn-submit{background:linear-gradient(135deg,var(--av),var(--aa));color:#0b0b10;font-weight:700}
+.btn-submit:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* ── RESULT ── */
+#result-wrap{display:none;animation:fadeUp .7s ease both}
+.result-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:46px 36px;text-align:center;margin-bottom:22px;position:relative;overflow:hidden;
+}
+.result-card::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.07}
+.rc-visual::before  {background:radial-gradient(circle at 50% 0%,var(--av),transparent 65%)}
+.rc-auditivo::before{background:radial-gradient(circle at 50% 0%,var(--aa),transparent 65%)}
+.rc-cines::before   {background:radial-gradient(circle at 50% 0%,var(--ac),transparent 65%)}
+.result-icon{font-size:3.3rem;display:block;margin-bottom:16px;animation:pop .6s .15s cubic-bezier(.175,.885,.32,1.275) both}
+.result-badge{font-size:.67rem;letter-spacing:.17em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
+.rb-visual{color:var(--av)}.rb-auditivo{color:var(--aa)}.rb-cines{color:var(--ac)}
+.result-title{font-family:'Playfair Display',serif;font-size:clamp(1.65rem,4vw,2.4rem);font-weight:900;color:var(--white);margin-bottom:13px}
+.result-desc{font-size:.91rem;color:var(--muted);line-height:1.8;max-width:500px;margin:0 auto 26px}
+.score-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.score-pill{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:7px 17px;font-size:.79rem}
+.pill-dot{width:8px;height:8px;border-radius:50%}
+.section-title{font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:26px 0 13px}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px}
+.tip-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:19px;text-align:left}
+.tip-icon{font-size:1.35rem;margin-bottom:9px;display:block}
+.tip-title{font-size:.79rem;font-weight:700;color:var(--white);margin-bottom:5px}
+.tip-text{font-size:.75rem;color:var(--muted);line-height:1.65}
+.result-actions{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.btn-restart{background:transparent;border:1.5px solid var(--border);color:var(--muted)}
+.btn-restart:hover{border-color:var(--text);color:var(--text)}
+.history-section{margin-top:38px}
+.history-list{display:flex;flex-direction:column;gap:10px}
+.history-item{
+  background:var(--card2);border:1px solid var(--border);border-radius:10px;
+  padding:13px 17px;display:flex;justify-content:space-between;align-items:center;font-size:.81rem;
+}
+.hi-left{display:flex;flex-direction:column;gap:3px}
+.hi-date{color:var(--muted);font-size:.72rem}
+.hi-result{color:var(--white);font-weight:600}
+.hi-badge{font-size:.69rem;padding:3px 10px;border-radius:99px;font-weight:500}
+.hb-visual  {background:rgba(110,232,196,.15);color:var(--av)}
+.hb-auditivo{background:rgba(255,179,71,.15); color:var(--aa)}
+.hb-cines   {background:rgba(255,126,179,.15);color:var(--ac)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:26px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--card2);border:1px solid var(--border2);color:var(--text);
+  border-radius:10px;padding:11px 22px;font-size:.83rem;
+  opacity:0;pointer-events:none;transition:all .3s;z-index:999;
+  white-space:nowrap;max-width:90vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.terror{border-color:var(--ac);color:var(--ac)}
+.toast.tsuccess{border-color:var(--av);color:var(--av)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:520px){
+  .auth-card{padding:28px 18px 24px}
+  .question-card{padding:22px 15px 18px}
+  .result-card{padding:30px 16px}
+  .nav{flex-wrap:wrap}
+  .btn{flex:1;text-align:center}
+  .topbar{padding:11px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN: LOGIN ══ -->
+<div id="screen-login" class="screen auth-screen active">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-badge">&#127891; Perfil de Aprendizagem</div>
+      <h2>Bem-vindo de volta</h2>
+      <p>Entre na sua conta para continuar</p>
     </div>
+    <div class="form-group">
+      <label class="form-label" for="login-email">E-mail</label>
+      <input class="form-input" type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/>
+      <span class="field-err" id="err-login-email">Informe um e-mail valido.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="login-pw">Senha</label>
+      <div class="pw-wrap">
+        <input class="form-input" type="password" id="login-pw" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password"/>
+        <button type="button" class="pw-eye" id="eye-login-pw" onclick="togglePw('login-pw','eye-login-pw')" aria-label="Mostrar senha">&#128065;</button>
+      </div>
+      <span class="field-err" id="err-login-pw">Informe sua senha.</span>
+    </div>
+    <button class="btn-auth" id="btn-do-login" onclick="doLogin()">Entrar</button>
+    <div class="divider">ou</div>
+    <div class="auth-switch">Nao tem conta? <a onclick="showScreen('screen-register')">Cadastre-se gratis</a></div>
+  </div>
 </div>
+
+<!-- ══ SCREEN: REGISTER ══ -->
+<div id="screen-register" class="screen auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-badge">&#127891; Perfil de Aprendizagem</div>
+      <h2>Criar conta</h2>
+      <p>Descubra como voce aprende melhor</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="reg-name">Nome completo</label>
+      <input class="form-input" type="text" id="reg-name" placeholder="Seu nome" autocomplete="name"/>
+      <span class="field-err" id="err-reg-name">Nome precisa ter ao menos 3 caracteres.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="reg-email">E-mail</label>
+      <input class="form-input" type="email" id="reg-email" placeholder="seu@email.com" autocomplete="email"/>
+      <span class="field-err" id="err-reg-email">Informe um e-mail valido.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="reg-pw">Senha</label>
+      <div class="pw-wrap">
+        <input class="form-input" type="password" id="reg-pw" placeholder="Minimo 6 caracteres" autocomplete="new-password" oninput="checkStrength(this.value)"/>
+        <button type="button" class="pw-eye" id="eye-reg-pw" onclick="togglePw('reg-pw','eye-reg-pw')" aria-label="Mostrar senha">&#128065;</button>
+      </div>
+      <div class="strength-wrap" id="strength-wrap">
+        <div class="strength-track"><div class="strength-fill" id="strength-fill"></div></div>
+        <span class="strength-text" id="strength-text"></span>
+      </div>
+      <span class="field-err" id="err-reg-pw">A senha precisa ter ao menos 6 caracteres.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="reg-pw2">Confirmar senha</label>
+      <div class="pw-wrap">
+        <input class="form-input" type="password" id="reg-pw2" placeholder="Repita a senha" autocomplete="new-password"/>
+        <button type="button" class="pw-eye" id="eye-reg-pw2" onclick="togglePw('reg-pw2','eye-reg-pw2')" aria-label="Mostrar senha">&#128065;</button>
+      </div>
+      <span class="field-err" id="err-reg-pw2">As senhas nao coincidem.</span>
+    </div>
+    <button class="btn-auth" id="btn-do-register" onclick="doRegister()">Criar conta</button>
+    <div class="auth-switch">Ja tem conta? <a onclick="showScreen('screen-login')">Fazer login</a></div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: QUIZ ══ -->
+<div id="screen-quiz" class="screen main-screen">
+  <div class="topbar">
+    <div class="topbar-brand">Aprende<span>.</span></div>
+    <div class="topbar-right">
+      <div class="avatar" id="av1">?</div>
+      <span id="tn1">Usuario</span>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="quiz-header">
+      <div class="tag">Diagnostico Educacional</div>
+      <h1>Qual e o seu<br/><em>Perfil de Aprendizagem?</em></h1>
+      <p>5 perguntas rapidas para descobrir se voce aprende melhor de forma visual, auditiva ou cinestetica.</p>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="prog-label">Pergunta 1 de 5</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+    <div class="question-card" id="question-card">
+      <div class="q-num" id="q-num">Pergunta 1</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="options" id="options-list"></div>
+    </div>
+    <div class="nav">
+      <button class="btn btn-back" id="btn-back" onclick="goBack()">&#8592; Anterior</button>
+      <button class="btn btn-next" id="btn-next" onclick="goNext()" disabled>Proxima &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: RESULT ══ -->
+<div id="screen-result" class="screen main-screen">
+  <div class="topbar">
+    <div class="topbar-brand">Aprende<span>.</span></div>
+    <div class="topbar-right">
+      <div class="avatar" id="av2">?</div>
+      <span id="tn2">Usuario</span>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+  <div class="main-content">
+    <div id="result-wrap">
+      <div class="result-card" id="result-card">
+        <span class="result-icon" id="result-icon"></span>
+        <div class="result-badge" id="result-badge">Seu perfil e</div>
+        <h2 class="result-title" id="result-title"></h2>
+        <p class="result-desc" id="result-desc"></p>
+        <div class="score-row" id="score-row"></div>
+      </div>
+      <p class="section-title">Dicas para voce aprender melhor</p>
+      <div class="tips-grid" id="tips-grid"></div>
+      <div class="result-actions">
+        <button class="btn btn-restart" onclick="restartQuiz()">&#8617; Refazer questionario</button>
+      </div>
+      <div class="history-section" id="history-section" style="display:none">
+        <p class="section-title">Historico de resultados</p>
+        <div class="history-list" id="history-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ════════════════════════════════
+   DATABASE (localStorage-backed)
+   Simulates SQL tables in memory
+════════════════════════════════ */
+var DB = {
+  users:    JSON.parse(localStorage.getItem('ap_users')    || '[]'),
+  sessions: JSON.parse(localStorage.getItem('ap_sessions') || '[]')
+};
+function dbSave(){
+  localStorage.setItem('ap_users',    JSON.stringify(DB.users));
+  localStorage.setItem('ap_sessions', JSON.stringify(DB.sessions));
+}
+/* SELECT * FROM users WHERE email = ? */
+function dbFindUser(email){
+  var e = email.toLowerCase().trim();
+  for(var i=0;i<DB.users.length;i++){ if(DB.users[i].email===e) return DB.users[i]; }
+  return null;
+}
+/* INSERT INTO users */
+function dbInsertUser(name,email,pw){
+  var u={id:Date.now()+'_'+Math.random().toString(36).slice(2),name:name.trim(),email:email.toLowerCase().trim(),pwHash:hash(pw)};
+  DB.users.push(u); dbSave(); return u;
+}
+/* INSERT INTO sessions */
+function dbInsertSession(uid,answers,result){
+  var s={id:Date.now(),uid:uid,ts:new Date().toISOString(),answers:answers.slice(),result:result};
+  DB.sessions.push(s); dbSave(); return s;
+}
+/* SELECT * FROM sessions WHERE uid = ? ORDER BY id DESC */
+function dbGetSessions(uid){
+  return DB.sessions.filter(function(s){return s.uid===uid;}).reverse();
+}
+function hash(str){
+  var h=5381;
+  for(var i=0;i<str.length;i++) h=((h<<5)+h)^str.charCodeAt(i);
+  return (h>>>0).toString(16);
+}
+
+/* ════════════════════════════════
+   STATIC DATA
+════════════════════════════════ */
+var QUESTIONS=[
+  {id:1,text:"Quando voce precisa aprender algo novo, voce prefere:",
+   a:"Ver imagens, diagramas ou videos explicativos",
+   b:"Ouvir uma explicacao ou aula falada",
+   c:"Tentar fazer na pratica imediatamente"},
+  {id:2,text:"Em uma aula ou explicacao, voce aprende melhor quando:",
+   a:"O conteudo esta organizado em slides, mapas mentais ou graficos",
+   b:"O professor explica em voz alta com exemplos",
+   c:"Voce participa de atividades ou exercicios durante a explicacao"},
+  {id:3,text:"Para lembrar de algo importante, voce costuma:",
+   a:"Lembrar da imagem ou da forma como estava escrito",
+   b:"Lembrar do que foi dito",
+   c:"Lembrar do que voce fez ou praticou"},
+  {id:4,text:"Qual tipo de atividade voce prefere?",
+   a:"Assistir videos, ler e observar exemplos",
+   b:"Conversar, ouvir podcasts ou explicacoes",
+   c:"Atividades praticas, simulacoes ou experiencias"},
+  {id:5,text:"Quando voce estuda sozinho, voce prefere:",
+   a:"Materiais visuais (slides, resumos, imagens)",
+   b:"Audios ou explicacoes em voz alta",
+   c:"Exercicios praticos e tentativa/erro"}
+];
+
+var PROFILES={
+  A:{cls:'visual',  icon:'&#128065;&#65039;',title:'Aprendiz Visual',
+     desc:'Voce absorve informacoes principalmente por meio de imagens, graficos, mapas mentais e cores. Organizacao visual e a sua superpotencia: quando algo esta bem estruturado visualmente, voce processa muito mais rapido que a maioria.'},
+  B:{cls:'auditivo',icon:'&#127911;',title:'Aprendiz Auditivo',
+     desc:'Voce aprende melhor ouvindo. Aulas expositivas, podcasts, debates e explicacoes em voz alta sao os seus combustiveis. Voce frequentemente escuta as informacoes na cabeca ao tentar se lembrar delas.'},
+  C:{cls:'cines',   icon:'&#129309;',title:'Aprendiz Cinestetico',
+     desc:'Voce aprende fazendo. A pratica, o movimento e a experimentacao sao essenciais para voce fixar o conteudo. Voce prefere testar antes de ler o manual e aprende muito mais quando esta ativo e engajado no processo.'}
+};
+
+var TIPS={
+  A:[{i:'&#128508;&#65039;',t:'Mapas Mentais',  d:'Use Miro ou papel para criar mapas com cores e simbolos.'},
+     {i:'&#128202;',        t:'Infograficos',    d:'Transforme textos densos em diagramas e fluxogramas visuais.'},
+     {i:'&#127912;',        t:'Codigo de Cores', d:'Sublinhe e destaque com cores diferentes para categorizar conceitos.'},
+     {i:'&#128249;',        t:'Videoaulas',      d:'Prefira YouTube ou Khan Academy para aprender novos topicos.'}],
+  B:[{i:'&#127897;&#65039;',t:'Podcasts',        d:'Encontre podcasts educativos sobre os temas que estuda.'},
+     {i:'&#128483;&#65039;',t:'Leia em Voz Alta',d:'Vocalizar o conteudo ajuda a fixar na memoria auditiva.'},
+     {i:'&#128101;',        t:'Grupos de Estudo',d:'Debater e explicar para outros reforca sua absorcao.'},
+     {i:'&#128251;',        t:'Grave Resumos',   d:'Grave audios com seus resumos e ouca enquanto se desloca.'}],
+  C:[{i:'&#129514;',        t:'Projetos Reais',  d:'Aplique o conteudo em projetos praticos o mais cedo possivel.'},
+     {i:'&#128257;',        t:'Tentativa/Erro',  d:'Nao tenha medo de errar: esse ciclo e o seu aprendizado.'},
+     {i:'&#127939;',        t:'Pausas Ativas',   d:'Intercale estudo com movimento; seu cerebro fixa melhor.'},
+     {i:'&#127918;',        t:'Gamificacao',     d:'Use apps gamificados como Duolingo para tornar o estudo dinamico.'}]
+};
+
+/* ════════════════════════════════
+   APP STATE
+════════════════════════════════ */
+var user     = null;
+var qCurrent = 0;
+var qAnswers = [];
+
+/* ════════════════════════════════
+   SCREEN ROUTER
+════════════════════════════════ */
+function showScreen(id){
+  var screens=document.querySelectorAll('.screen');
+  for(var i=0;i<screens.length;i++) screens[i].classList.remove('active');
+  var el=document.getElementById(id);
+  if(el){ el.classList.add('active'); window.scrollTo(0,0); }
+}
+
+/* ════════════════════════════════
+   UTILS
+════════════════════════════════ */
+function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+function val(id){ var el=document.getElementById(id); return el?el.value:''; }
+function setErr(fid,eid,on){
+  var f=document.getElementById(fid), e=document.getElementById(eid);
+  if(f) f.classList[on?'add':'remove']('err');
+  if(e) e.classList[on?'add':'remove']('show');
+}
+function clearErrs(pairs){ pairs.forEach(function(p){setErr(p[0],p[1],false);}); }
+
+var toastTimer=null;
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  if(!t) return;
+  t.textContent=msg;
+  t.className='toast show '+(type||'');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show');},2900);
+}
+
+function togglePw(inpId,btnId){
+  var inp=document.getElementById(inpId), btn=document.getElementById(btnId);
+  if(!inp||!btn) return;
+  var hide=inp.type==='password';
+  inp.type=hide?'text':'password';
+  btn.innerHTML=hide?'&#128584;':'&#128065;';
+}
+
+function checkStrength(v){
+  var wrap=document.getElementById('strength-wrap');
+  var fill=document.getElementById('strength-fill');
+  var txt =document.getElementById('strength-text');
+  if(!wrap||!fill||!txt) return;
+  if(!v){ wrap.classList.remove('show'); return; }
+  wrap.classList.add('show');
+  var sc=0;
+  if(v.length>=6)  sc++;
+  if(v.length>=10) sc++;
+  if(/[A-Z]/.test(v)) sc++;
+  if(/[0-9]/.test(v)) sc++;
+  if(/[^A-Za-z0-9]/.test(v)) sc++;
+  var lvls=[
+    {p:'20%',bg:'#ff5252',l:'Muito fraca'},
+    {p:'40%',bg:'#ff7043',l:'Fraca'},
+    {p:'60%',bg:'#ffb347',l:'Moderada'},
+    {p:'80%',bg:'#66bb6a',l:'Forte'},
+    {p:'100%',bg:'#26c97e',l:'Muito forte'}
+  ];
+  var lv=lvls[Math.min(sc,4)];
+  fill.style.width=lv.p; fill.style.background=lv.bg; txt.textContent=lv.l;
+}
+
+function initials(name){
+  return name.split(' ').slice(0,2).map(function(w){return w.charAt(0).toUpperCase();}).join('');
+}
+function firstName(name){ return name.split(' ')[0]; }
+
+function setTopbar(){
+  if(!user) return;
+  var ini=initials(user.name), fn=firstName(user.name);
+  var a1=document.getElementById('av1'), a2=document.getElementById('av2');
+  var n1=document.getElementById('tn1'), n2=document.getElementById('tn2');
+  if(a1) a1.textContent=ini;
+  if(a2) a2.textContent=ini;
+  if(n1) n1.textContent=fn;
+  if(n2) n2.textContent=fn;
+}
+
+/* ════════════════════════════════
+   AUTH
+════════════════════════════════ */
+function doLogin(){
+  var email=val('login-email'), pw=val('login-pw');
+  clearErrs([['login-email','err-login-email'],['login-pw','err-login-pw']]);
+  var ok=true;
+  if(!isEmail(email)){setErr('login-email','err-login-email',true);ok=false;}
+  if(!pw.trim())      {setErr('login-pw','err-login-pw',true);ok=false;}
+  if(!ok) return;
+  var u=dbFindUser(email);
+  if(!u||u.pwHash!==hash(pw)){showToast('E-mail ou senha incorretos.','terror');return;}
+  user=u;
+  sessionStorage.setItem('ap_session',JSON.stringify(u));
+  setTopbar();
+  showToast('Bem-vindo(a) de volta, '+firstName(u.name)+'!','tsuccess');
+  startQuiz();
+}
+
+function doRegister(){
+  var name=val('reg-name'), email=val('reg-email'), pw=val('reg-pw'), pw2=val('reg-pw2');
+  clearErrs([['reg-name','err-reg-name'],['reg-email','err-reg-email'],['reg-pw','err-reg-pw'],['reg-pw2','err-reg-pw2']]);
+  var ok=true;
+  if(name.trim().length<3) {setErr('reg-name','err-reg-name',true);ok=false;}
+  if(!isEmail(email))       {setErr('reg-email','err-reg-email',true);ok=false;}
+  if(pw.length<6)           {setErr('reg-pw','err-reg-pw',true);ok=false;}
+  if(pw!==pw2)              {setErr('reg-pw2','err-reg-pw2',true);ok=false;}
+  if(!ok) return;
+  if(dbFindUser(email)){showToast('E-mail ja cadastrado.','terror');return;}
+  var u=dbInsertUser(name,email,pw);
+  user=u;
+  sessionStorage.setItem('ap_session',JSON.stringify(u));
+  setTopbar();
+  showToast('Conta criada! Bem-vindo(a), '+firstName(u.name)+'!','tsuccess');
+  startQuiz();
+}
+
+function doLogout(){
+  sessionStorage.removeItem('ap_session');
+  user=null; qCurrent=0; qAnswers=[];
+  showScreen('screen-login');
+}
+
+/* ════════════════════════════════
+   QUIZ
+════════════════════════════════ */
+function startQuiz(){
+  qCurrent=0;
+  qAnswers=new Array(QUESTIONS.length).fill(null);
+  showScreen('screen-quiz');
+  renderQ();
+}
+
+function renderQ(){
+  var q=QUESTIONS[qCurrent];
+  var card=document.getElementById('question-card');
+  if(!card) return;
+  card.classList.remove('visible');
+  setTimeout(function(){
+    var qn=document.getElementById('q-num');
+    var qt=document.getElementById('q-text');
+    var ol=document.getElementById('options-list');
+    if(qn) qn.textContent='Pergunta '+(qCurrent+1);
+    if(qt) qt.textContent=q.text;
+    if(ol){
+      ol.innerHTML='';
+      [['A',q.a],['B',q.b],['C',q.c]].forEach(function(pair){
+        var L=pair[0], txt=pair[1];
+        var d=document.createElement('div');
+        d.className='option opt-'+L.toLowerCase()+(qAnswers[qCurrent]===L?' selected':'');
+        d.innerHTML='<div class="opt-letter">'+L+'</div><div class="opt-text">'+txt+'</div>';
+        (function(letter){ d.onclick=function(){pickAnswer(letter);}; })(L);
+        ol.appendChild(d);
+      });
+    }
+    var pct=Math.round((qCurrent/QUESTIONS.length)*100);
+    var pf=document.getElementById('progress-fill');
+    var pl=document.getElementById('prog-label');
+    var pp=document.getElementById('prog-pct');
+    if(pf) pf.style.width=pct+'%';
+    if(pl) pl.textContent='Pergunta '+(qCurrent+1)+' de '+QUESTIONS.length;
+    if(pp) pp.textContent=pct+'%';
+    var bb=document.getElementById('btn-back');
+    var bn=document.getElementById('btn-next');
+    var last=qCurrent===QUESTIONS.length-1;
+    if(bb) bb.style.visibility=qCurrent===0?'hidden':'visible';
+    if(bn){
+      bn.textContent=last?'Ver resultado \u2713':'Proxima \u2192';
+      bn.className='btn '+(last?'btn-submit':'btn-next');
+      bn.disabled=qAnswers[qCurrent]===null;
+    }
+    card.classList.add('visible');
+  },160);
+}
+
+function pickAnswer(L){
+  qAnswers[qCurrent]=L;
+  var opts=document.querySelectorAll('.option');
+  for(var i=0;i<opts.length;i++) opts[i].classList.remove('selected');
+  var sel=document.querySelector('.opt-'+L.toLowerCase());
+  if(sel) sel.classList.add('selected');
+  var bn=document.getElementById('btn-next');
+  if(bn) bn.disabled=false;
+}
+
+function goNext(){
+  if(qAnswers[qCurrent]===null){showToast('Selecione uma alternativa.','terror');return;}
+  if(qCurrent<QUESTIONS.length-1){qCurrent++;renderQ();}
+  else showResult();
+}
+
+function goBack(){
+  if(qCurrent>0){qCurrent--;renderQ();}
+}
+
+/* ════════════════════════════════
+   RESULT
+════════════════════════════════ */
+function calc
