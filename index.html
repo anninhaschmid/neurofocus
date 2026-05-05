@@ -248,6 +248,138 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   .btn{flex:1;text-align:center}
   .topbar{padding:11px 14px}
 }
+
+/* ════════════════════════════════
+   DISORDERS FLOATING BUTTON
+════════════════════════════════ */
+.fab-disorders{
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  width:56px;height:56px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,#a78bfa,#7c3aed);
+  color:#fff;font-size:1.4rem;cursor:pointer;
+  box-shadow:0 6px 28px rgba(124,58,237,.45);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .25s;
+}
+.fab-disorders:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 10px 36px rgba(124,58,237,.55)}
+.fab-disorders:active{transform:scale(.97)}
+.fab-tip{
+  position:fixed;bottom:92px;right:28px;z-index:200;
+  background:var(--card2);border:1px solid rgba(167,139,250,.35);
+  color:var(--muted);font-size:.72rem;border-radius:8px;
+  padding:6px 12px;white-space:nowrap;pointer-events:none;
+  opacity:0;transform:translateY(6px);
+  transition:all .3s;
+}
+.fab-tip.show{opacity:1;transform:translateY(0)}
+
+/* ════════════════════════════════
+   DISORDERS MODAL
+════════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(7,7,14,.78);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:24px 16px 40px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+  overflow-y:auto;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:20px;width:100%;max-width:820px;
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  transform:translateY(24px);transition:transform .35s cubic-bezier(.22,.68,0,1.2);
+  overflow:hidden;
+}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 32px 22px;
+  border-bottom:1px solid var(--border);
+}
+.modal-head-left h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:900;color:var(--white);margin-bottom:4px;
+}
+.modal-head-left p{font-size:.83rem;color:var(--muted)}
+.modal-close{
+  background:var(--surface);border:1px solid var(--border2);
+  color:var(--muted);border-radius:10px;width:36px;height:36px;
+  font-size:1rem;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;transition:all .2s;flex-shrink:0;
+}
+.modal-close:hover{border-color:var(--ac);color:var(--ac)}
+
+/* disorder tabs */
+.dis-tabs{
+  display:flex;gap:0;border-bottom:1px solid var(--border);
+  padding:0 32px;overflow-x:auto;
+}
+.dis-tab{
+  background:none;border:none;color:var(--muted);
+  font-family:'DM Sans',sans-serif;font-size:.83rem;font-weight:500;
+  padding:14px 20px;cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:all .2s;margin-bottom:-1px;
+}
+.dis-tab:hover{color:var(--text)}
+.dis-tab.active{color:var(--white);border-bottom-color:var(--av)}
+
+/* disorder panels */
+.dis-panels{padding:28px 32px 36px}
+.dis-panel{display:none;animation:fadeUp .4s ease both}
+.dis-panel.active{display:block}
+
+.dis-hero{
+  display:flex;align-items:flex-start;gap:20px;
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:14px;padding:24px;margin-bottom:24px;
+}
+.dis-emoji{font-size:2.6rem;flex-shrink:0;line-height:1}
+.dis-hero-text h4{
+  font-family:'Playfair Display',serif;font-size:1.3rem;
+  font-weight:900;color:var(--white);margin-bottom:6px;
+}
+.dis-hero-text p{font-size:.88rem;color:var(--muted);line-height:1.75}
+
+.dis-color-v  {border-left:3px solid var(--av)}
+.dis-color-a  {border-left:3px solid var(--aa)}
+.dis-color-c  {border-left:3px solid var(--ac)}
+.dis-color-p  {border-left:3px solid #a78bfa}
+
+.dis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:22px}
+.dis-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+.dis-block-icon{font-size:1.3rem;margin-bottom:8px}
+.dis-block-title{font-size:.8rem;font-weight:700;color:var(--white);margin-bottom:6px}
+.dis-block-text{font-size:.77rem;color:var(--muted);line-height:1.65}
+
+.dis-tips-title{
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:13px;
+}
+.dis-tips-list{display:flex;flex-direction:column;gap:10px}
+.dis-tip-item{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:13px 16px;
+}
+.dis-tip-dot{
+  width:8px;height:8px;border-radius:50%;
+  flex-shrink:0;margin-top:5px;
+}
+.dis-tip-text{font-size:.82rem;color:var(--text);line-height:1.6}
+
+/* modal responsive */
+@media(max-width:560px){
+  .modal-head{padding:20px 18px 16px}
+  .dis-tabs{padding:0 18px}
+  .dis-panels{padding:20px 18px 28px}
+  .dis-hero{flex-direction:column;gap:12px}
+  .modal-head-left h3{font-size:1.2rem}
+}
 </style>
 </head>
 <body>
@@ -275,7 +407,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
     <button class="btn-auth" id="btn-do-login" onclick="doLogin()">Entrar</button>
     <div class="divider">ou</div>
-    <div class="auth-switch">Nao tem conta? <a onclick="showScreen('screen-register')">Cadastre-se</a></div>
+    <div class="auth-switch">Nao tem conta? <a onclick="showScreen('screen-register')">Cadastre-se gratis</a></div>
   </div>
 </div>
 
@@ -360,7 +492,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ══ SCREEN: RESULT ══ -->
 <div id="screen-result" class="screen main-screen">
   <div class="topbar">
-    <div class="topbar-brand">Neurofcous<span>.</span></div>
+    <div class="topbar-brand">Aprende<span>.</span></div>
     <div class="topbar-right">
       <div class="avatar" id="av2">?</div>
       <span id="tn2">Usuario</span>
@@ -391,6 +523,183 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 <!-- toast -->
 <div class="toast" id="toast"></div>
+
+<!-- ══ FAB: TRANSTORNOS ══ -->
+<div class="fab-tip" id="fab-tip">Saiba sobre Transtornos de Aprendizagem</div>
+<button class="fab-disorders" id="fab-btn" onclick="openDisorders()" aria-label="Transtornos de aprendizagem">&#129504;</button>
+
+<!-- ══ MODAL: TRANSTORNOS ══ -->
+<div class="modal-overlay" id="modal-disorders" onclick="overlayClick(event)">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <h3 id="modal-title">Transtornos de Aprendizagem</h3>
+        <p>Entenda cada condicao, seus sinais e estrategias de apoio</p>
+      </div>
+      <button class="modal-close" onclick="closeDisorders()" aria-label="Fechar">&#10005;</button>
+    </div>
+
+    <!-- tabs -->
+    <div class="dis-tabs" role="tablist">
+      <button class="dis-tab active" role="tab" onclick="switchTab(0)" id="tab0">&#129518; Discalculia</button>
+      <button class="dis-tab" role="tab" onclick="switchTab(1)" id="tab1">&#9997;&#65039; Disgrafia</button>
+      <button class="dis-tab" role="tab" onclick="switchTab(2)" id="tab2">&#128218; Dislexia</button>
+      <button class="dis-tab" role="tab" onclick="switchTab(3)" id="tab3">&#9889; TDAH</button>
+    </div>
+
+    <!-- panels -->
+    <div class="dis-panels">
+
+      <!-- DISCALCULIA -->
+      <div class="dis-panel active" id="panel0">
+        <div class="dis-hero dis-color-v">
+          <span class="dis-emoji">&#129518;</span>
+          <div class="dis-hero-text">
+            <h4>Discalculia</h4>
+            <p>E um transtorno especifico de aprendizagem que afeta a capacidade de compreender e trabalhar com numeros e conceitos matematicos. Nao tem relacao com inteligencia: pessoas com discalculia podem ser muito inteligentes, mas o cerebro processa quantidades e simbolos numericos de forma diferente.</p>
+          </div>
+        </div>
+        <div class="dis-grid">
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128270;</div>
+            <div class="dis-block-title">Como identificar</div>
+            <div class="dis-block-text">Dificuldade em reconhecer numeros, fazer calculos basicos, entender sequencias e medir distancias ou tempo. Contar nos dedos mesmo em idades mais avancadas e comum.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#129504;</div>
+            <div class="dis-block-title">O que acontece no cerebro</div>
+            <div class="dis-block-text">Estudos de neuroimagem mostram diferenca de ativacao no lobulo parietal, area responsavel pelo processamento de quantidades e espacialidade numerica.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128100;</div>
+            <div class="dis-block-title">Impacto no cotidiano</div>
+            <div class="dis-block-text">Dificuldade com troco, horarios, gestao de dinheiro e leitura de mapas. Pode gerar ansiedade elevada em situacoes envolvendo matematica.</div>
+          </div>
+        </div>
+        <p class="dis-tips-title">Estrategias de apoio</p>
+        <div class="dis-tips-list">
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Usar materiais concretos e visuais: blocos, abaco, linhas numericas coloridas para dar corpo aos numeros abstratos.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Dividir problemas em etapas pequenas, resolvendo uma de cada vez com reforco positivo a cada passo.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Permitir uso de calculadora e tabelas de multiplicacao durante aprendizado para reduzir carga cognitiva.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Jogos matematicos e apps gamificados (ex: Prodigy) tornam a pratica menos ansiogena e mais motivadora.</span></div>
+        </div>
+      </div>
+
+      <!-- DISGRAFIA -->
+      <div class="dis-panel" id="panel1">
+        <div class="dis-hero dis-color-a">
+          <span class="dis-emoji">&#9997;&#65039;</span>
+          <div class="dis-hero-text">
+            <h4>Disgrafia</h4>
+            <p>Transtorno que afeta a habilidade de escrever a mao de forma legivel e fluente, sem relacao com forca muscular ou visao. A pessoa tem dificuldade em transformar pensamentos em escrita manual, podendo envolver desorganizacao espacial, letras irregulares e cansaco excessivo ao escrever.</p>
+          </div>
+        </div>
+        <div class="dis-grid">
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128270;</div>
+            <div class="dis-block-title">Como identificar</div>
+            <div class="dis-block-text">Letra dificil de ler, tamanho irregular das letras, mistura de maiusculas e minusculas, dor ou tensao ao escrever, dificuldade em manter espacamento e alinhar o texto.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#129504;</div>
+            <div class="dis-block-title">O que acontece no cerebro</div>
+            <div class="dis-block-text">Ha uma desconexao entre o planejamento motor fino e a execucao dos movimentos graficos, envolvendo areas frontais e parietais do cerebro ligadas a coordenacao motora.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128100;</div>
+            <div class="dis-block-title">Impacto no cotidiano</div>
+            <div class="dis-block-text">Lentidao em provas escritas, fadiga, frustacao e baixa autoestima pela diferenca percebida em relacao aos colegas. O conteudo intelectual pode ser muito superior ao que a escrita demonstra.</div>
+          </div>
+        </div>
+        <p class="dis-tips-title">Estrategias de apoio</p>
+        <div class="dis-tips-list">
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Permitir uso de computador ou tablet para producao de textos, reduzindo a barreira motoraem avaliacoes.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Treino de caligrafia com papel pautado especial e canetas ergonomicas que melhoram o controle do lapis.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Mais tempo nas atividades escritas e avaliacao oral como alternativa valida ao texto manuscrito.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Terapia ocupacional com foco em coordenacao motora fina produz resultados significativos a medio prazo.</span></div>
+        </div>
+      </div>
+
+      <!-- DISLEXIA -->
+      <div class="dis-panel" id="panel2">
+        <div class="dis-hero dis-color-c">
+          <span class="dis-emoji">&#128218;</span>
+          <div class="dis-hero-text">
+            <h4>Dislexia</h4>
+            <p>E o transtorno de aprendizagem mais comum, afetando a leitura e a decodificacao de palavras. Pessoas com dislexia tem dificuldade em associar letras a sons (consciencia fonologica), mas costumam ter criatividade, raciocinio visual e pensamento holistico muito desenvolvidos.</p>
+          </div>
+        </div>
+        <div class="dis-grid">
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128270;</div>
+            <div class="dis-block-title">Como identificar</div>
+            <div class="dis-block-text">Leitura lenta e imprecisa, inversao ou omissao de letras e silabas, dificuldade em rimar, confusao entre letras parecidas (b/d, p/q) e problemas para soletrar mesmo palavras conhecidas.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#129504;</div>
+            <div class="dis-block-title">O que acontece no cerebro</div>
+            <div class="dis-block-text">Neuroimagens mostram menor ativacao nas areas de Wernicke e Broca, responsaveis pelo processamento fonologico da linguagem. O cerebro usa rotas alternativas mais lentas para ler.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128100;</div>
+            <div class="dis-block-title">Impacto no cotidiano</div>
+            <div class="dis-block-text">Dificuldade em seguir instrucoes escritas, lentidao em provas, evitacao de leitura em voz alta e possivel baixa autoestima escolar. Nao afeta a compreensao auditiva nem a inteligencia.</div>
+          </div>
+        </div>
+        <p class="dis-tips-title">Estrategias de apoio</p>
+        <div class="dis-tips-list">
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Metodo multissensorial (ver, ouvir e tocar): associar letras a sons e gestos melhora a decodificacao.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Audiolivros e leitores de tela permitem acesso ao conteudo sem a barreira da decodificacao grafica.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Fontes especificas para dislexia (OpenDyslexic) e maior espacamento entre linhas facilitam a leitura.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Avaliacao oral ou prova lida em voz alta elimina a barreira grafica sem comprometer a avaliacao do conhecimento.</span></div>
+        </div>
+      </div>
+
+      <!-- TDAH -->
+      <div class="dis-panel" id="panel3">
+        <div class="dis-hero dis-color-p">
+          <span class="dis-emoji">&#9889;</span>
+          <div class="dis-hero-text">
+            <h4>TDAH &#8212; Transtorno do Deficit de Atencao e Hiperatividade</h4>
+            <p>E um transtorno do neurodesenvolvimento que afeta a atencao, o controle de impulsos e, em alguns casos, o nivel de atividade motora. Existe em tres apresentacoes: predominantemente desatento, predominantemente hiperativo/impulsivo, e combinado.</p>
+          </div>
+        </div>
+        <div class="dis-grid">
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128270;</div>
+            <div class="dis-block-title">Como identificar</div>
+            <div class="dis-block-text">Dificuldade em manter atencao, perda frequente de objetos, impulsividade, interromper conversas, dificuldade em organizar tarefas e sensacao de que o tempo passa de forma diferente.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#129504;</div>
+            <div class="dis-block-title">O que acontece no cerebro</div>
+            <div class="dis-block-text">Ha menor atividade dopaminergica e noradrenergica no cortex pre-frontal, area ligada a funcoes executivas como planejamento, inibicao de impulsos e memoria de trabalho.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#128100;</div>
+            <div class="dis-block-title">Impacto no cotidiano</div>
+            <div class="dis-block-text">Dificuldade em cumprir prazos, manter rotinas e filtrar distractores. Hiperfoco em assuntos de interesse e tambem caracteristico: a pessoa se concentra profundamente no que a engaja.</div>
+          </div>
+          <div class="dis-block">
+            <div class="dis-block-icon">&#127775;</div>
+            <div class="dis-block-title">Superpoderes do TDAH</div>
+            <div class="dis-block-text">Alta criatividade, pensamento nao-linear, capacidade de hiperfoco, energia abundante e facilidade para gerar muitas ideias em pouco tempo sao frequentemente relatados.</div>
+          </div>
+        </div>
+        <p class="dis-tips-title">Estrategias de apoio</p>
+        <div class="dis-tips-list">
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Tecnica Pomodoro: blocos de 25 minutos de foco seguidos de 5 minutos de pausa regulam a atencao de forma sustentavel.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Listas visuais, alarmes e calendarios coloridos externalizam a organizacao que o cerebro TDAH tem dificuldade de manter internamente.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Ambientes com menos estimulos visuais e auditivos reduzem distractores durante tarefas que exigem concentracao.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Movimento ajuda: permitir que a pessoa se levante, use objetos antiestresse ou faca pausa ativa melhora o foco subsequente.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Acompanhamento com neuropsicologia e psiquiatria e essencial: o tratamento pode incluir terapia comportamental e, quando indicado, medicacao.</span></div>
+        </div>
+      </div>
+
+    </div><!-- /dis-panels -->
+  </div><!-- /modal-box -->
+</div><!-- /modal-overlay -->
 
 <script>
 (function(){
@@ -809,6 +1118,46 @@ document.addEventListener('keydown',function(e){
   else if(active.id==='screen-register') doRegister();
 });
 
+/* ════════════════════════════════
+   DISORDERS MODAL
+════════════════════════════════ */
+function openDisorders(){
+  var m=document.getElementById('modal-disorders');
+  if(m){ m.classList.add('open'); document.body.style.overflow='hidden'; }
+}
+function closeDisorders(){
+  var m=document.getElementById('modal-disorders');
+  if(m){ m.classList.remove('open'); document.body.style.overflow=''; }
+}
+function overlayClick(e){
+  if(e.target===document.getElementById('modal-disorders')) closeDisorders();
+}
+function switchTab(idx){
+  var tabs=document.querySelectorAll('.dis-tab');
+  var panels=document.querySelectorAll('.dis-panel');
+  for(var i=0;i<tabs.length;i++){
+    tabs[i].classList[i===idx?'add':'remove']('active');
+    panels[i].classList[i===idx?'add':'remove']('active');
+  }
+}
+/* Esc key closes modal */
+document.addEventListener('keydown',function(ev){
+  if(ev.key==='Escape') closeDisorders();
+});
+/* FAB tooltip on hover */
+(function(){
+  var fab=document.getElementById('fab-btn');
+  var tip=document.getElementById('fab-tip');
+  if(!fab||!tip) return;
+  var hTimer;
+  fab.addEventListener('mouseenter',function(){
+    hTimer=setTimeout(function(){tip.classList.add('show');},400);
+  });
+  fab.addEventListener('mouseleave',function(){
+    clearTimeout(hTimer);tip.classList.remove('show');
+  });
+})();
+
 /* expose globals for inline onclick */
 window.showScreen=showScreen;
 window.togglePw=togglePw;
@@ -819,6 +1168,10 @@ window.doLogout=doLogout;
 window.goNext=goNext;
 window.goBack=goBack;
 window.restartQuiz=restartQuiz;
+window.openDisorders=openDisorders;
+window.closeDisorders=closeDisorders;
+window.overlayClick=overlayClick;
+window.switchTab=switchTab;
 
 })();
 </script>
