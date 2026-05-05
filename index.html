@@ -257,7 +257,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="auth-card">
     <div class="auth-logo">
       <div class="auth-badge">&#127891; Perfil de Aprendizagem</div>
-      <h2>Bem-vindo!!</h2>
+      <h2>Bem-vindo de volta</h2>
       <p>Entre na sua conta para continuar</p>
     </div>
     <div class="form-group">
@@ -689,4 +689,138 @@ function goBack(){
 /* ════════════════════════════════
    RESULT
 ════════════════════════════════ */
-function calc
+function calcDominant(){
+  var cnt={A:0,B:0,C:0};
+  for(var i=0;i<qAnswers.length;i++) if(qAnswers[i]) cnt[qAnswers[i]]++;
+  var dom='A';
+  if(cnt.B>cnt[dom]) dom='B';
+  if(cnt.C>cnt[dom]) dom='C';
+  /* tie-breaker: last chosen wins */
+  if((cnt.A===cnt.B)||(cnt.A===cnt.C)||(cnt.B===cnt.C)){
+    for(var j=qAnswers.length-1;j>=0;j--){
+      if(qAnswers[j]!==null){ dom=qAnswers[j]; break; }
+    }
+  }
+  return dom;
+}
+
+function showResult(){
+  var dom=calcDominant();
+  var cntA=qAnswers.filter(function(x){return x==='A';}).length;
+  var cntB=qAnswers.filter(function(x){return x==='B';}).length;
+  var cntC=qAnswers.filter(function(x){return x==='C';}).length;
+  if(user) dbInsertSession(user.id,qAnswers,dom);
+
+  showScreen('screen-result');
+
+  var pf=document.getElementById('progress-fill');
+  if(pf) pf.style.width='100%';
+
+  var pr=PROFILES[dom];
+  var rc=document.getElementById('result-card');
+  if(rc) rc.className='result-card rc-'+pr.cls;
+  var ri=document.getElementById('result-icon');
+  var rb=document.getElementById('result-badge');
+  var rt=document.getElementById('result-title');
+  var rd=document.getElementById('result-desc');
+  if(ri) ri.innerHTML=pr.icon;
+  if(rb){ rb.textContent='Seu perfil e'; rb.className='result-badge rb-'+pr.cls; }
+  if(rt) rt.textContent=pr.title;
+  if(rd) rd.textContent=pr.desc;
+
+  var colors={A:'var(--av)',B:'var(--aa)',C:'var(--ac)'};
+  var labels={A:'Visual',B:'Auditivo',C:'Cinestetico'};
+  var sr=document.getElementById('score-row');
+  if(sr){
+    sr.innerHTML='';
+    [['A',cntA],['B',cntB],['C',cntC]].forEach(function(p){
+      var k=p[0],n=p[1];
+      var pill=document.createElement('div');
+      pill.className='score-pill';
+      pill.innerHTML='<span class="pill-dot" style="background:'+colors[k]+'"></span>'+labels[k]+': <strong>'+n+'/5</strong>';
+      sr.appendChild(pill);
+    });
+  }
+
+  var tg=document.getElementById('tips-grid');
+  if(tg){
+    tg.innerHTML='';
+    TIPS[dom].forEach(function(tp){
+      var c=document.createElement('div');
+      c.className='tip-card';
+      c.innerHTML='<span class="tip-icon">'+tp.i+'</span><div class="tip-title">'+tp.t+'</div><div class="tip-text">'+tp.d+'</div>';
+      tg.appendChild(c);
+    });
+  }
+
+  var rw=document.getElementById('result-wrap');
+  if(rw) rw.style.display='block';
+
+  renderHistory();
+}
+
+function renderHistory(){
+  if(!user) return;
+  var ss=dbGetSessions(user.id);
+  var sec=document.getElementById('history-section');
+  var lst=document.getElementById('history-list');
+  if(!sec||!lst) return;
+  if(ss.length<=1){ sec.style.display='none'; return; }
+  sec.style.display='block';
+  lst.innerHTML='';
+  var icons={A:'&#128065;&#65039;',B:'&#127911;',C:'&#129309;'};
+  var labels={A:'Visual',B:'Auditivo',C:'Cinestetico'};
+  var bcls={A:'hb-visual',B:'hb-auditivo',C:'hb-cines'};
+  ss.forEach(function(s){
+    var d=new Date(s.ts);
+    var dt=d.toLocaleDateString('pt-BR')+' as '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    var item=document.createElement('div');
+    item.className='history-item';
+    item.innerHTML='<div class="hi-left"><span class="hi-date">'+dt+'</span><span class="hi-result">'+icons[s.result]+' '+labels[s.result]+'</span></div><span class="hi-badge '+bcls[s.result]+'">'+labels[s.result]+'</span>';
+    lst.appendChild(item);
+  });
+}
+
+function restartQuiz(){ startQuiz(); }
+
+/* ════════════════════════════════
+   BOOT
+════════════════════════════════ */
+var saved=sessionStorage.getItem('ap_session');
+if(saved){
+  try{
+    user=JSON.parse(saved);
+    setTopbar();
+    startQuiz();
+  }catch(e){
+    sessionStorage.removeItem('ap_session');
+    showScreen('screen-login');
+  }
+} else {
+  showScreen('screen-login');
+}
+
+/* Enter key support on auth screens */
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter') return;
+  var active=document.querySelector('.screen.active');
+  if(!active) return;
+  if(active.id==='screen-login')    doLogin();
+  else if(active.id==='screen-register') doRegister();
+});
+
+/* expose globals for inline onclick */
+window.showScreen=showScreen;
+window.togglePw=togglePw;
+window.checkStrength=checkStrength;
+window.doLogin=doLogin;
+window.doRegister=doRegister;
+window.doLogout=doLogout;
+window.goNext=goNext;
+window.goBack=goBack;
+window.restartQuiz=restartQuiz;
+
+})();
+</script>
+</body>
+</html>
