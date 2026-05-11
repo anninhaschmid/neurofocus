@@ -1,3 +1,4 @@
+
 function showResult() {
     var counts = { A: 0, B: 0, C: 0 };
     qAnswers.forEach(function(ans) { if (ans) counts[ans]++; });
@@ -57,8 +58,3 @@ window.onload = function() {
         startQuiz();
     }
 };
-
-})(); // Fecha a função autoinvocada
-</script>
-</body>
-</html>
