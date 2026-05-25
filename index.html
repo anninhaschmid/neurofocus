@@ -139,10 +139,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .question-card{
   background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
   padding:36px 32px 28px;margin-bottom:20px;
-  opacity:0;transform:translateY(18px);
   transition:opacity .4s ease,transform .4s ease;
 }
-.question-card.visible{opacity:1;transform:translateY(0)}
 .q-num{font-size:.69rem;letter-spacing:.14em;text-transform:uppercase;color:var(--av);font-weight:500;margin-bottom:10px}
 .q-text{font-family:'Playfair Display',serif;font-size:1.16rem;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:25px}
 .options{display:flex;flex-direction:column;gap:11px}
@@ -178,8 +176,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .btn-next{background:var(--av);color:#0b0b10;font-weight:600}
 .btn-next:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
 .btn-next:disabled{opacity:.35;cursor:not-allowed}
-.btn-submit{background:linear-gradient(135deg,var(--av),var(--aa));color:#0b0b10;font-weight:700}
-.btn-submit:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
 /* ── RESULT ── */
 #result-wrap{display:none;animation:fadeUp .7s ease both}
@@ -188,56 +184,44 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   padding:46px 36px;text-align:center;margin-bottom:22px;position:relative;overflow:hidden;
 }
 .result-card::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.07}
-.rc-visual::before  {background:radial-gradient(circle at 50% 0%,var(--av),transparent 65%)}
-.rc-auditivo::before{background:radial-gradient(circle at 50% 0%,var(--aa),transparent 65%)}
-.rc-cines::before   {background:radial-gradient(circle at 50% 0%,var(--ac),transparent 65%)}
 .result-icon{font-size:3.3rem;display:block;margin-bottom:16px;animation:pop .6s .15s cubic-bezier(.175,.885,.32,1.275) both}
-.result-badge{font-size:.67rem;letter-spacing:.17em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
-.rb-visual{color:var(--av)}.rb-auditivo{color:var(--aa)}.rb-cines{color:var(--ac)}
+.result-badge{font-size:.67rem;letter-spacing:.17em;text-transform:uppercase;font-weight:500;margin-bottom:10px;color:var(--av)}
 .result-title{font-family:'Playfair Display',serif;font-size:clamp(1.65rem,4vw,2.4rem);font-weight:900;color:var(--white);margin-bottom:13px}
 .result-desc{font-size:.91rem;color:var(--muted);line-height:1.8;max-width:500px;margin:0 auto 26px}
-.score-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.score-pill{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:7px 17px;font-size:.79rem}
-.pill-dot{width:8px;height:8px;border-radius:50%}
 .section-title{font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:26px 0 13px}
-.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px}
-.tip-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:19px;text-align:left}
-.tip-icon{font-size:1.35rem;margin-bottom:9px;display:block}
-.tip-title{font-size:.79rem;font-weight:700;color:var(--white);margin-bottom:5px}
-.tip-text{font-size:.75rem;color:var(--muted);line-height:1.65}
 .result-actions{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
 .btn-restart{background:transparent;border:1.5px solid var(--border);color:var(--muted)}
 .btn-restart:hover{border-color:var(--text);color:var(--text)}
-.history-section{margin-top:38px}
-.history-list{display:flex;flex-direction:column;gap:10px}
-.history-item{
-  background:var(--card2);border:1px solid var(--border);border-radius:10px;
-  padding:13px 17px;display:flex;justify-content:space-between;align-items:center;font-size:.81rem;
-}
-.hi-left{display:flex;flex-direction:column;gap:3px}
-.hi-date{color:var(--muted);font-size:.72rem}
-.hi-result{color:var(--white);font-weight:600}
-.hi-badge{font-size:.69rem;padding:3px 10px;border-radius:99px;font-weight:500}
-.hb-visual  {background:rgba(110,232,196,.15);color:var(--av)}
-.hb-auditivo{background:rgba(255,179,71,.15); color:var(--aa)}
-.hb-cines   {background:rgba(255,126,179,.15);color:var(--ac)}
 
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:26px;left:50%;
-  transform:translateX(-50%) translateY(16px);
-  background:var(--card2);border:1px solid var(--border2);color:var(--text);
-  border-radius:10px;padding:11px 22px;font-size:.83rem;
-  opacity:0;pointer-events:none;transition:all .3s;z-index:999;
-  white-space:nowrap;max-width:90vw;text-align:center;
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.terror{border-color:var(--ac);color:var(--ac)}
-.toast.tsuccess{border-color:var(--av);color:var(--av)}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+/* ── MODAL E TRANSTORNOS ── */
+.fab-disorders { position: fixed; bottom: 20px; right: 20px; background: var(--card2); border: 1px solid var(--border); border-radius: 50%; width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer; z-index: 100; box-shadow: var(--shadow); transition: transform 0.2s; }
+.fab-disorders:hover { transform: scale(1.1); border-color: var(--av); }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(11, 11, 16, 0.85); backdrop-filter: blur(5px); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+.modal-box { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; padding: 30px; }
+.modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.modal-head-left h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); }
+.modal-head-left p { font-size: 0.85rem; color: var(--muted); margin-top: 5px; }
+.modal-close { background: none; border: none; font-size: 1.2rem; color: var(--muted); cursor: pointer; }
+.dis-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.dis-tab { background: var(--surface); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; color: var(--muted); cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+.dis-tab.active, .dis-tab:hover { background: rgba(110,232,196,.1); color: var(--av); border-color: var(--av); }
+.dis-panels { position: relative; }
+.dis-panel { display: none; }
+.dis-panel.active { display: block; animation: fadeUp 0.4s ease both; }
+.dis-hero { display: flex; gap: 15px; margin-bottom: 20px; padding: 20px; border-radius: 12px; background: var(--surface); }
+.dis-emoji { font-size: 2.5rem; }
+.dis-hero-text h4 { font-size: 1.1rem; color: var(--white); margin-bottom: 5px; }
+.dis-hero-text p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.dis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+.dis-block { background: var(--card2); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
+.dis-block-icon { font-size: 1.2rem; margin-bottom: 10px; }
+.dis-block-title { font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.dis-block-text { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.dis-tips-title { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 15px; }
+.dis-tips-list { display: flex; flex-direction: column; gap: 10px; }
+.dis-tip-item { display: flex; gap: 10px; align-items: flex-start; }
+.dis-tip-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.dis-tip-text { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 
 /* ── RESPONSIVE ── */
 @media(max-width:520px){
@@ -252,7 +236,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </head>
 <body>
 
-<!-- ══ SCREEN: LOGIN ══ -->
 <div id="screen-login" class="screen auth-screen active">
   <div class="auth-card">
     <div class="auth-logo">
@@ -263,107 +246,65 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="form-group">
       <label class="form-label" for="login-email">E-mail</label>
       <input class="form-input" type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/>
-      <span class="field-err" id="err-login-email">Informe um e-mail valido.</span>
     </div>
     <div class="form-group">
       <label class="form-label" for="login-pw">Senha</label>
       <div class="pw-wrap">
         <input class="form-input" type="password" id="login-pw" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password"/>
-        <button type="button" class="pw-eye" id="eye-login-pw" onclick="togglePw('login-pw','eye-login-pw')" aria-label="Mostrar senha">&#128065;</button>
+        <button type="button" class="pw-eye" id="eye-login-pw" onclick="togglePw('login-pw')" aria-label="Mostrar senha">&#128065;</button>
       </div>
-      <span class="field-err" id="err-login-pw">Informe sua senha.</span>
     </div>
     <button class="btn-auth" id="btn-do-login" onclick="doLogin()">Entrar</button>
     <div class="divider">ou</div>
-    <div class="auth-switch">Nao tem conta? <a onclick="showScreen('screen-register')">Cadastre-se gratis</a></div>
+    <div class="auth-switch">Não tem conta? <a onclick="showScreen('screen-register')">Cadastre-se grátis</a></div>
   </div>
 </div>
 
-<!-- ══ SCREEN: LOGIN ══ -->
-<div id="screen-login" class="screen auth-screen active">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <div class="auth-badge">&#127891; Perfil de Aprendizagem</div>
-      <h2>Bem-vindo</h2>
-      <p>Entre na sua conta para continuar</p>
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="login-email">E-mail</label>
-      <input class="form-input" type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/>
-      <span class="field-err" id="err-login-email">Informe um e-mail valido.</span>
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="login-pw">Senha</label>
-      <div class="pw-wrap">
-        <input class="form-input" type="password" id="login-pw" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password"/>
-        <button type="button" class="pw-eye" id="eye-login-pw" onclick="togglePw('login-pw','eye-login-pw')" aria-label="Mostrar senha">&#128065;</button>
-      </div>
-      <span class="field-err" id="err-login-pw">Informe sua senha.</span>
-    </div>
-    <button class="btn-auth" id="btn-do-login" onclick="doLogin()">Entrar</button>
-    <div class="divider">ou</div>
-    <div class="auth-switch">Nao tem conta? <a onclick="showScreen('screen-register')">Cadastre-se</a></div>
-  </div>
-</div>
-
-<!-- ══ SCREEN: REGISTER ══ -->
 <div id="screen-register" class="screen auth-screen">
   <div class="auth-card">
     <div class="auth-logo">
       <div class="auth-badge">&#127891; Perfil de Aprendizagem</div>
       <h2>Criar conta</h2>
-      <p>Descubra como voce aprende melhor</p>
+      <p>Descubra como você aprende melhor</p>
     </div>
     <div class="form-group">
       <label class="form-label" for="reg-name">Nome completo</label>
       <input class="form-input" type="text" id="reg-name" placeholder="Seu nome" autocomplete="name"/>
-      <span class="field-err" id="err-reg-name">Nome precisa ter ao menos 3 caracteres.</span>
     </div>
     <div class="form-group">
       <label class="form-label" for="reg-email">E-mail</label>
       <input class="form-input" type="email" id="reg-email" placeholder="seu@email.com" autocomplete="email"/>
-      <span class="field-err" id="err-reg-email">Informe um e-mail valido.</span>
     </div>
     <div class="form-group">
       <label class="form-label" for="reg-pw">Senha</label>
       <div class="pw-wrap">
-        <input class="form-input" type="password" id="reg-pw" placeholder="Minimo 6 caracteres" autocomplete="new-password" oninput="checkStrength(this.value)"/>
-        <button type="button" class="pw-eye" id="eye-reg-pw" onclick="togglePw('reg-pw','eye-reg-pw')" aria-label="Mostrar senha">&#128065;</button>
+        <input class="form-input" type="password" id="reg-pw" placeholder="Mínimo 6 caracteres" autocomplete="new-password" oninput="checkStrength(this.value)"/>
+        <button type="button" class="pw-eye" id="eye-reg-pw" onclick="togglePw('reg-pw')" aria-label="Mostrar senha">&#128065;</button>
       </div>
       <div class="strength-wrap" id="strength-wrap">
         <div class="strength-track"><div class="strength-fill" id="strength-fill"></div></div>
         <span class="strength-text" id="strength-text"></span>
       </div>
-      <span class="field-err" id="err-reg-pw">A senha precisa ter ao menos 6 caracteres.</span>
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="reg-pw2">Confirmar senha</label>
-      <div class="pw-wrap">
-        <input class="form-input" type="password" id="reg-pw2" placeholder="Repita a senha" autocomplete="new-password"/>
-        <button type="button" class="pw-eye" id="eye-reg-pw2" onclick="togglePw('reg-pw2','eye-reg-pw2')" aria-label="Mostrar senha">&#128065;</button>
-      </div>
-      <span class="field-err" id="err-reg-pw2">As senhas nao coincidem.</span>
     </div>
     <button class="btn-auth" id="btn-do-register" onclick="doRegister()">Criar conta</button>
-    <div class="auth-switch">Ja tem conta? <a onclick="showScreen('screen-login')">Fazer login</a></div>
+    <div class="auth-switch">Já tem conta? <a onclick="showScreen('screen-login')">Fazer login</a></div>
   </div>
 </div>
 
-<!-- ══ SCREEN: QUIZ ══ -->
 <div id="screen-quiz" class="screen main-screen">
   <div class="topbar">
     <div class="topbar-brand">Aprende<span>.</span></div>
     <div class="topbar-right">
-      <div class="avatar" id="av1">?</div>
-      <span id="tn1">Usuario</span>
+      <div class="avatar">?</div>
+      <span>Usuário</span>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </div>
   <div class="main-content">
     <div class="quiz-header">
-      <div class="tag">Diagnostico Educacional</div>
-      <h1>Qual e o seu<br/><em>Perfil de Aprendizagem?</em></h1>
-      <p>5 perguntas rapidas para descobrir se voce aprende melhor de forma visual, auditiva ou cinestetica.</p>
+      <div class="tag">Diagnóstico Educacional</div>
+      <h1>Qual é o seu<br/><em>Perfil de Aprendizagem?</em></h1>
+      <p>Perguntas rápidas para descobrir se você aprende melhor de forma visual, auditiva ou cinestésica.</p>
     </div>
     <div class="progress-wrap">
       <div class="progress-meta">
@@ -379,18 +320,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
     <div class="nav">
       <button class="btn btn-back" id="btn-back" onclick="goBack()">&#8592; Anterior</button>
-      <button class="btn btn-next" id="btn-next" onclick="goNext()" disabled>Proxima &#8594;</button>
+      <button class="btn btn-next" id="btn-next" onclick="goNext()" disabled>Próxima &#8594;</button>
     </div>
   </div>
 </div>
 
-<!-- ══ SCREEN: RESULT ══ -->
 <div id="screen-result" class="screen main-screen">
   <div class="topbar">
     <div class="topbar-brand">Aprende<span>.</span></div>
     <div class="topbar-right">
-      <div class="avatar" id="av2">?</div>
-      <span id="tn2">Usuario</span>
+      <div class="avatar">?</div>
+      <span>Usuário</span>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </div>
@@ -398,677 +338,298 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div id="result-wrap">
       <div class="result-card" id="result-card">
         <span class="result-icon" id="result-icon"></span>
-        <div class="result-badge" id="result-badge">Seu perfil e</div>
+        <div class="result-badge" id="result-badge">Seu perfil é</div>
         <h2 class="result-title" id="result-title"></h2>
         <p class="result-desc" id="result-desc"></p>
-        <div class="score-row" id="score-row"></div>
       </div>
-      <p class="section-title">Dicas para voce aprender melhor</p>
-      <div class="tips-grid" id="tips-grid"></div>
       <div class="result-actions">
-        <button class="btn btn-restart" onclick="restartQuiz()">&#8617; Refazer questionario</button>
-      </div>
-      <div class="history-section" id="history-section" style="display:none">
-        <p class="section-title">Historico de resultados</p>
-        <div class="history-list" id="history-list"></div>
+        <button class="btn btn-restart" onclick="restartQuiz()">&#8617; Refazer questionário</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- toast -->
-<div class="toast" id="toast"></div>
-
-<!-- ══ FAB: TRANSTORNOS ══ -->
-<div class="fab-tip" id="fab-tip">Saiba sobre Transtornos de Aprendizagem</div>
 <button class="fab-disorders" id="fab-btn" onclick="openDisorders()" aria-label="Transtornos de aprendizagem">&#129504;</button>
 
-<!-- ══ MODAL: TRANSTORNOS ══ -->
 <div class="modal-overlay" id="modal-disorders" onclick="overlayClick(event)">
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
 
     <div class="modal-head">
       <div class="modal-head-left">
         <h3 id="modal-title">Transtornos de Aprendizagem</h3>
-        <p>Entenda cada condicao, seus sinais e estrategias de apoio</p>
+        <p>Entenda cada condição, seus sinais e estratégias de apoio</p>
       </div>
       <button class="modal-close" onclick="closeDisorders()" aria-label="Fechar">&#10005;</button>
     </div>
 
-    <!-- tabs -->
     <div class="dis-tabs" role="tablist">
-      <button class="dis-tab active" role="tab" onclick="switchTab(0)" id="tab0">&#129518; Discalculia</button>
-      <button class="dis-tab" role="tab" onclick="switchTab(1)" id="tab1">&#9997;&#65039; Disgrafia</button>
-      <button class="dis-tab" role="tab" onclick="switchTab(2)" id="tab2">&#128218; Dislexia</button>
-      <button class="dis-tab" role="tab" onclick="switchTab(3)" id="tab3">&#9889; TDAH</button>
+      <button class="dis-tab active" role="tab" onclick="switchTab(0)">&#129518; Discalculia</button>
+      <button class="dis-tab" role="tab" onclick="switchTab(1)">&#9997;&#65039; Disgrafia</button>
+      <button class="dis-tab" role="tab" onclick="switchTab(2)">&#128218; Dislexia</button>
+      <button class="dis-tab" role="tab" onclick="switchTab(3)">&#9889; TDAH</button>
     </div>
 
-    <!-- panels -->
     <div class="dis-panels">
-
-      <!-- DISCALCULIA -->
-      <div class="dis-panel active" id="panel0">
-        <div class="dis-hero dis-color-v">
+      <div class="dis-panel active">
+        <div class="dis-hero">
           <span class="dis-emoji">&#129518;</span>
           <div class="dis-hero-text">
             <h4>Discalculia</h4>
-            <p>E um transtorno especifico de aprendizagem que afeta a capacidade de compreender e trabalhar com numeros e conceitos matematicos. Nao tem relacao com inteligencia: pessoas com discalculia podem ser muito inteligentes, mas o cerebro processa quantidades e simbolos numericos de forma diferente.</p>
+            <p>Transtorno específico de aprendizagem que afeta a capacidade de compreender e trabalhar com números e conceitos matemáticos.</p>
           </div>
         </div>
         <div class="dis-grid">
           <div class="dis-block">
             <div class="dis-block-icon">&#128270;</div>
             <div class="dis-block-title">Como identificar</div>
-            <div class="dis-block-text">Dificuldade em reconhecer numeros, fazer calculos basicos, entender sequencias e medir distancias ou tempo. Contar nos dedos mesmo em idades mais avancadas e comum.</div>
-          </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#129504;</div>
-            <div class="dis-block-title">O que acontece no cerebro</div>
-            <div class="dis-block-text">Estudos de neuroimagem mostram diferenca de ativacao no lobulo parietal, area responsavel pelo processamento de quantidades e espacialidade numerica.</div>
-          </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#128100;</div>
-            <div class="dis-block-title">Impacto no cotidiano</div>
-            <div class="dis-block-text">Dificuldade com troco, horarios, gestao de dinheiro e leitura de mapas. Pode gerar ansiedade elevada em situacoes envolvendo matematica.</div>
+            <div class="dis-block-text">Dificuldade em reconhecer números, fazer cálculos básicos e medir distâncias ou tempo.</div>
           </div>
         </div>
-        <p class="dis-tips-title">Estrategias de apoio</p>
+        <p class="dis-tips-title">Estratégias de apoio</p>
         <div class="dis-tips-list">
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Usar materiais concretos e visuais: blocos, abaco, linhas numericas coloridas para dar corpo aos numeros abstratos.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Dividir problemas em etapas pequenas, resolvendo uma de cada vez com reforco positivo a cada passo.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Permitir uso de calculadora e tabelas de multiplicacao durante aprendizado para reduzir carga cognitiva.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Jogos matematicos e apps gamificados (ex: Prodigy) tornam a pratica menos ansiogena e mais motivadora.</span></div>
+          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--av)"></span><span class="dis-tip-text">Usar materiais concretos e visuais: blocos, ábaco, linhas numéricas.</span></div>
         </div>
       </div>
 
-      <!-- DISGRAFIA -->
-      <div class="dis-panel" id="panel1">
-        <div class="dis-hero dis-color-a">
+      <div class="dis-panel">
+        <div class="dis-hero">
           <span class="dis-emoji">&#9997;&#65039;</span>
           <div class="dis-hero-text">
             <h4>Disgrafia</h4>
-            <p>Transtorno que afeta a habilidade de escrever a mao de forma legivel e fluente, sem relacao com forca muscular ou visao. A pessoa tem dificuldade em transformar pensamentos em escrita manual, podendo envolver desorganizacao espacial, letras irregulares e cansaco excessivo ao escrever.</p>
+            <p>Transtorno que afeta a habilidade de escrever à mão de forma legível e fluente.</p>
           </div>
         </div>
         <div class="dis-grid">
           <div class="dis-block">
             <div class="dis-block-icon">&#128270;</div>
             <div class="dis-block-title">Como identificar</div>
-            <div class="dis-block-text">Letra dificil de ler, tamanho irregular das letras, mistura de maiusculas e minusculas, dor ou tensao ao escrever, dificuldade em manter espacamento e alinhar o texto.</div>
+            <div class="dis-block-text">Letra difícil de ler, tamanho irregular das letras, dor ou tensão ao escrever.</div>
           </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#129504;</div>
-            <div class="dis-block-title">O que acontece no cerebro</div>
-            <div class="dis-block-text">Ha uma desconexao entre o planejamento motor fino e a execucao dos movimentos graficos, envolvendo areas frontais e parietais do cerebro ligadas a coordenacao motora.</div>
-          </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#128100;</div>
-            <div class="dis-block-title">Impacto no cotidiano</div>
-            <div class="dis-block-text">Lentidao em provas escritas, fadiga, frustacao e baixa autoestima pela diferenca percebida em relacao aos colegas. O conteudo intelectual pode ser muito superior ao que a escrita demonstra.</div>
-          </div>
-        </div>
-        <p class="dis-tips-title">Estrategias de apoio</p>
-        <div class="dis-tips-list">
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Permitir uso de computador ou tablet para producao de textos, reduzindo a barreira motoraem avaliacoes.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Treino de caligrafia com papel pautado especial e canetas ergonomicas que melhoram o controle do lapis.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Mais tempo nas atividades escritas e avaliacao oral como alternativa valida ao texto manuscrito.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--aa)"></span><span class="dis-tip-text">Terapia ocupacional com foco em coordenacao motora fina produz resultados significativos a medio prazo.</span></div>
         </div>
       </div>
 
-      <!-- DISLEXIA -->
-      <div class="dis-panel" id="panel2">
-        <div class="dis-hero dis-color-c">
+      <div class="dis-panel">
+        <div class="dis-hero">
           <span class="dis-emoji">&#128218;</span>
           <div class="dis-hero-text">
             <h4>Dislexia</h4>
-            <p>E o transtorno de aprendizagem mais comum, afetando a leitura e a decodificacao de palavras. Pessoas com dislexia tem dificuldade em associar letras a sons (consciencia fonologica), mas costumam ter criatividade, raciocinio visual e pensamento holistico muito desenvolvidos.</p>
+            <p>Afeta a leitura e a decodificação de palavras. Pessoas com dislexia têm dificuldade em associar letras a sons.</p>
           </div>
         </div>
         <div class="dis-grid">
           <div class="dis-block">
             <div class="dis-block-icon">&#128270;</div>
             <div class="dis-block-title">Como identificar</div>
-            <div class="dis-block-text">Leitura lenta e imprecisa, inversao ou omissao de letras e silabas, dificuldade em rimar, confusao entre letras parecidas (b/d, p/q) e problemas para soletrar mesmo palavras conhecidas.</div>
+            <div class="dis-block-text">Leitura lenta, inversão ou omissão de letras e sílabas, dificuldade em rimar.</div>
           </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#129504;</div>
-            <div class="dis-block-title">O que acontece no cerebro</div>
-            <div class="dis-block-text">Neuroimagens mostram menor ativacao nas areas de Wernicke e Broca, responsaveis pelo processamento fonologico da linguagem. O cerebro usa rotas alternativas mais lentas para ler.</div>
-          </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#128100;</div>
-            <div class="dis-block-title">Impacto no cotidiano</div>
-            <div class="dis-block-text">Dificuldade em seguir instrucoes escritas, lentidao em provas, evitacao de leitura em voz alta e possivel baixa autoestima escolar. Nao afeta a compreensao auditiva nem a inteligencia.</div>
-          </div>
-        </div>
-        <p class="dis-tips-title">Estrategias de apoio</p>
-        <div class="dis-tips-list">
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Metodo multissensorial (ver, ouvir e tocar): associar letras a sons e gestos melhora a decodificacao.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Audiolivros e leitores de tela permitem acesso ao conteudo sem a barreira da decodificacao grafica.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Fontes especificas para dislexia (OpenDyslexic) e maior espacamento entre linhas facilitam a leitura.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:var(--ac)"></span><span class="dis-tip-text">Avaliacao oral ou prova lida em voz alta elimina a barreira grafica sem comprometer a avaliacao do conhecimento.</span></div>
         </div>
       </div>
 
-      <!-- TDAH -->
-      <div class="dis-panel" id="panel3">
-        <div class="dis-hero dis-color-p">
+      <div class="dis-panel">
+        <div class="dis-hero">
           <span class="dis-emoji">&#9889;</span>
           <div class="dis-hero-text">
-            <h4>TDAH &#8212; Transtorno do Deficit de Atencao e Hiperatividade</h4>
-            <p>E um transtorno do neurodesenvolvimento que afeta a atencao, o controle de impulsos e, em alguns casos, o nivel de atividade motora. Existe em tres apresentacoes: predominantemente desatento, predominantemente hiperativo/impulsivo, e combinado.</p>
+            <h4>TDAH</h4>
+            <p>É um transtorno do neurodesenvolvimento que afeta a atenção, o controle de impulsos e o nível de atividade motora.</p>
           </div>
         </div>
         <div class="dis-grid">
           <div class="dis-block">
             <div class="dis-block-icon">&#128270;</div>
             <div class="dis-block-title">Como identificar</div>
-            <div class="dis-block-text">Dificuldade em manter atencao, perda frequente de objetos, impulsividade, interromper conversas, dificuldade em organizar tarefas e sensacao de que o tempo passa de forma diferente.</div>
+            <div class="dis-block-text">Dificuldade em manter o foco, inquietação excessiva, impulsividade e desorganização, perdendo objetos frequentemente.</div>
           </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#129504;</div>
-            <div class="dis-block-title">O que acontece no cerebro</div>
-            <div class="dis-block-text">Ha menor atividade dopaminergica e noradrenergica no cortex pre-frontal, area ligada a funcoes executivas como planejamento, inibicao de impulsos e memoria de trabalho.</div>
-          </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#128100;</div>
-            <div class="dis-block-title">Impacto no cotidiano</div>
-            <div class="dis-block-text">Dificuldade em cumprir prazos, manter rotinas e filtrar distractores. Hiperfoco em assuntos de interesse e tambem caracteristico: a pessoa se concentra profundamente no que a engaja.</div>
-          </div>
-          <div class="dis-block">
-            <div class="dis-block-icon">&#127775;</div>
-            <div class="dis-block-title">Superpoderes do TDAH</div>
-            <div class="dis-block-text">Alta criatividade, pensamento nao-linear, capacidade de hiperfoco, energia abundante e facilidade para gerar muitas ideias em pouco tempo sao frequentemente relatados.</div>
-          </div>
-        </div>
-        <p class="dis-tips-title">Estrategias de apoio</p>
-        <div class="dis-tips-list">
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Tecnica Pomodoro: blocos de 25 minutos de foco seguidos de 5 minutos de pausa regulam a atencao de forma sustentavel.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Listas visuais, alarmes e calendarios coloridos externalizam a organizacao que o cerebro TDAH tem dificuldade de manter internamente.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Ambientes com menos estimulos visuais e auditivos reduzem distractores durante tarefas que exigem concentracao.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Movimento ajuda: permitir que a pessoa se levante, use objetos antiestresse ou faca pausa ativa melhora o foco subsequente.</span></div>
-          <div class="dis-tip-item"><span class="dis-tip-dot" style="background:#a78bfa"></span><span class="dis-tip-text">Acompanhamento com neuropsicologia e psiquiatria e essencial: o tratamento pode incluir terapia comportamental e, quando indicado, medicacao.</span></div>
         </div>
       </div>
-
-    </div><!-- /dis-panels -->
-  </div><!-- /modal-box -->
-</div><!-- /modal-overlay -->
+    </div>
+  </div>
+</div>
 
 <script>
-(function(){
-'use strict';
-
-/* ════════════════════════════════
-   DATABASE (localStorage-backed)
-   Simulates SQL tables in memory
-════════════════════════════════ */
-var DB = {
-  users:    JSON.parse(localStorage.getItem('ap_users')    || '[]'),
-  sessions: JSON.parse(localStorage.getItem('ap_sessions') || '[]')
-};
-function dbSave(){
-  localStorage.setItem('ap_users',    JSON.stringify(DB.users));
-  localStorage.setItem('ap_sessions', JSON.stringify(DB.sessions));
-}
-/* SELECT * FROM users WHERE email = ? */
-function dbFindUser(email){
-  var e = email.toLowerCase().trim();
-  for(var i=0;i<DB.users.length;i++){ if(DB.users[i].email===e) return DB.users[i]; }
-  return null;
-}
-/* INSERT INTO users */
-function dbInsertUser(name,email,pw){
-  var u={id:Date.now()+'_'+Math.random().toString(36).slice(2),name:name.trim(),email:email.toLowerCase().trim(),pwHash:hash(pw)};
-  DB.users.push(u); dbSave(); return u;
-}
-/* INSERT INTO sessions */
-function dbInsertSession(uid,answers,result){
-  var s={id:Date.now(),uid:uid,ts:new Date().toISOString(),answers:answers.slice(),result:result};
-  DB.sessions.push(s); dbSave(); return s;
-}
-/* SELECT * FROM sessions WHERE uid = ? ORDER BY id DESC */
-function dbGetSessions(uid){
-  return DB.sessions.filter(function(s){return s.uid===uid;}).reverse();
-}
-function hash(str){
-  var h=5381;
-  for(var i=0;i<str.length;i++) h=((h<<5)+h)^str.charCodeAt(i);
-  return (h>>>0).toString(16);
+// --- NAVEGAÇÃO ENTRE TELAS ---
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-/* ════════════════════════════════
-   STATIC DATA
-════════════════════════════════ */
-var QUESTIONS=[
-  {id:1,text:"Quando voce precisa aprender algo novo, voce prefere:",
-   a:"Ver imagens, diagramas ou videos explicativos",
-   b:"Ouvir uma explicacao ou aula falada",
-   c:"Tentar fazer na pratica imediatamente"},
-  {id:2,text:"Em uma aula ou explicacao, voce aprende melhor quando:",
-   a:"O conteudo esta organizado em slides, mapas mentais ou graficos",
-   b:"O professor explica em voz alta com exemplos",
-   c:"Voce participa de atividades ou exercicios durante a explicacao"},
-  {id:3,text:"Para lembrar de algo importante, voce costuma:",
-   a:"Lembrar da imagem ou da forma como estava escrito",
-   b:"Lembrar do que foi dito",
-   c:"Lembrar do que voce fez ou praticou"},
-  {id:4,text:"Qual tipo de atividade voce prefere?",
-   a:"Assistir videos, ler e observar exemplos",
-   b:"Conversar, ouvir podcasts ou explicacoes",
-   c:"Atividades praticas, simulacoes ou experiencias"},
-  {id:5,text:"Quando voce estuda sozinho, voce prefere:",
-   a:"Materiais visuais (slides, resumos, imagens)",
-   b:"Audios ou explicacoes em voz alta",
-   c:"Exercicios praticos e tentativa/erro"}
+// --- AUTENTICAÇÃO E FORMULÁRIOS ---
+function doLogin() {
+  showScreen('screen-quiz');
+  initQuiz();
+}
+function doRegister() {
+  showScreen('screen-quiz');
+  initQuiz();
+}
+function doLogout() {
+  showScreen('screen-login');
+}
+function togglePw(inputId) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') input.type = 'text';
+  else input.type = 'password';
+}
+function checkStrength(val) {
+  const wrap = document.getElementById('strength-wrap');
+  const fill = document.getElementById('strength-fill');
+  const text = document.getElementById('strength-text');
+  wrap.classList.toggle('show', val.length > 0);
+  
+  if (val.length < 6) {
+    fill.style.width = '30%'; fill.style.background = 'var(--ac)'; text.innerText = 'Senha fraca';
+  } else {
+    fill.style.width = '100%'; fill.style.background = 'var(--av)'; text.innerText = 'Senha forte';
+  }
+}
+
+// --- LÓGICA DO QUIZ ---
+const questions = [
+  { q: "Ao estudar um assunto novo, o que te ajuda mais?", opts: [
+      { t: "Ver gráficos, diagramas ou ler o material", type: "v" },
+      { t: "Ouvir uma explicação, aula ou podcast", type: "a" },
+      { t: "Fazer exercícios, praticar ou montar algo", type: "c" }
+  ]},
+  { q: "Como você memoriza um número de telefone?", opts: [
+      { t: "Visualizo os números na minha mente", type: "v" },
+      { t: "Repito o número em voz alta", type: "a" },
+      { t: "Associo com o movimento dos dedos no teclado", type: "c" }
+  ]},
+  { q: "O que mais te distrai enquanto estuda?", opts: [
+      { t: "Desordem visual ou pessoas passando", type: "v" },
+      { t: "Barulhos, conversas e ruídos de fundo", type: "a" },
+      { t: "Ficar sentado na mesma posição muito tempo", type: "c" }
+  ]},
+  { q: "Quando você explica algo a alguém, você prefere:", opts: [
+      { t: "Desenhar ou mostrar uma imagem", type: "v" },
+      { t: "Explicar falando de forma detalhada", type: "a" },
+      { t: "Gesticular e demonstrar como se faz", type: "c" }
+  ]}
 ];
 
-var PROFILES={
-  A:{cls:'visual',  icon:'&#128065;&#65039;',title:'Aprendiz Visual',
-     desc:'Voce absorve informacoes principalmente por meio de imagens, graficos, mapas mentais e cores. Organizacao visual e a sua superpotencia: quando algo esta bem estruturado visualmente, voce processa muito mais rapido que a maioria.'},
-  B:{cls:'auditivo',icon:'&#127911;',title:'Aprendiz Auditivo',
-     desc:'Voce aprende melhor ouvindo. Aulas expositivas, podcasts, debates e explicacoes em voz alta sao os seus combustiveis. Voce frequentemente escuta as informacoes na cabeca ao tentar se lembrar delas.'},
-  C:{cls:'cines',   icon:'&#129309;',title:'Aprendiz Cinestetico',
-     desc:'Voce aprende fazendo. A pratica, o movimento e a experimentacao sao essenciais para voce fixar o conteudo. Voce prefere testar antes de ler o manual e aprende muito mais quando esta ativo e engajado no processo.'}
-};
+let currentQ = 0;
+let answers = [];
 
-var TIPS={
-  A:[{i:'&#128508;&#65039;',t:'Mapas Mentais',  d:'Use Miro ou papel para criar mapas com cores e simbolos.'},
-     {i:'&#128202;',        t:'Infograficos',    d:'Transforme textos densos em diagramas e fluxogramas visuais.'},
-     {i:'&#127912;',        t:'Codigo de Cores', d:'Sublinhe e destaque com cores diferentes para categorizar conceitos.'},
-     {i:'&#128249;',        t:'Videoaulas',      d:'Prefira YouTube ou Khan Academy para aprender novos topicos.'}],
-  B:[{i:'&#127897;&#65039;',t:'Podcasts',        d:'Encontre podcasts educativos sobre os temas que estuda.'},
-     {i:'&#128483;&#65039;',t:'Leia em Voz Alta',d:'Vocalizar o conteudo ajuda a fixar na memoria auditiva.'},
-     {i:'&#128101;',        t:'Grupos de Estudo',d:'Debater e explicar para outros reforca sua absorcao.'},
-     {i:'&#128251;',        t:'Grave Resumos',   d:'Grave audios com seus resumos e ouca enquanto se desloca.'}],
-  C:[{i:'&#129514;',        t:'Projetos Reais',  d:'Aplique o conteudo em projetos praticos o mais cedo possivel.'},
-     {i:'&#128257;',        t:'Tentativa/Erro',  d:'Nao tenha medo de errar: esse ciclo e o seu aprendizado.'},
-     {i:'&#127939;',        t:'Pausas Ativas',   d:'Intercale estudo com movimento; seu cerebro fixa melhor.'},
-     {i:'&#127918;',        t:'Gamificacao',     d:'Use apps gamificados como Duolingo para tornar o estudo dinamico.'}]
-};
-
-/* ════════════════════════════════
-   APP STATE
-════════════════════════════════ */
-var user     = null;
-var qCurrent = 0;
-var qAnswers = [];
-
-/* ════════════════════════════════
-   SCREEN ROUTER
-════════════════════════════════ */
-function showScreen(id){
-  var screens=document.querySelectorAll('.screen');
-  for(var i=0;i<screens.length;i++) screens[i].classList.remove('active');
-  var el=document.getElementById(id);
-  if(el){ el.classList.add('active'); window.scrollTo(0,0); }
+function initQuiz() {
+  currentQ = 0;
+  answers = [];
+  renderQuestion();
 }
 
-/* ════════════════════════════════
-   UTILS
-════════════════════════════════ */
-function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
-function val(id){ var el=document.getElementById(id); return el?el.value:''; }
-function setErr(fid,eid,on){
-  var f=document.getElementById(fid), e=document.getElementById(eid);
-  if(f) f.classList[on?'add':'remove']('err');
-  if(e) e.classList[on?'add':'remove']('show');
-}
-function clearErrs(pairs){ pairs.forEach(function(p){setErr(p[0],p[1],false);}); }
-
-var toastTimer=null;
-function showToast(msg,type){
-  var t=document.getElementById('toast');
-  if(!t) return;
-  t.textContent=msg;
-  t.className='toast show '+(type||'');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(function(){t.classList.remove('show');},2900);
-}
-
-function togglePw(inpId,btnId){
-  var inp=document.getElementById(inpId), btn=document.getElementById(btnId);
-  if(!inp||!btn) return;
-  var hide=inp.type==='password';
-  inp.type=hide?'text':'password';
-  btn.innerHTML=hide?'&#128584;':'&#128065;';
-}
-
-function checkStrength(v){
-  var wrap=document.getElementById('strength-wrap');
-  var fill=document.getElementById('strength-fill');
-  var txt =document.getElementById('strength-text');
-  if(!wrap||!fill||!txt) return;
-  if(!v){ wrap.classList.remove('show'); return; }
-  wrap.classList.add('show');
-  var sc=0;
-  if(v.length>=6)  sc++;
-  if(v.length>=10) sc++;
-  if(/[A-Z]/.test(v)) sc++;
-  if(/[0-9]/.test(v)) sc++;
-  if(/[^A-Za-z0-9]/.test(v)) sc++;
-  var lvls=[
-    {p:'20%',bg:'#ff5252',l:'Muito fraca'},
-    {p:'40%',bg:'#ff7043',l:'Fraca'},
-    {p:'60%',bg:'#ffb347',l:'Moderada'},
-    {p:'80%',bg:'#66bb6a',l:'Forte'},
-    {p:'100%',bg:'#26c97e',l:'Muito forte'}
-  ];
-  var lv=lvls[Math.min(sc,4)];
-  fill.style.width=lv.p; fill.style.background=lv.bg; txt.textContent=lv.l;
+function renderQuestion() {
+  const qData = questions[currentQ];
+  document.getElementById('q-num').innerText = `Pergunta ${currentQ + 1}`;
+  document.getElementById('q-text').innerText = qData.q;
+  
+  const pct = Math.round((currentQ / questions.length) * 100);
+  document.getElementById('prog-label').innerText = `Pergunta ${currentQ + 1} de ${questions.length}`;
+  document.getElementById('prog-pct').innerText = `${pct}%`;
+  document.getElementById('progress-fill').style.width = `${pct}%`;
+  
+  const optsContainer = document.getElementById('options-list');
+  optsContainer.innerHTML = '';
+  
+  const classes = ['opt-a', 'opt-b', 'opt-c'];
+  const letters = ['A', 'B', 'C'];
+  
+  qData.opts.forEach((opt, index) => {
+    const isSelected = answers[currentQ] === opt.type;
+    const div = document.createElement('div');
+    div.className = `option ${classes[index]} ${isSelected ? 'selected' : ''}`;
+    div.onclick = () => selectOption(opt.type);
+    
+    div.innerHTML = `
+      <div class="opt-letter">${letters[index]}</div>
+      <div class="opt-text">${opt.t}</div>
+    `;
+    optsContainer.appendChild(div);
+  });
+  
+  document.getElementById('btn-back').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
+  document.getElementById('btn-next').disabled = !answers[currentQ];
+  document.getElementById('btn-next').innerText = currentQ === questions.length - 1 ? 'Finalizar' : 'Próxima →';
 }
 
-function initials(name){
-  return name.split(' ').slice(0,2).map(function(w){return w.charAt(0).toUpperCase();}).join('');
-}
-function firstName(name){ return name.split(' ')[0]; }
-
-function setTopbar(){
-  if(!user) return;
-  var ini=initials(user.name), fn=firstName(user.name);
-  var a1=document.getElementById('av1'), a2=document.getElementById('av2');
-  var n1=document.getElementById('tn1'), n2=document.getElementById('tn2');
-  if(a1) a1.textContent=ini;
-  if(a2) a2.textContent=ini;
-  if(n1) n1.textContent=fn;
-  if(n2) n2.textContent=fn;
+function selectOption(type) {
+  answers[currentQ] = type;
+  renderQuestion();
 }
 
-/* ════════════════════════════════
-   AUTH
-════════════════════════════════ */
-function doLogin(){
-  var email=val('login-email'), pw=val('login-pw');
-  clearErrs([['login-email','err-login-email'],['login-pw','err-login-pw']]);
-  var ok=true;
-  if(!isEmail(email)){setErr('login-email','err-login-email',true);ok=false;}
-  if(!pw.trim())      {setErr('login-pw','err-login-pw',true);ok=false;}
-  if(!ok) return;
-  var u=dbFindUser(email);
-  if(!u||u.pwHash!==hash(pw)){showToast('E-mail ou senha incorretos.','terror');return;}
-  user=u;
-  sessionStorage.setItem('ap_session',JSON.stringify(u));
-  setTopbar();
-  showToast('Bem-vindo(a) de volta, '+firstName(u.name)+'!','tsuccess');
-  startQuiz();
+function goNext() {
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    finishQuiz();
+  }
 }
 
-function doRegister(){
-  var name=val('reg-name'), email=val('reg-email'), pw=val('reg-pw'), pw2=val('reg-pw2');
-  clearErrs([['reg-name','err-reg-name'],['reg-email','err-reg-email'],['reg-pw','err-reg-pw'],['reg-pw2','err-reg-pw2']]);
-  var ok=true;
-  if(name.trim().length<3) {setErr('reg-name','err-reg-name',true);ok=false;}
-  if(!isEmail(email))       {setErr('reg-email','err-reg-email',true);ok=false;}
-  if(pw.length<6)           {setErr('reg-pw','err-reg-pw',true);ok=false;}
-  if(pw!==pw2)              {setErr('reg-pw2','err-reg-pw2',true);ok=false;}
-  if(!ok) return;
-  if(dbFindUser(email)){showToast('E-mail ja cadastrado.','terror');return;}
-  var u=dbInsertUser(name,email,pw);
-  user=u;
-  sessionStorage.setItem('ap_session',JSON.stringify(u));
-  setTopbar();
-  showToast('Conta criada! Bem-vindo(a), '+firstName(u.name)+'!','tsuccess');
-  startQuiz();
+function goBack() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
 }
 
-function doLogout(){
-  sessionStorage.removeItem('ap_session');
-  user=null; qCurrent=0; qAnswers=[];
-  showScreen('screen-login');
+function finishQuiz() {
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('prog-pct').innerText = '100%';
+  
+  setTimeout(() => {
+    showScreen('screen-result');
+    calculateResult();
+  }, 400);
 }
 
-/* ════════════════════════════════
-   QUIZ
-════════════════════════════════ */
-function startQuiz(){
-  qCurrent=0;
-  qAnswers=new Array(QUESTIONS.length).fill(null);
+function calculateResult() {
+  const counts = { v: 0, a: 0, c: 0 };
+  answers.forEach(ans => counts[ans]++);
+  
+  const resultType = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+  
+  let title = "", desc = "", icon = "";
+  if (resultType === 'v') {
+    title = "Visual";
+    desc = "Você absorve informações muito melhor através de imagens, diagramas e leitura. Abuse das cores, mapas mentais e resumos desenhados!";
+    icon = "👁️";
+  } else if (resultType === 'a') {
+    title = "Auditivo";
+    desc = "Você aprende melhor escutando e falando. Podcasts, debates, explicar o conteúdo em voz alta e usar áudios são suas melhores ferramentas.";
+    icon = "🎧";
+  } else {
+    title = "Cinestésico";
+    desc = "Você precisa de movimento e prática para aprender! O famoso 'colocar a mão na massa'. Faça pausas ativas e associe estudos a atividades motoras.";
+    icon = "🖐️";
+  }
+  
+  document.getElementById('result-title').innerText = title;
+  document.getElementById('result-desc').innerText = desc;
+  document.getElementById('result-icon').innerText = icon;
+  document.getElementById('result-wrap').style.display = 'block';
+}
+
+function restartQuiz() {
   showScreen('screen-quiz');
-  renderQ();
+  initQuiz();
 }
 
-function renderQ(){
-  var q=QUESTIONS[qCurrent];
-  var card=document.getElementById('question-card');
-  if(!card) return;
-  card.classList.remove('visible');
-  setTimeout(function(){
-    var qn=document.getElementById('q-num');
-    var qt=document.getElementById('q-text');
-    var ol=document.getElementById('options-list');
-    if(qn) qn.textContent='Pergunta '+(qCurrent+1);
-    if(qt) qt.textContent=q.text;
-    if(ol){
-      ol.innerHTML='';
-      [['A',q.a],['B',q.b],['C',q.c]].forEach(function(pair){
-        var L=pair[0], txt=pair[1];
-        var d=document.createElement('div');
-        d.className='option opt-'+L.toLowerCase()+(qAnswers[qCurrent]===L?' selected':'');
-        d.innerHTML='<div class="opt-letter">'+L+'</div><div class="opt-text">'+txt+'</div>';
-        (function(letter){ d.onclick=function(){pickAnswer(letter);}; })(L);
-        ol.appendChild(d);
-      });
-    }
-    var pct=Math.round((qCurrent/QUESTIONS.length)*100);
-    var pf=document.getElementById('progress-fill');
-    var pl=document.getElementById('prog-label');
-    var pp=document.getElementById('prog-pct');
-    if(pf) pf.style.width=pct+'%';
-    if(pl) pl.textContent='Pergunta '+(qCurrent+1)+' de '+QUESTIONS.length;
-    if(pp) pp.textContent=pct+'%';
-    var bb=document.getElementById('btn-back');
-    var bn=document.getElementById('btn-next');
-    var last=qCurrent===QUESTIONS.length-1;
-    if(bb) bb.style.visibility=qCurrent===0?'hidden':'visible';
-    if(bn){
-      bn.textContent=last?'Ver resultado \u2713':'Proxima \u2192';
-      bn.className='btn '+(last?'btn-submit':'btn-next');
-      bn.disabled=qAnswers[qCurrent]===null;
-    }
-    card.classList.add('visible');
-  },160);
+// --- MODAL DE TRANSTORNOS ---
+function openDisorders() {
+  document.getElementById('modal-disorders').style.display = 'flex';
 }
-
-function pickAnswer(L){
-  qAnswers[qCurrent]=L;
-  var opts=document.querySelectorAll('.option');
-  for(var i=0;i<opts.length;i++) opts[i].classList.remove('selected');
-  var sel=document.querySelector('.opt-'+L.toLowerCase());
-  if(sel) sel.classList.add('selected');
-  var bn=document.getElementById('btn-next');
-  if(bn) bn.disabled=false;
+function closeDisorders() {
+  document.getElementById('modal-disorders').style.display = 'none';
 }
-
-function goNext(){
-  if(qAnswers[qCurrent]===null){showToast('Selecione uma alternativa.','terror');return;}
-  if(qCurrent<QUESTIONS.length-1){qCurrent++;renderQ();}
-  else showResult();
+function overlayClick(e) {
+  if(e.target.id === 'modal-disorders') closeDisorders();
 }
-
-function goBack(){
-  if(qCurrent>0){qCurrent--;renderQ();}
-}
-
-/* ════════════════════════════════
-   RESULT
-════════════════════════════════ */
-function calcDominant(){
-  var cnt={A:0,B:0,C:0};
-  for(var i=0;i<qAnswers.length;i++) if(qAnswers[i]) cnt[qAnswers[i]]++;
-  var dom='A';
-  if(cnt.B>cnt[dom]) dom='B';
-  if(cnt.C>cnt[dom]) dom='C';
-  /* tie-breaker: last chosen wins */
-  if((cnt.A===cnt.B)||(cnt.A===cnt.C)||(cnt.B===cnt.C)){
-    for(var j=qAnswers.length-1;j>=0;j--){
-      if(qAnswers[j]!==null){ dom=qAnswers[j]; break; }
-    }
-  }
-  return dom;
-}
-
-function showResult(){
-  var dom=calcDominant();
-  var cntA=qAnswers.filter(function(x){return x==='A';}).length;
-  var cntB=qAnswers.filter(function(x){return x==='B';}).length;
-  var cntC=qAnswers.filter(function(x){return x==='C';}).length;
-  if(user) dbInsertSession(user.id,qAnswers,dom);
-
-  showScreen('screen-result');
-
-  var pf=document.getElementById('progress-fill');
-  if(pf) pf.style.width='100%';
-
-  var pr=PROFILES[dom];
-  var rc=document.getElementById('result-card');
-  if(rc) rc.className='result-card rc-'+pr.cls;
-  var ri=document.getElementById('result-icon');
-  var rb=document.getElementById('result-badge');
-  var rt=document.getElementById('result-title');
-  var rd=document.getElementById('result-desc');
-  if(ri) ri.innerHTML=pr.icon;
-  if(rb){ rb.textContent='Seu perfil e'; rb.className='result-badge rb-'+pr.cls; }
-  if(rt) rt.textContent=pr.title;
-  if(rd) rd.textContent=pr.desc;
-
-  var colors={A:'var(--av)',B:'var(--aa)',C:'var(--ac)'};
-  var labels={A:'Visual',B:'Auditivo',C:'Cinestetico'};
-  var sr=document.getElementById('score-row');
-  if(sr){
-    sr.innerHTML='';
-    [['A',cntA],['B',cntB],['C',cntC]].forEach(function(p){
-      var k=p[0],n=p[1];
-      var pill=document.createElement('div');
-      pill.className='score-pill';
-      pill.innerHTML='<span class="pill-dot" style="background:'+colors[k]+'"></span>'+labels[k]+': <strong>'+n+'/5</strong>';
-      sr.appendChild(pill);
-    });
-  }
-
-  var tg=document.getElementById('tips-grid');
-  if(tg){
-    tg.innerHTML='';
-    TIPS[dom].forEach(function(tp){
-      var c=document.createElement('div');
-      c.className='tip-card';
-      c.innerHTML='<span class="tip-icon">'+tp.i+'</span><div class="tip-title">'+tp.t+'</div><div class="tip-text">'+tp.d+'</div>';
-      tg.appendChild(c);
-    });
-  }
-
-  var rw=document.getElementById('result-wrap');
-  if(rw) rw.style.display='block';
-
-  renderHistory();
-}
-
-function renderHistory(){
-  if(!user) return;
-  var ss=dbGetSessions(user.id);
-  var sec=document.getElementById('history-section');
-  var lst=document.getElementById('history-list');
-  if(!sec||!lst) return;
-  if(ss.length<=1){ sec.style.display='none'; return; }
-  sec.style.display='block';
-  lst.innerHTML='';
-  var icons={A:'&#128065;&#65039;',B:'&#127911;',C:'&#129309;'};
-  var labels={A:'Visual',B:'Auditivo',C:'Cinestetico'};
-  var bcls={A:'hb-visual',B:'hb-auditivo',C:'hb-cines'};
-  ss.forEach(function(s){
-    var d=new Date(s.ts);
-    var dt=d.toLocaleDateString('pt-BR')+' as '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    var item=document.createElement('div');
-    item.className='history-item';
-    item.innerHTML='<div class="hi-left"><span class="hi-date">'+dt+'</span><span class="hi-result">'+icons[s.result]+' '+labels[s.result]+'</span></div><span class="hi-badge '+bcls[s.result]+'">'+labels[s.result]+'</span>';
-    lst.appendChild(item);
+function switchTab(index) {
+  document.querySelectorAll('.dis-tab').forEach((tab, i) => {
+    tab.classList.toggle('active', i === index);
+  });
+  document.querySelectorAll('.dis-panel').forEach((panel, i) => {
+    panel.classList.toggle('active', i === index);
   });
 }
-
-function restartQuiz(){ startQuiz(); }
-
-/* ════════════════════════════════
-   BOOT
-════════════════════════════════ */
-var saved=sessionStorage.getItem('ap_session');
-if(saved){
-  try{
-    user=JSON.parse(saved);
-    setTopbar();
-    startQuiz();
-  }catch(e){
-    sessionStorage.removeItem('ap_session');
-    showScreen('screen-login');
-  }
-} else {
-  showScreen('screen-login');
-}
-
-/* Enter key support on auth screens */
-document.addEventListener('keydown',function(e){
-  if(e.key!=='Enter') return;
-  var active=document.querySelector('.screen.active');
-  if(!active) return;
-  if(active.id==='screen-login')    doLogin();
-  else if(active.id==='screen-register') doRegister();
-});
-
-/* ════════════════════════════════
-   DISORDERS MODAL
-════════════════════════════════ */
-function openDisorders(){
-  var m=document.getElementById('modal-disorders');
-  if(m){ m.classList.add('open'); document.body.style.overflow='hidden'; }
-}
-function closeDisorders(){
-  var m=document.getElementById('modal-disorders');
-  if(m){ m.classList.remove('open'); document.body.style.overflow=''; }
-}
-function overlayClick(e){
-  if(e.target===document.getElementById('modal-disorders')) closeDisorders();
-}
-function switchTab(idx){
-  var tabs=document.querySelectorAll('.dis-tab');
-  var panels=document.querySelectorAll('.dis-panel');
-  for(var i=0;i<tabs.length;i++){
-    tabs[i].classList[i===idx?'add':'remove']('active');
-    panels[i].classList[i===idx?'add':'remove']('active');
-  }
-}
-/* Esc key closes modal */
-document.addEventListener('keydown',function(ev){
-  if(ev.key==='Escape') closeDisorders();
-});
-/* FAB tooltip on hover */
-(function(){
-  var fab=document.getElementById('fab-btn');
-  var tip=document.getElementById('fab-tip');
-  if(!fab||!tip) return;
-  var hTimer;
-  fab.addEventListener('mouseenter',function(){
-    hTimer=setTimeout(function(){tip.classList.add('show');},400);
-  });
-  fab.addEventListener('mouseleave',function(){
-    clearTimeout(hTimer);tip.classList.remove('show');
-  });
-})();
-
-/* expose globals for inline onclick */
-window.showScreen=showScreen;
-window.togglePw=togglePw;
-window.checkStrength=checkStrength;
-window.doLogin=doLogin;
-window.doRegister=doRegister;
-window.doLogout=doLogout;
-window.goNext=goNext;
-window.goBack=goBack;
-window.restartQuiz=restartQuiz;
-window.openDisorders=openDisorders;
-window.closeDisorders=closeDisorders;
-window.overlayClick=overlayClick;
-window.switchTab=switchTab;
-
-})();
 </script>
 </body>
 </html>
