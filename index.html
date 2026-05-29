@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Perfil de Aprendizagem</title>
+  <title>NEUROFOCUS</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"/>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
@@ -375,7 +375,7 @@
 
   <div id="screen-quiz" class="screen main-screen">
     <div class="topbar">
-      <div class="topbar-brand">Aprende<span>.</span></div>
+      <div class="topbar-brand">neurofocus<span>.</span></div>
       <div class="topbar-right">
         <div class="avatar">?</div>
         <span>Usuário</span>
@@ -409,7 +409,7 @@
 
   <div id="screen-result" class="screen main-screen">
     <div class="topbar">
-      <div class="topbar-brand">Aprende<span>.</span></div>
+      <div class="topbar-brand">neurofocus<span>.</span></div>
       <div class="topbar-right">
         <div class="avatar">?</div>
         <span>Usuário</span>
@@ -575,28 +575,33 @@
     }
 
     // --- LÓGICA DO QUIZ ---
-    const questions = [
-      { q: "Ao estudar um assunto novo, o que te ajuda mais?", opts: [
-          { t: "Ver gráficos, diagramas ou ler o material", type: "v" },
-          { t: "Ouvir uma explicação, aula ou podcast", type: "a" },
-          { t: "Fazer exercícios, praticar ou montar algo", type: "c" }
-      ]},
-      { q: "Como você memoriza um número de telefone?", opts: [
-          { t: "Visualizo os números na minha mente", type: "v" },
-          { t: "Repito o número em voz alta", type: "a" },
-          { t: "Associo com o movimento dos dedos no teclado", type: "c" }
-      ]},
-      { q: "O que mais te distrai enquanto estuda?", opts: [
-          { t: "Desordem visual ou pessoas passando", type: "v" },
-          { t: "Barulhos, conversas e ruídos de fundo", type: "a" },
-          { t: "Ficar sentado na mesma posição muito tempo", type: "c" }
-      ]},
-      { q: "Quando você explica algo a alguém, você prefere:", opts: [
-          { t: "Desenhar ou mostrar uma imagem", type: "v" },
-          { t: "Explicar falando de forma detalhada", type: "a" },
-          { t: "Gesticular e demonstrar como se faz", type: "c" }
-      ]}
-    ];
+const questions = [
+  { 
+    q: "Como você descreveria a sua experiência principal com a leitura e a escrita?", 
+    options: [
+      { t: "Troco ou inverto letras com frequência e a minha leitura é muito lenta", type: "Dislexia" },
+      { t: "Sinto cansaço ao escrever à mão e a minha caligrafia é bem desorganizada", type: "Disgrafia" },
+      { t: "Leio e escrevo com tranquilidade, sem grandes obstáculos", type: "Nenhum" }
+    ]
+  },
+  { 
+    q: "Como você lida com números, cálculos mentais e conceitos matemáticos básicos (como ver as horas)?", 
+    options: [
+      { t: "Tenho extrema dificuldade, confundo símbolos e me perco em contas simples", type: "Discalculia" },
+      { t: "Preciso de um pouco mais de tempo, mas consigo resolver ou usar a lógica", type: "Nenhum" },
+      { t: "Tenho bastante facilidade com números e contas mentais", type: "Nenhum" }
+    ]
+  },
+  { 
+    q: "Durante uma aula, leitura ou estudo mais longo, como é o seu nível de concentração?", 
+    options: [
+      { t: "Perco o foco quase imediatamente, fico inquieto(a) e me distraio muito", type: "TDAH" },
+      { t: "Me distraio de vez em quando, mas consigo retomar a atenção rápido", type: "Nenhum" },
+      { t: "Consigo manter o foco contínuo facilmente até terminar a tarefa", type: "Nenhum" }
+    ]
+  }
+];
+
 
     let currentQ = 0;
     let answers = [];
