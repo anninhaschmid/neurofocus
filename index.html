@@ -12,24 +12,24 @@
 
     :root {
       /* Paleta Midnight Glass */
-      --bg: #090e17;             /* Azul meia-noite profundo */
-      --surface: rgba(17, 24, 39, 0.65); /* Fundo translúcido */
-      --card: rgba(21, 30, 48, 0.6);     /* Cartões com aspecto de vidro */
-      --card2: rgba(30, 41, 59, 0.7);    /* Hover e cartões secundários */
+      --bg: #090e17;             
+      --surface: rgba(17, 24, 39, 0.65); 
+      --card: rgba(21, 30, 48, 0.6);     
+      --card2: rgba(30, 41, 59, 0.7);    
       
       --border: rgba(255, 255, 255, 0.08);
       --border2: rgba(255, 255, 255, 0.15);
       
       /* Cores de Categoria (Neon Vibrante) */
-      --av: #38bdf8; /* Visual: Azul Celeste */
-      --aa: #f472b6; /* Auditivo: Rosa Neon */
-      --ac: #a78bfa; /* Cinestésico: Roxo Lavanda */
+      --av: #38bdf8; 
+      --aa: #f472b6; 
+      --ac: #a78bfa; 
       
       --text: #f8fafc;
       --muted: #94a3b8;
       --white: #ffffff;
       
-      --radius: 16px; /* Bordas mais arredondadas e amigáveis */
+      --radius: 16px; 
       --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
@@ -44,7 +44,6 @@
       position: relative;
     }
 
-    /* Orbes brilhantes de fundo para o efeito Glassmorphism */
     body::before, body::after {
       content: ''; position: fixed; border-radius: 50%; filter: blur(100px); z-index: 0; pointer-events: none;
     }
@@ -89,10 +88,6 @@
       font-family: 'Outfit', sans-serif; outline: none; transition: all 0.3s ease;
     }
     .form-input:focus { border-color: var(--av); background: rgba(15, 23, 42, 0.9); box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15); }
-    .form-input.err { border-color: #ef4444; }
-    .form-input::placeholder { color: #64748b; font-weight: 300; }
-    .field-err { font-size: 0.8rem; color: #ef4444; margin-top: 6px; display: none; margin-left: 4px; }
-    .field-err.show { display: block; }
     .pw-wrap { position: relative; }
     .pw-wrap .form-input { padding-right: 48px; }
     .pw-eye {
@@ -102,7 +97,6 @@
     }
     .pw-eye:hover { color: var(--av); }
 
-    /* STRENGTH WRAPPER (Adicionado) */
     .strength-wrap { display: none; margin-top: 10px; }
     .strength-wrap.show { display: block; }
     .strength-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; margin-bottom: 4px; }
@@ -116,8 +110,6 @@
       box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
     }
     .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6); }
-    .btn-auth:active { transform: translateY(0); }
-    .btn-auth:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
     .auth-switch { text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--muted); }
     .auth-switch a { color: var(--av); text-decoration: none; font-weight: 500; cursor: pointer; transition: color 0.2s; }
     .auth-switch a:hover { color: var(--white); text-decoration: underline; }
@@ -197,12 +189,11 @@
     }
     .opt-text { font-size: 1rem; color: var(--text); line-height: 1.5; font-weight: 300; }
 
-    /* Estados Selecionados */
     .option.selected { transform: translateX(8px); }
     .opt-a.selected { border-color: var(--av); background: rgba(56, 189, 248, 0.05); box-shadow: 0 4px 20px rgba(56, 189, 248, 0.1); }
     .opt-b.selected { border-color: var(--aa); background: rgba(244, 114, 182, 0.05); box-shadow: 0 4px 20px rgba(244, 114, 182, 0.1); }
     .opt-c.selected { border-color: var(--ac); background: rgba(167, 139, 250, 0.05); box-shadow: 0 4px 20px rgba(167, 139, 250, 0.1); }
-
+    
     .opt-a.selected .opt-letter { background: var(--av); color: var(--bg); }
     .opt-b.selected .opt-letter { background: var(--aa); color: var(--bg); }
     .opt-c.selected .opt-letter { background: var(--ac); color: var(--bg); }
@@ -216,8 +207,6 @@
     .btn-next { background: var(--white); color: var(--bg); font-weight: 600; }
     .btn-next:hover:not(:disabled) { box-shadow: 0 0 15px rgba(255,255,255,0.4); }
     .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
-    .btn-submit { background: linear-gradient(135deg, var(--av), var(--ac)); color: var(--white); font-weight: 600; box-shadow: 0 4px 15px rgba(167, 139, 250, 0.4); }
-    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(167, 139, 250, 0.6); }
 
     /* ── RESULT ── */
     #result-wrap { display: none; animation: floatUp 0.6s ease both; }
@@ -226,15 +215,10 @@
       border: 1px solid var(--border); border-radius: 24px;
       padding: 56px 40px; text-align: center; margin-bottom: 32px; position: relative; overflow: hidden;
     }
-    .result-card::before { content: ''; position: absolute; inset: 0; opacity: 0.15; pointer-events: none; }
-    .rc-visual::before  { background: radial-gradient(circle at top, var(--av), transparent 60%); }
-    .rc-auditivo::before{ background: radial-gradient(circle at top, var(--aa), transparent 60%); }
-    .rc-cines::before   { background: radial-gradient(circle at top, var(--ac), transparent 60%); }
+    .result-card::before { content: ''; position: absolute; inset: 0; opacity: 0.15; pointer-events: none; background: radial-gradient(circle at top, var(--av), transparent 60%); }
 
     .result-icon { font-size: 4rem; display: block; margin-bottom: 24px; animation: scalePop 0.5s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-    .result-badge { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
-    .rb-visual { color: var(--av); } .rb-auditivo { color: var(--aa); } .rb-cines { color: var(--ac); }
-
+    .result-badge { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; color: var(--av); }
     .result-title { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 700; color: var(--white); margin-bottom: 16px; }
     .result-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.6; max-width: 600px; margin: 0 auto 32px; font-weight: 300; }
 
@@ -242,7 +226,7 @@
     .btn-restart { background: rgba(255,255,255,0.05); border: 1px solid var(--border2); color: var(--white); }
     .btn-restart:hover { background: rgba(255,255,255,0.1); }
 
-    /* ── FAB BUTTON & MODALS (Adicionado) ── */
+    /* ── FAB BUTTON & MODALS ── */
     .fab-disorders {
       position: fixed; bottom: 32px; right: 32px;
       width: 60px; height: 60px; border-radius: 50%;
@@ -292,11 +276,6 @@
     .dis-block-icon { font-size: 1.5rem; margin-bottom: 12px; }
     .dis-block-title { color: var(--white); font-weight: 600; margin-bottom: 8px; font-size: 1.05rem; }
     .dis-block-text { color: var(--muted); font-size: 0.95rem; line-height: 1.6; font-weight: 300; }
-    .dis-tips-title { color: var(--white); font-weight: 600; margin-bottom: 16px; font-size: 1.1rem; }
-    .dis-tips-list { display: flex; flex-direction: column; gap: 12px; }
-    .dis-tip-item { display: flex; align-items: flex-start; gap: 12px; background: rgba(255,255,255,0.02); padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); }
-    .dis-tip-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-    .dis-tip-text { color: var(--muted); font-size: 0.95rem; font-weight: 300; line-height: 1.5; }
 
     /* ── ANIMATIONS ── */
     @keyframes floatUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -386,11 +365,11 @@
       <div class="quiz-header">
         <div class="tag">Diagnóstico Educacional</div>
         <h1>Qual é o seu<br/><em>Perfil de Aprendizagem?</em></h1>
-        <p>Perguntas rápidas para descobrir se você aprende melhor de forma visual, auditiva ou cinestésica.</p>
+        <p>Perguntas rápidas para identificar possíveis sinais de transtornos de aprendizagem.</p>
       </div>
       <div class="progress-wrap">
         <div class="progress-meta">
-          <span id="prog-label">Pergunta 1 de 4</span>
+          <span id="prog-label">Pergunta 1 de 3</span>
           <span id="prog-pct">0%</span>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
@@ -409,7 +388,7 @@
 
   <div id="screen-result" class="screen main-screen">
     <div class="topbar">
-      <div class="topbar-brand">aprende<span>.</span></div>
+      <div class="topbar-brand">neurofocus<span>.</span></div>
       <div class="topbar-right">
         <div class="avatar">?</div>
         <span>Usuário</span>
@@ -420,7 +399,7 @@
       <div id="result-wrap">
         <div class="result-card" id="result-card">
           <span class="result-icon" id="result-icon"></span>
-          <div class="result-badge" id="result-badge">Seu perfil é</div>
+          <div class="result-badge" id="result-badge">Resultado do Diagnóstico</div>
           <h2 class="result-title" id="result-title"></h2>
           <p class="result-desc" id="result-desc"></p>
         </div>
@@ -465,13 +444,6 @@
               <div class="dis-block-icon">&#128270;</div>
               <div class="dis-block-title">Como identificar</div>
               <div class="dis-block-text">Dificuldade em reconhecer números, fazer cálculos básicos e medir distâncias ou tempo.</div>
-            </div>
-          </div>
-          <p class="dis-tips-title">Estratégias de apoio</p>
-          <div class="dis-tips-list">
-            <div class="dis-tip-item">
-              <span class="dis-tip-dot" style="background:var(--av)"></span>
-              <span class="dis-tip-text">Usar materiais concretos e visuais: blocos, ábaco, linhas numéricas.</span>
             </div>
           </div>
         </div>
@@ -531,12 +503,10 @@
   </div>
 
   <script>
-    // --- NAVEGAÇÃO ENTRE TELAS ---
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       
-      // Adicionar animação de reset caso volte para a tela do quiz
       if(id === 'screen-quiz') {
         const qCard = document.getElementById('question-card');
         qCard.classList.remove('visible');
@@ -544,23 +514,16 @@
       }
     }
 
-    // --- AUTENTICAÇÃO E FORMULÁRIOS ---
-    function doLogin() {
-      showScreen('screen-quiz');
-      initQuiz();
-    }
-    function doRegister() {
-      showScreen('screen-quiz');
-      initQuiz();
-    }
-    function doLogout() {
-      showScreen('screen-login');
-    }
+    function doLogin() { showScreen('screen-quiz'); initQuiz(); }
+    function doRegister() { showScreen('screen-quiz'); initQuiz(); }
+    function doLogout() { showScreen('screen-login'); }
+    
     function togglePw(inputId) {
       const input = document.getElementById(inputId);
       if (input.type === 'password') input.type = 'text';
       else input.type = 'password';
     }
+    
     function checkStrength(val) {
       const wrap = document.getElementById('strength-wrap');
       const fill = document.getElementById('strength-fill');
@@ -574,34 +537,32 @@
       }
     }
 
-    // --- LÓGICA DO QUIZ ---
-const questions = [
-  { 
-    q: "Como você descreveria a sua experiência principal com a leitura e a escrita?", 
-    options: [
-      { t: "Troco ou inverto letras com frequência e a minha leitura é muito lenta", type: "Dislexia" },
-      { t: "Sinto cansaço ao escrever à mão e a minha caligrafia é bem desorganizada", type: "Disgrafia" },
-      { t: "Leio e escrevo com tranquilidade, sem grandes obstáculos", type: "Nenhum" }
-    ]
-  },
-  { 
-    q: "Como você lida com números, cálculos mentais e conceitos matemáticos básicos (como ver as horas)?", 
-    options: [
-      { t: "Tenho extrema dificuldade, confundo símbolos e me perco em contas simples", type: "Discalculia" },
-      { t: "Preciso de um pouco mais de tempo, mas consigo resolver ou usar a lógica", type: "Nenhum" },
-      { t: "Tenho bastante facilidade com números e contas mentais", type: "Nenhum" }
-    ]
-  },
-  { 
-    q: "Durante uma aula, leitura ou estudo mais longo, como é o seu nível de concentração?", 
-    options: [
-      { t: "Perco o foco quase imediatamente, fico inquieto(a) e me distraio muito", type: "TDAH" },
-      { t: "Me distraio de vez em quando, mas consigo retomar a atenção rápido", type: "Nenhum" },
-      { t: "Consigo manter o foco contínuo facilmente até terminar a tarefa", type: "Nenhum" }
-    ]
-  }
-];
-
+    const questions = [
+      { 
+        q: "Como você descreveria a sua experiência principal com a leitura e a escrita?", 
+        options: [
+          { t: "Troco ou inverto letras com frequência e a minha leitura é muito lenta", type: "Dislexia" },
+          { t: "Sinto cansaço ao escrever à mão e a minha caligrafia é bem desorganizada", type: "Disgrafia" },
+          { t: "Leio e escrevo com tranquilidade, sem grandes obstáculos", type: "Nenhum" }
+        ]
+      },
+      { 
+        q: "Como você lida com números, cálculos mentais e conceitos matemáticos básicos (como ver as horas)?", 
+        options: [
+          { t: "Tenho extrema dificuldade, confundo símbolos e me perco em contas simples", type: "Discalculia" },
+          { t: "Preciso de um pouco mais de tempo, mas consigo resolver ou usar a lógica", type: "Nenhum" },
+          { t: "Tenho bastante facilidade com números e contas mentais", type: "Nenhum" }
+        ]
+      },
+      { 
+        q: "Durante uma aula, leitura ou estudo mais longo, como é o seu nível de concentração?", 
+        options: [
+          { t: "Perco o foco quase imediatamente, fico inquieto(a) e me distraio muito", type: "TDAH" },
+          { t: "Me distraio de vez em quando, mas consigo retomar a atenção rápido", type: "Nenhum" },
+          { t: "Consigo manter o foco contínuo facilmente até terminar a tarefa", type: "Nenhum" }
+        ]
+      }
+    ];
 
     let currentQ = 0;
     let answers = [];
@@ -628,7 +589,8 @@ const questions = [
       const classes = ['opt-a', 'opt-b', 'opt-c'];
       const letters = ['A', 'B', 'C'];
       
-      qData.opts.forEach((opt, index) => {
+      // AQUI FOI CORRIGIDO DE "qData.opts" PARA "qData.options"
+      qData.options.forEach((opt, index) => {
         const isSelected = answers[currentQ] === opt.type;
         const div = document.createElement('div');
         div.className = `option ${classes[index]} ${isSelected ? 'selected' : ''}`;
@@ -678,24 +640,40 @@ const questions = [
     }
 
     function calculateResult() {
-      const counts = { v: 0, a: 0, c: 0 };
+      // AQUI A LÓGICA FOI ATUALIZADA PARA LER OS NOVOS VALORES
+      const counts = { Dislexia: 0, Disgrafia: 0, Discalculia: 0, TDAH: 0, Nenhum: 0 };
       answers.forEach(ans => counts[ans]++);
       
-      const resultType = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+      // Remove o "Nenhum" da disputa principal para ver qual transtorno teve mais marcações
+      const specificCounts = { ...counts };
+      delete specificCounts.Nenhum;
+      
+      const resultType = Object.keys(specificCounts).reduce((a, b) => specificCounts[a] > specificCounts[b] ? a : b);
       
       let title = "", desc = "", icon = "";
-      if (resultType === 'v') {
-        title = "Visual";
-        desc = "Você absorve informações muito melhor através de imagens, diagramas e leitura. Abuse das cores, mapas mentais e resumos desenhados!";
-        icon = "👁️";
-      } else if (resultType === 'a') {
-        title = "Auditivo";
-        desc = "Você aprende melhor escutando e falando. Podcasts, debates, explicar o conteúdo em voz alta e usar áudios são suas melhores ferramentas.";
-        icon = "🎧";
+      
+      if (counts[resultType] > 0) {
+        if (resultType === 'Dislexia') {
+          title = "Indícios de Dislexia";
+          desc = "Suas respostas indicam uma possível dificuldade com leitura e decodificação. É recomendado buscar um especialista para uma avaliação completa.";
+          icon = "📚";
+        } else if (resultType === 'Disgrafia') {
+          title = "Indícios de Disgrafia";
+          desc = "Suas respostas apontam para possíveis desafios motores ou organizacionais na escrita à mão, o que pode indicar traços de disgrafia.";
+          icon = "✍️";
+        } else if (resultType === 'Discalculia') {
+          title = "Indícios de Discalculia";
+          desc = "Você demonstrou ter desafios específicos com números e cálculos. Materiais visuais e concretos podem te ajudar bastante no dia a dia!";
+          icon = "🧮";
+        } else if (resultType === 'TDAH') {
+          title = "Indícios de TDAH";
+          desc = "Você relatou dificuldades significativas com foco, atenção prolongada e agitação, o que pode ser um traço de TDAH.";
+          icon = "⚡";
+        }
       } else {
-        title = "Cinestésico";
-        desc = "Você precisa de movimento e prática para aprender! O famoso 'colocar a mão na massa'. Faça pausas ativas e associe estudos a atividades motoras.";
-        icon = "🖐️";
+        title = "Nenhum indício forte detectado";
+        desc = "Suas respostas não apontam para traços fortes de transtornos específicos de aprendizagem nas áreas avaliadas por este teste rápido.";
+        icon = "🌟";
       }
       
       document.getElementById('result-title').innerText = title;
@@ -709,23 +687,12 @@ const questions = [
       initQuiz();
     }
 
-    // --- MODAL DE TRANSTORNOS ---
-    function openDisorders() {
-      document.getElementById('modal-disorders').style.display = 'flex';
-    }
-    function closeDisorders() {
-      document.getElementById('modal-disorders').style.display = 'none';
-    }
-    function overlayClick(e) {
-      if(e.target.id === 'modal-disorders') closeDisorders();
-    }
+    function openDisorders() { document.getElementById('modal-disorders').style.display = 'flex'; }
+    function closeDisorders() { document.getElementById('modal-disorders').style.display = 'none'; }
+    function overlayClick(e) { if(e.target.id === 'modal-disorders') closeDisorders(); }
     function switchTab(index) {
-      document.querySelectorAll('.dis-tab').forEach((tab, i) => {
-        tab.classList.toggle('active', i === index);
-      });
-      document.querySelectorAll('.dis-panel').forEach((panel, i) => {
-        panel.classList.toggle('active', i === index);
-      });
+      document.querySelectorAll('.dis-tab').forEach((tab, i) => tab.classList.toggle('active', i === index));
+      document.querySelectorAll('.dis-panel').forEach((panel, i) => panel.classList.toggle('active', i === index));
     }
   </script>
 </body>
