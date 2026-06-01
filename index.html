@@ -572,56 +572,45 @@
       answers = [];
       renderQuestion();
     }
-
-  function renderQuestion() {
-    const qData = questions[currentQ]; // ou QUESTIONS[currentQ], dependendo de como você nomeou
-    document.getElementById('q-num').innerText = `Pergunta ${currentQ + 1}`;
-    document.getElementById('q-text').innerText = qData.q;
-    
-    const pct = Math.round((currentQ / questions.length) * 100);
-    document.getElementById('prog-label').innerText = `Pergunta ${currentQ + 1} de ${questions.length}`;
-    document.getElementById('prog-pct').innerText = `${pct}%`;
-    document.getElementById('progress-fill').style.width = `${pct}%`;
-    
-    const optsContainer = document.getElementById('options-list');
-    optsContainer.innerHTML = '';
-    
-    const classes = ['opt-a', 'opt-b', 'opt-c'];
-    const letters = ['A', 'B', 'C'];
-    
-    qData.options.forEach((opt, index) => {
-        // A CORREÇÃO ESTÁ AQUI: Agora ele compara a posição do botão (0, 1 ou 2)
-        const isSelected = selectedIndexes[currentQ] === index;
-        
+function renderQuestion() {
+      const qData = questions[currentQ];
+      document.getElementById('q-num').innerText = `Pergunta ${currentQ + 1}`;
+      document.getElementById('q-text').innerText = qData.q;
+      
+      const pct = Math.round((currentQ / questions.length) * 100);
+      document.getElementById('prog-label').innerText = `Pergunta ${currentQ + 1} de ${questions.length}`;
+      document.getElementById('prog-pct').innerText = `${pct}%`;
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+      
+      const optsContainer = document.getElementById('options-list');
+      optsContainer.innerHTML = '';
+      
+      const classes = ['opt-a', 'opt-b', 'opt-c'];
+      const letters = ['A', 'B', 'C'];
+      
+      // AQUI FOI CORRIGIDO DE "qData.opts" PARA "qData.options"
+      qData.options.forEach((opt, index) => {
+        const isSelected = answers[currentQ] === opt.type;
         const div = document.createElement('div');
         div.className = `option ${classes[index]} ${isSelected ? 'selected' : ''}`;
-        
-        // Quando clica, enviamos as duas informações: a posição do botão e o valor da resposta ('A', 'B' ou 'C')
-        div.onclick = () => selectOption(index, letters[index]);
+        div.onclick = () => selectOption(opt.type);
         
         div.innerHTML = `
-            <div class="opt-letter">${letters[index]}</div>
-            <div class="opt-text">${opt.t || opt.text}</div>
+          <div class="opt-letter">${letters[index]}</div>
+          <div class="opt-text">${opt.t}</div>
         `;
         optsContainer.appendChild(div);
-    });
-    
-    document.getElementById('btn-back').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
-    
-    // O botão Próxima só ativa se um botão foi selecionado
-    document.getElementById('btn-next').disabled = selectedIndexes[currentQ] === undefined;
-    document.getElementById('btn-next').innerText = currentQ === questions.length - 1 ? 'Finalizar' : 'Próxima →';
-}
+      });
+      
+      document.getElementById('btn-back').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
+      document.getElementById('btn-next').disabled = !answers[currentQ];
+      document.getElementById('btn-next').innerText = currentQ === questions.length - 1 ? 'Finalizar' : 'Próxima →';
+    }
 
-function selectOption(btnIndex, answerValue) {
-    // 1. Salva a posição visual para colorir apenas o botão certo
-    selectedIndexes[currentQ] = btnIndex;
-    
-    // 2. Salva o valor real ('A', 'B' ou 'C') na sua array de cálculo
-    qAnswers[currentQ] = answerValue; 
-    
-    renderQuestion();
-}
+    function selectOption(type) {
+      answers[currentQ] = type;
+      renderQuestion();
+    }
     function goNext() {
       if (currentQ < questions.length - 1) {
         currentQ++;
@@ -691,12 +680,10 @@ function selectOption(btnIndex, answerValue) {
       document.getElementById('result-wrap').style.display = 'block';
     }
 
-  function restartQuiz() {
-    currentQ = 0;
-    qAnswers = [];
-    selectedIndexes = []; // Limpa as seleções visuais
-    startQuiz(); // ou renderQuestion();
-}
+ function restartQuiz() {
+      showScreen('screen-quiz');
+      initQuiz();
+    }
 
     function openDisorders() { document.getElementById('modal-disorders').style.display = 'flex'; }
     function closeDisorders() { document.getElementById('modal-disorders').style.display = 'none'; }
