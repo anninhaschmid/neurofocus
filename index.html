@@ -588,12 +588,15 @@ function renderQuestion() {
       const classes = ['opt-a', 'opt-b', 'opt-c'];
       const letters = ['A', 'B', 'C'];
       
-      // AQUI FOI CORRIGIDO DE "qData.opts" PARA "qData.options"
       qData.options.forEach((opt, index) => {
-        const isSelected = answers[currentQ] === opt.type;
+        // CORREÇÃO: Agora o código verifica se o ÍNDICE (0, 1 ou 2) é o que foi clicado
+        const isSelected = answers[currentQ] === index;
+        
         const div = document.createElement('div');
         div.className = `option ${classes[index]} ${isSelected ? 'selected' : ''}`;
-        div.onclick = () => selectOption(opt.type);
+        
+        // Quando clica, salva a posição (0, 1 ou 2) na lista de respostas
+        div.onclick = () => selectOption(index);
         
         div.innerHTML = `
           <div class="opt-letter">${letters[index]}</div>
@@ -603,12 +606,14 @@ function renderQuestion() {
       });
       
       document.getElementById('btn-back').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
-      document.getElementById('btn-next').disabled = !answers[currentQ];
+      // Libera o botão "Próxima" apenas se alguma opção (mesmo o índice 0) foi selecionada
+      document.getElementById('btn-next').disabled = answers[currentQ] === undefined;
       document.getElementById('btn-next').innerText = currentQ === questions.length - 1 ? 'Finalizar' : 'Próxima →';
     }
 
-    function selectOption(type) {
-      answers[currentQ] = type;
+    function selectOption(index) {
+      // Salva apenas o número do botão que foi clicado
+      answers[currentQ] = index;
       renderQuestion();
     }
     function goNext() {
@@ -637,15 +642,19 @@ function renderQuestion() {
       }, 400);
     }
 
-    function calculateResult() {
-      // AQUI A LÓGICA FOI ATUALIZADA PARA LER OS NOVOS VALORES
+  function calculateResult() {
       const counts = { Dislexia: 0, Disgrafia: 0, Discalculia: 0, TDAH: 0, Nenhum: 0 };
-      answers.forEach(ans => counts[ans]++);
       
-      // Remove o "Nenhum" da disputa principal para ver qual transtorno teve mais marcações
+      // CORREÇÃO: Pega o número do botão salvo e busca qual era o "type" dele na pergunta
+      answers.forEach((selectedIndex, qIndex) => {
+        const type = questions[qIndex].options[selectedIndex].type;
+        counts[type]++;
+      });
+      
       const specificCounts = { ...counts };
       delete specificCounts.Nenhum;
       
+      // Descobre qual transtorno teve mais pontos
       const resultType = Object.keys(specificCounts).reduce((a, b) => specificCounts[a] > specificCounts[b] ? a : b);
       
       let title = "", desc = "", icon = "";
