@@ -691,10 +691,12 @@ function selectOption(btnIndex, answerValue) {
       document.getElementById('result-wrap').style.display = 'block';
     }
 
-    function restartQuiz() {
-      showScreen('screen-quiz');
-      initQuiz();
-    }
+  function restartQuiz() {
+    currentQ = 0;
+    qAnswers = [];
+    selectedIndexes = []; // Limpa as seleções visuais
+    startQuiz(); // ou renderQuestion();
+}
 
     function openDisorders() { document.getElementById('modal-disorders').style.display = 'flex'; }
     function closeDisorders() { document.getElementById('modal-disorders').style.display = 'none'; }
