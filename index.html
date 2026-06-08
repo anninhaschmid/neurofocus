@@ -56,7 +56,7 @@
       bottom: -10vw; right: -5vw;
     }
 
-    /* ── SCREENS ── */
+   /* TELAS */
     .screen { display: none; position: relative; z-index: 1; min-height: 100vh; }
     .screen.active { display: flex; }
     .auth-screen { align-items: center; justify-content: center; padding: 24px; }
@@ -116,7 +116,7 @@
     .divider { display: flex; align-items: center; gap: 16px; margin: 24px 0; color: var(--muted); font-size: 0.8rem; font-weight: 300; }
     .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* ── TOPBAR ── */
+    /* ── BARRA SUPERIOR (TOPBAR) ── */
     .topbar {
       position: sticky; top: 0; z-index: 10;
       background: rgba(9, 14, 23, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -140,10 +140,10 @@
     }
     .btn-logout:hover { background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; }
 
-    /* ── MAIN CONTENT ── */
+    /* ── FUNÇÃO PRINCIPAL ── */
     .main-content { max-width: 800px; width: 100%; margin: 0 auto; padding: 60px 24px 80px; flex: 1; }
 
-    /* ── QUIZ HEADER ── */
+    /* ── CABEÇALHO DO QUIZ ── */
     .quiz-header { text-align: center; margin-bottom: 48px; animation: floatUp 0.6s ease both; }
     .tag {
       display: inline-block; font-size: 0.75rem; font-weight: 600;
@@ -154,7 +154,7 @@
     .quiz-header h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.2; color: var(--white); margin-bottom: 16px; }
     .quiz-header p { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 300; }
 
-    /* ── PROGRESS ── */
+    /* ── BARRA DE PROGRESSO── */
     .progress-wrap { margin-bottom: 40px; animation: floatUp 0.6s 0.1s ease both; }
     .progress-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; font-weight: 500; }
     .progress-track { height: 6px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden; }
@@ -164,7 +164,7 @@
       box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
     }
 
-    /* ── QUESTION CARD ── */
+    /* ── CARTÃO DE PERGUTA ── */
     .question-card {
       background: var(--card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border); border-radius: var(--radius);
@@ -199,7 +199,7 @@
     .opt-c.selected .opt-letter { background: var(--ac); color: var(--bg); }
     .option.selected .opt-text { color: var(--white); font-weight: 400; }
 
-    /* ── NAV ── */
+    /* ── NAVEGAÇÃO DE BOTOÕES ── */
     .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; gap: 16px; }
     .btn { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 500; padding: 14px 28px; border-radius: 12px; border: none; cursor: pointer; transition: all 0.3s; }
     .btn-back { background: var(--surface); border: 1px solid var(--border); color: var(--muted); }
@@ -208,7 +208,7 @@
     .btn-next:hover:not(:disabled) { box-shadow: 0 0 15px rgba(255,255,255,0.4); }
     .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* ── RESULT ── */
+    /* ── TELA DE RESULTADO ── */
     #result-wrap { display: none; animation: floatUp 0.6s ease both; }
     .result-card {
       background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -226,7 +226,7 @@
     .btn-restart { background: rgba(255,255,255,0.05); border: 1px solid var(--border2); color: var(--white); }
     .btn-restart:hover { background: rgba(255,255,255,0.1); }
 
-    /* ── FAB BUTTON & MODALS ── */
+    /* ── BOTÃO FLUTUANTE & MODAL (Cérebro)── */
     .fab-disorders {
       position: fixed; bottom: 32px; right: 32px;
       width: 60px; height: 60px; border-radius: 50%;
@@ -235,6 +235,7 @@
       cursor: pointer; z-index: 90; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 4px 20px rgba(167, 139, 250, 0.5); transition: transform 0.3s, box-shadow 0.3s;
     }
+    /* BOTÃO FLUTUANTE & MODAL (Cérebro) */
     .fab-disorders:hover { transform: scale(1.08) translateY(-4px); box-shadow: 0 8px 25px rgba(167, 139, 250, 0.7); }
 
     .modal-overlay {
@@ -277,7 +278,7 @@
     .dis-block-title { color: var(--white); font-weight: 600; margin-bottom: 8px; font-size: 1.05rem; }
     .dis-block-text { color: var(--muted); font-size: 0.95rem; line-height: 1.6; font-weight: 300; }
 
-    /* ── ANIMATIONS ── */
+    /* ── ANIMAÇÕES ── */
     @keyframes floatUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes scalePop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
@@ -297,6 +298,7 @@
 </head>
 <body>
 
+  /*autenticação login e cadastro/*
   <div id="screen-login" class="screen auth-screen active">
     <div class="auth-card">
       <div class="auth-logo">
@@ -321,6 +323,7 @@
     </div>
   </div>
 
+  //REGISTRO APRENDE//
   <div id="screen-register" class="screen auth-screen">
     <div class="auth-card">
       <div class="auth-logo">
@@ -352,6 +355,7 @@
     </div>
   </div>
 
+// usuario login e logout 
   <div id="screen-quiz" class="screen main-screen">
     <div class="topbar">
       <div class="topbar-brand">neurofocus<span>.</span></div>
@@ -385,7 +389,7 @@
       </div>
     </div>
   </div>
-
+// BOTAO ENTRADA E SAIDA DO USUARIO
   <div id="screen-result" class="screen main-screen">
     <div class="topbar">
       <div class="topbar-brand">neurofocus<span>.</span></div>
@@ -410,6 +414,7 @@
     </div>
   </div>
 
+  //BOTÃO SCREEN TRANSTORNOS DE APRENDIZAGEM
   <button class="fab-disorders" id="fab-btn" onclick="openDisorders()" aria-label="Transtornos de aprendizagem">&#129504;</button>
 
   <div class="modal-overlay" id="modal-disorders" onclick="overlayClick(event)">
@@ -422,7 +427,7 @@
         </div>
         <button class="modal-close" onclick="closeDisorders()" aria-label="Fechar">&#10005;</button>
       </div>
-
+// BOTÃO TRANSTORNOS
       <div class="dis-tabs" role="tablist">
         <button class="dis-tab active" role="tab" onclick="switchTab(0)">&#129518; Discalculia</button>
         <button class="dis-tab" role="tab" onclick="switchTab(1)">&#9997;&#65039; Disgrafia</button>
@@ -502,6 +507,7 @@
     </div>
   </div>
 
+  // FUNÇÃO DATABASE BANCO DE DADOS
   <script>
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -641,7 +647,7 @@ function renderQuestion() {
         calculateResult();
       }, 400);
     }
-
+// FUNÇÃO 
   function calculateResult() {
       const counts = { Dislexia: 0, Disgrafia: 0, Discalculia: 0, TDAH: 0, Nenhum: 0 };
       
