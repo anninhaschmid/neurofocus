@@ -565,7 +565,8 @@
       answers = [];
       renderQuestion();
     }
-function renderQuestion() {
+
+    function renderQuestion() {
       const qData = questions[currentQ];
       document.getElementById('q-num').innerText = `Pergunta ${currentQ + 1}`;
       document.getElementById('q-text').innerText = qData.q;
@@ -582,13 +583,11 @@ function renderQuestion() {
       const letters = ['A', 'B', 'C'];
       
       qData.options.forEach((opt, index) => {
-        // CORREÇÃO: Agora o código verifica se o ÍNDICE (0, 1 ou 2) é o que foi clicado
         const isSelected = answers[currentQ] === index;
         
         const div = document.createElement('div');
         div.className = `option ${classes[index]} ${isSelected ? 'selected' : ''}`;
         
-        // Quando clica, salva a posição (0, 1 ou 2) na lista de respostas
         div.onclick = () => selectOption(index);
         
         div.innerHTML = `
@@ -599,16 +598,15 @@ function renderQuestion() {
       });
       
       document.getElementById('btn-back').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
-      // Libera o botão "Próxima" apenas se alguma opção (mesmo o índice 0) foi selecionada
       document.getElementById('btn-next').disabled = answers[currentQ] === undefined;
       document.getElementById('btn-next').innerText = currentQ === questions.length - 1 ? 'Finalizar' : 'Próxima →';
     }
 
     function selectOption(index) {
-      // Salva apenas o número do botão que foi clicado
       answers[currentQ] = index;
       renderQuestion();
     }
+
     function goNext() {
       if (currentQ < questions.length - 1) {
         currentQ++;
@@ -634,66 +632,75 @@ function renderQuestion() {
         calculateResult();
       }, 400);
     }
-// FUNÇÃO 
-  function calculateResult() {
-      const counts = { Dislexia: 0, Disgrafia: 0, Discalculia: 0, TDAH: 0, Nenhum: 0 };
+
+    // NOVA FUNÇÃO: Captura e exibe TODOS os transtornos selecionados ao mesmo tempo
+    function calculateResult() {
+      const detected = [];
       
-      // CORREÇÃO: Pega o número do botão salvo e busca qual era o "type" dele na pergunta
       answers.forEach((selectedIndex, qIndex) => {
-        const type = questions[qIndex].options[selectedIndex].type;
-        counts[type]++;
-      });
-      
-      const specificCounts = { ...counts };
-      delete specificCounts.Nenhum;
-      
-      // Descobre qual transtorno teve mais pontos
-      const resultType = Object.keys(specificCounts).reduce((a, b) => specificCounts[a] > specificCounts[b] ? a : b);
-      
-      let title = "", desc = "", icon = "";
-      
-      if (counts[resultType] > 0) {
-        if (resultType === 'Dislexia') {
-          title = "Indícios de Dislexia";
-          desc = "Suas respostas indicam uma possível dificuldade com leitura e decodificação. É recomendado buscar um especialista para uma avaliação completa.";
-          icon = "📚";
-        } else if (resultType === 'Disgrafia') {
-          title = "Indícios de Disgrafia";
-          desc = "Suas respostas apontam para possíveis desafios motores ou organizacionais na escrita à mão, o que pode indicar traços de disgrafia.";
-          icon = "✍️";
-        } else if (resultType === 'Discalculia') {
-          title = "Indícios de Discalculia";
-          desc = "Você demonstrou ter desafios específicos com números e cálculos. Materiais visuais e concretos podem te ajudar bastante no dia a dia!";
-          icon = "🧮";
-        } else if (resultType === 'TDAH') {
-          title = "Indícios de TDAH";
-          desc = "Você relatou dificuldades significativas com foco, atenção prolongada e agitação, o que pode ser um traço de TDAH.";
-          icon = "⚡";
+        if (selectedIndex !== undefined) {
+          const type = questions[qIndex].options[selectedIndex].type;
+          if (type !== "Nenhum" && !detected.includes(type)) {
+            detected.push(type);
+          }
         }
-      } else {
-        title = "Nenhum indício forte detectado";
-        desc = "Suas respostas não apontam para traços fortes de transtornos específicos de aprendizagem nas áreas avaliadas por este teste rápido.";
-        icon = "🌟";
-      }
-      
-      document.getElementById('result-title').innerText = title;
-      document.getElementById('result-desc').innerText = desc;
-      document.getElementById('result-icon').innerText = icon;
+      });
+
       document.getElementById('result-wrap').style.display = 'block';
+      const iconEl = document.getElementById('result-icon');
+      const titleEl = document.getElementById('result-title');
+      const descEl = document.getElementById('result-desc');
+
+      if (detected.length === 0) {
+        iconEl.innerHTML = "&#10024;"; 
+        titleEl.innerText = "Perfil de Aprendizado Regular";
+        descEl.innerText = "Não identificamos sinais significativos de transtornos de aprendizagem nas suas respostas. Você demonstra boa adaptação aos métodos tradicionais estudados.";
+      } else {
+        iconEl.innerHTML = "&#129504;"; // Ícone do cérebro ativado
+        titleEl.innerText = "Indicadores de: " + detected.join(", ");
+        descEl.innerHTML = `Com base nas suas escolhas, seu perfil apresentou traços compatíveis com múltiplos indicadores: <strong>${detected.join(' e ')}</strong>.<br><br>
+        <em>Nota: Este teste é apenas uma triagem pedagógica preliminar de orientação. Para um diagnóstico real, procure um profissional habilitado (como psicopedagogo, fonoaudiólogo ou neuropsicólogo).</em>`;
+      }
     }
 
- function restartQuiz() {
+    function restartQuiz() {
       showScreen('screen-quiz');
       initQuiz();
     }
 
-    function openDisorders() { document.getElementById('modal-disorders').style.display = 'flex'; }
-    function closeDisorders() { document.getElementById('modal-disorders').style.display = 'none'; }
-    function overlayClick(e) { if(e.target.id === 'modal-disorders') closeDisorders(); }
+    // Funções do Modal informativo dos Transtornos (Botão Flutuante do Cérebro)
+    function openDisorders() {
+      document.getElementById('modal-disorders').style.display = 'flex';
+    }
+
+    function closeDisorders() {
+      document.getElementById('modal-disorders').style.display = 'none';
+    }
+
+    function overlayClick(event) {
+      if (event.target.id === 'modal-disorders') {
+        closeDisorders();
+      }
+    }
+
     function switchTab(index) {
-      document.querySelectorAll('.dis-tab').forEach((tab, i) => tab.classList.toggle('active', i === index));
-      document.querySelectorAll('.dis-panel').forEach((panel, i) => panel.classList.toggle('active', i === index));
+      const tabs = document.querySelectorAll('.dis-tab');
+      const panels = document.querySelectorAll('.dis-panel');
+      
+      tabs.forEach((tab, i) => {
+        if (i === index) {
+          tab.classList.add('active');
+          panels[i].classList.add('active');
+        } else {
+          tab.classList.remove('active');
+          panels[i].classList.remove('active');
+        }
+      });
     }
   </script>
 </body>
 </html>
+  
+  
+
+  
