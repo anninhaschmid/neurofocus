@@ -699,27 +699,25 @@ body {
   // Array de Objetos contendo a Base de Dados de perguntas, alternativas e o mapeamento dos transtornos
   const questions = [
     {
-      q: "Como você descreveria a sua experiência principal com a leitura e a escrita?",
-      options: [
-        { t: "Troco ou inverto letras com frequência e a minha leitura é muito lenta", type: "Dislexia" },
-        { t: "Sinto cansaço ao escrever à mão e a minha caligrafia é bem desorganizada", type: "Disgrafia" },
-        { t: "Leio e escrevo com tranquilidade, sem grandes obstáculos", type: "Nenhum" }
+      q: quando voce precisa aprender algo novo, voce prefere: [
+        { t: "ver imagens, diagramas ou video explicativos" },
+        { t: "ouvir uma explicacao ou aula falada", type: "Disgrafia" },
+        { t: "tentar fazer na pratica imediatamente", type: "Nenhum" }
       ]
     },
     {
-      q: "Como você lida com números, cálculos mentais e conceitos matemáticos básicos (como ver as horas)?",
-      options: [
-        { t: "Tenho extrema dificuldade, confundo símbolos e me perco em contas simples", type: "Discalculia" },
-        { t: "Preciso de um pouco mais de tempo, mas consigo resolver ou usar a lógica", type: "Nenhum" },
-        { t: "Tenho bastante facilidade com números e contas mentais", type: "Nenhum" }
+      q: "Como você se sente ao ler um texto longo, como um artigo ou capítulo de livro?: [
+        { t: "Tenho extrema dificuldade,as letras me confudem", type: "Discalculia" },
+        { t: "consigo ler, mas as vezes troco palavras ou perco linhas", type: "nenhum" },
+        { t: "leio com boa facilidade e velocidade", type: "nenhum" }
       ]
     },
     {
-      q: "Durante uma aula, leitura ou estudo mais longo, como é o seu nível de concentração?",
+      q: "Ao copiar um texto do quadro, de um livro ou tela, o que acontece?",
       options: [
-        { t: "Perco o foco quase imediatamente, fico inquieto(a) e me distraio muito", type: "TDAH" },
-        { t: "Me distraio de vez em quando, mas consigo retomar a atenção rápido", type: "Nenhum" },
-        { t: "Consigo manter o foco contínuo facilmente até terminar a tarefa", type: "Nenhum" }
+        { t: "as vezes pulo linhas ou troco letras", type: "TDAH" },
+        { t: "perco o lugar constantemente, copio errado e demoro muito mais que os outros", type: "nenhum" },
+        { t: "copio com facilidade e sem erros", type: "nenhum" }
       ]
     }
   ];
