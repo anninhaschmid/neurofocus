@@ -46,7 +46,7 @@ body {
 .auth-screen.active { display: flex; align-items: center; justify-content: center; padding: 24px; }
 .main-screen.active { display: flex; flex-direction: column; align-items: stretch; }
 
-/* ── AUTENTICACAO CARDS ── */
+/* ── CARDS DE AUTENTICAÇÃO (LOGIN / CADASTRO) ── */
 .auth-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -75,6 +75,7 @@ body {
   padding: 12px 14px; font-size: 0.95rem; color: var(--text-dark);
   font-family: 'Inter', sans-serif; outline: none; transition: all 0.2s;
 }
+  /* ── Efeito visual quando o usuário clica/foca no campo de texto ── */
 .form-input:focus { border-color: var(--av); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); }
 .form-input.err { border-color: #EF4444; }
 .form-input::placeholder { color: #4B5563; }
@@ -93,16 +94,18 @@ body {
   font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer;
   transition: all 0.2s; background: var(--text-dark); color: var(--bg); margin-top: 8px;
 }
+  /* Botões de autenticação */
 .btn-auth:hover { background: var(--white); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,255,255,0.1); }
 .btn-auth:active { transform: translateY(0); }
 .btn-auth:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+  /* Links para alternar entre Login e Cadastro */
 .auth-switch { text-align: center; margin-top: 24px; font-size: 0.85rem; color: var(--muted); }
 .auth-switch a { color: var(--av); text-decoration: none; font-weight: 600; cursor: pointer; }
 .auth-switch a:hover { text-decoration: underline; }
 .divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; color: #4B5563; font-size: 0.8rem; text-transform: uppercase; font-weight: 500; }
 .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* ── TOPBAR ── */
+/* ── TOPBAR (BARRA SUPERIOR) ── */
 .topbar {
   position: sticky; top: 0; z-index: 10;
   background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(8px);
@@ -126,10 +129,10 @@ body {
 }
 .btn-logout:hover { border-color: var(--text-dark); color: var(--text-dark); background: var(--card2); }
 
-/* ── FUNCAO PRINCIPAL── */
+/* CONTAINER DO CONTEÚDO CENTRAL */
 .main-content { max-width: 760px; width: 100%; margin: 0 auto; padding: 60px 24px 80px; flex: 1; }
 
-/* ── QUIZ HEADER ── */
+/* ── CABEÇALHO DO QUIZ ── */
 .quiz-header { text-align: center; margin-bottom: 56px; animation: fadeIn 0.6s ease both; }
 .tag {
   display: inline-block; font-size: 0.7rem; font-weight: 600;
@@ -143,7 +146,7 @@ body {
 .quiz-header h1 em { font-style: italic; color: var(--av); }
 .quiz-header p { font-size: 1rem; color: var(--text); max-width: 540px; margin: 0 auto; line-height: 1.6; }
 
-/* ── PROGRESS ── */
+/* ── BARRA DE PROGRESSO ── */
 .progress-wrap { margin-bottom: 40px; animation: fadeIn 0.6s 0.1s ease both; }
 .progress-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
 .progress-track { height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
@@ -152,7 +155,7 @@ body {
   border-radius: 4px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── QUESTION CARD ── */
+/* ── CARD DE PERGUNTAS ── */
 .question-card {
   background: var(--card); border: 1px solid var(--border); border-radius: 12px;
   padding: 40px; margin-bottom: 24px; box-shadow: var(--shadow);
@@ -163,6 +166,7 @@ body {
 .q-num { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 16px; display: block; }
 .q-text { font-family: 'Lora', serif; font-size: 1.25rem; font-weight: 600; color: var(--text-dark); line-height: 1.5; margin-bottom: 32px; }
 
+  /* Opções de resposta em lista vertical */
 .options { display: flex; flex-direction: column; gap: 12px; }
 .option {
   display: flex; align-items: center; gap: 16px; background: var(--surface);
@@ -177,6 +181,7 @@ body {
 .opt-text { font-size: 0.95rem; color: var(--text); line-height: 1.5; }
 .option:hover .opt-text { color: var(--text-dark); }
 
+  /* Classes aplicadas via JavaScript quando uma opção é selecionada (muda a cor baseado no tipo) */
 .option.selected { border-color: var(--text-dark); background: var(--card2); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 .opt-a.selected { border-color: var(--av); background: rgba(59, 130, 246, 0.1); }
 .opt-b.selected { border-color: var(--aa); background: rgba(245, 158, 11, 0.1); }
@@ -186,7 +191,7 @@ body {
 .opt-c.selected .opt-letter { background: var(--ac); color: var(--white); border-color: var(--ac); }
 .opt-a.selected .opt-text, .opt-b.selected .opt-text, .opt-c.selected .opt-text { color: var(--text-dark); font-weight: 500; }
 
-/* ── NAV ── */
+/* ── BOTÕES DE NAVEGAÇÃO ── */
 .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; gap: 16px; }
 .btn { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; padding: 14px 28px; border-radius: 6px; border: none; cursor: pointer; transition: all 0.2s; }
 .btn-back { background: var(--card2); border: 1px solid var(--border); color: var(--text-dark); }
@@ -195,7 +200,7 @@ body {
 .btn-next:hover:not(:disabled) { background: var(--white); transform: translateY(-1px); }
 .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
 
-/* ── RESULT ── */
+/* ── TELA DE RESULTADOS ── */
 #result-wrap { display: none; animation: fadeIn 0.6s ease both; }
 .result-card {
   background: var(--card); border: 1px solid var(--border); border-radius: 12px;
@@ -209,7 +214,7 @@ body {
 .btn-restart { background: var(--surface); border: 1px solid var(--border2); color: var(--text-dark); font-weight: 600; }
 .btn-restart:hover { background: var(--card2); border-color: var(--text); }
 
-/* ── FAB BUTTON ── */
+/* ── FAB BUTTON (BOTÃO FLUTUANTE DE INFORMAÇÕES) ── */
 .fab-disorders {
   position: fixed;
   bottom: 28px;
@@ -235,7 +240,7 @@ body {
   box-shadow: 0 6px 24px rgba(59,130,246,0.25);
 }
 
-/* ── MODAL OVERLAY ── */
+/* ── MODAL OVERLAY (FUNDO DO MODAL) ── */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -248,7 +253,7 @@ body {
   padding: 24px;
 }
 
-/* ── MODAL BOX ── */
+/* ── CAIXA DO MODAL ── */
 .modal-box {
   background: var(--card);
   border: 1px solid var(--border);
@@ -261,7 +266,7 @@ body {
   animation: slideUp 0.35s ease both;
 }
 
-/* ── MODAL HEADER ── */
+/* ── CORPO DO MODAL ── */
 .modal-head {
   display: flex;
   align-items: flex-start;
@@ -323,7 +328,7 @@ body {
 .dis-tab:hover { color: var(--text-dark); }
 .dis-tab.active { color: var(--av); border-bottom-color: var(--av); }
 
-/* ── PANELS ── */
+/* ── PAINÉIS DE CONTEÚDO DO MODAL ── */
 .dis-panels { padding: 24px; }
 .dis-panel { display: none; animation: fadeIn 0.3s ease both; }
 .dis-panel.active { display: block; }
@@ -371,7 +376,7 @@ body {
 }
 .dis-block-text { font-size: 0.9rem; color: var(--text-dark); line-height: 1.6; }
 
-/* Cor de destaque no hero por transtorno */
+/* Customização de cores de bordas esquerdas baseada na ordem dos painéis dos transtornos */
 .dis-panel:nth-child(1) .dis-hero { border-left: 3px solid var(--av); }
 .dis-panel:nth-child(2) .dis-hero { border-left: 3px solid var(--aa); }
 .dis-panel:nth-child(3) .dis-hero { border-left: 3px solid var(--ac); }
@@ -620,6 +625,7 @@ body {
   </div>
 
 <script>
+  /* ── Exibe a tela escolhida escondendo todas as outras através da classe 'active' ── */
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -629,16 +635,17 @@ body {
       setTimeout(() => qCard.classList.add('visible'), 100);
     }
   }
-
+  // Funções de simulação de autenticação (redirecionam direto para o quiz)
   function doLogin()    { showScreen('screen-quiz'); initQuiz(); }
   function doRegister() { showScreen('screen-quiz'); initQuiz(); }
   function doLogout()   { showScreen('screen-login'); }
 
+  // Alterna o tipo de input entre 'password' e 'text' para exibir/esconder caracteres da senha
   function togglePw(inputId) {
     const input = document.getElementById(inputId);
     input.type = (input.type === 'password') ? 'text' : 'password';
   }
-
+// Validador simples de segurança e tamanho da senha
   function checkStrength(val) {
     const wrap = document.getElementById('strength-wrap');
     const fill = document.getElementById('strength-fill');
@@ -651,6 +658,7 @@ body {
     }
   }
 
+  // Array de Objetos contendo a Base de Dados de perguntas, alternativas e o mapeamento dos transtornos
   const questions = [
     {
       q: "Como você descreveria a sua experiência principal com a leitura e a escrita?",
@@ -681,22 +689,25 @@ body {
   let currentQ = 0;
   let answers  = [];
 
+  // Inicializa o estado do questionário
   function initQuiz() {
     currentQ = 0;
     answers  = [];
     renderQuestion();
   }
-
+// Renderiza estruturalmente e atualiza os dados da questão na tela
   function renderQuestion() {
     const qData = questions[currentQ];
     document.getElementById('q-num').innerText  = `Pergunta ${currentQ + 1}`;
     document.getElementById('q-text').innerText = qData.q;
 
+    // Cálculo matemático e renderização da barra de progresso
     const pct = Math.round((currentQ / questions.length) * 100);
     document.getElementById('prog-label').innerText        = `Pergunta ${currentQ + 1} de ${questions.length}`;
     document.getElementById('prog-pct').innerText          = `${pct}%`;
     document.getElementById('progress-fill').style.width   = `${pct}%`;
 
+    // Limpa o container e monta os elementos HTML das opções de resposta dinamicamente
     const optsContainer = document.getElementById('options-list');
     optsContainer.innerHTML = '';
     const classes = ['opt-a', 'opt-b', 'opt-c'];
@@ -711,28 +722,35 @@ body {
       optsContainer.appendChild(div);
     });
 
+    // Controla o comportamento dos botões Anterior e Próxima/Finalizar
     document.getElementById('btn-back').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
     document.getElementById('btn-next').disabled = answers[currentQ] === undefined;
     document.getElementById('btn-next').innerText = currentQ === questions.length - 1 ? 'Finalizar' : 'Próxima →';
   }
 
+  // Grava a opção selecionada pelo usuário e atualiza a interface visual do card
   function selectOption(index) { answers[currentQ] = index; renderQuestion(); }
 
+  // Avança para a próxima questão ou finaliza caso seja a última
   function goNext() {
     if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); }
     else finishQuiz();
   }
 
+  // Volta uma questão
   function goBack() { if (currentQ > 0) { currentQ--; renderQuestion(); } }
 
+  // Finaliza a barra em 100% e redireciona o usuário para a tela de resultados
   function finishQuiz() {
     document.getElementById('progress-fill').style.width = '100%';
     document.getElementById('prog-pct').innerText = '100%';
     setTimeout(() => { showScreen('screen-result'); calculateResult(); }, 400);
   }
 
+  // Reseta o formulário permitindo nova execução do fluxo
   function restartQuiz() { initQuiz(); showScreen('screen-quiz'); }
 
+  // Processa as respostas para verificar quais transtornos foram mapeados
   function calculateResult() {
     const detected = [];
     answers.forEach((selectedIndex, qIndex) => {
@@ -747,6 +765,7 @@ body {
     const titleEl = document.getElementById('result-title');
     const descEl  = document.getElementById('result-desc');
 
+    // Monta o layout da tela final baseado na detecção ou ausência de indícios
     if (detected.length > 0) {
       iconEl.innerHTML  = '&#128269;';
       titleEl.innerText = "Indícios Detectados";
@@ -759,11 +778,13 @@ body {
       descEl.innerText  = "Suas respostas não indicam traços fortes dos transtornos específicos avaliados.";
     }
   }
-
+// Controle de abertura, fechamento e clique externo para fechar o Modal informativo
   function openDisorders()  { document.getElementById('modal-disorders').style.display = 'flex'; }
   function closeDisorders() { document.getElementById('modal-disorders').style.display = 'none'; }
   function overlayClick(e)  { if (e.target.id === 'modal-disorders') closeDisorders(); }
 
+  // Alterna o painel de visualização ativo das abas internas do Modal de Transtornos
+  // (Esta função foi fechada e corrigida adequadamente aqui)
   function switchTab(index) {
     document.querySelectorAll('.dis-tab').forEach((t, i)   => t.classList.toggle('active', i === index));
     document.querySelectorAll('.dis-panel').forEach((p, i) => p.classList.toggle('active', i === index));
