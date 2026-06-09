@@ -668,37 +668,36 @@
       initQuiz();
       showScreen('screen-quiz');
     }
-
-    /* ── FUNÇÕES DO MODAL DO CÉREBRO (Adicione estas) ── */
-    function openDisorders() {
-      document.getElementById('modal-disorders').style.display = 'flex';
+  
+      /* ==========================================================================
+       CONTROLES DO MODAL (CÉREBRO FLUTUANTE) - COPIE APENAS ESTE TRECHO
+       ========================================================================== */
+    
+    // Abre o modal ao clicar no cérebro
+    function openDisorders() { 
+      document.getElementById('modal-disorders').style.display = 'flex'; 
     }
-
-    function closeDisorders() {
-      document.getElementById('modal-disorders').style.display = 'none';
+    
+    // Fecha o modal no botão X
+    function closeDisorders() { 
+      document.getElementById('modal-disorders').style.display = 'none'; 
     }
-
-    function overlayClick(event) {
-      if (event.target.id === 'modal-disorders') {
-        closeDisorders();
-      }
+    
+    // Fecha o modal se o usuário clicar na área escura (fora da caixa)
+    function overlayClick(e) { 
+      if(e.target.id === 'modal-disorders') closeDisorders(); 
     }
-
+    
+    // Alterna dinamicamente entre as abas: Discalculia, Disgrafia, Dislexia e TDAH
     function switchTab(index) {
-      const tabs = document.querySelectorAll('.dis-tab');
-      const panels = document.querySelectorAll('.dis-panel');
-      
-      tabs.forEach((tab, i) => {
-        if (i === index) {
-          tab.classList.add('active');
-          panels[i].classList.add('active');
-        } else {
-          tab.classList.remove('active');
-          panels[i].classList.remove('active');
-        }
-      });
+      // Altera a classe ativa dos botões do topo (abas)
+      document.querySelectorAll('.dis-tab').forEach((t, i) => t.classList.toggle('active', i === index));
+      // Altera a classe ativa dos painéis de conteúdo para mostrar o texto certo
+      document.querySelectorAll('.dis-panel').forEach((p, i) => p.classList.toggle('active', i === index));
     }
-  </script>
+
+    
+
   
 
   
