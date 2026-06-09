@@ -651,24 +651,25 @@
       const titleEl = document.getElementById('result-title');
       const descEl = document.getElementById('result-desc');
 
-      if (detected.length === 0) {
-        iconEl.innerHTML = "&#10024;"; 
-        titleEl.innerText = "Perfil de Aprendizado Regular";
-        descEl.innerText = "Não identificamos sinais significativos de transtornos de aprendizagem nas suas respostas. Você demonstra boa adaptação aos métodos tradicionais estudados.";
+      if (detected.length > 0) {
+        iconEl.innerHTML = '&#128269;'; 
+        titleEl.innerText = "Indícios Detectados";
+        descEl.innerHTML = "Com base nas suas respostas, notamos sinais associados a:<br><br>" + 
+          detected.map(d => `<strong>${d}</strong>`).join(', ') + 
+          ".<br><br>Sugerimos buscar uma avaliação pedagógica ou clínica especializada.";
       } else {
-        iconEl.innerHTML = "&#129504;"; // Ícone do cérebro ativado
-        titleEl.innerText = "Indicadores de: " + detected.join(", ");
-        descEl.innerHTML = `Com base nas suas escolhas, seu perfil apresentou traços compatíveis com múltiplos indicadores: <strong>${detected.join(' e ')}</strong>.<br><br>
-        <em>Nota: Este teste é apenas uma triagem pedagógica preliminar de orientação. Para um diagnóstico real, procure um profissional habilitado (como psicopedagogo, fonoaudiólogo ou neuropsicólogo).</em>`;
+        iconEl.innerHTML = '&#127881;';
+        titleEl.innerText = "Nenhum indício forte";
+        descEl.innerText = "Suas respostas não indicam traços fortes dos transtornos específicos avaliados.";
       }
     }
 
     function restartQuiz() {
-      showScreen('screen-quiz');
       initQuiz();
+      showScreen('screen-quiz');
     }
 
-    // Funções do Modal informativo dos Transtornos (Botão Flutuante do Cérebro)
+    /* ── FUNÇÕES DO MODAL DO CÉREBRO (Adicione estas) ── */
     function openDisorders() {
       document.getElementById('modal-disorders').style.display = 'flex';
     }
@@ -698,9 +699,6 @@
       });
     }
   </script>
-</body>
-</html>
-  
   
 
   
