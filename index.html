@@ -483,11 +483,10 @@ body {
       </div>
     </div>
   </div>
-  <script>
+<script>
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      
       if(id === 'screen-quiz') {
         const qCard = document.getElementById('question-card');
         qCard.classList.remove('visible');
@@ -501,8 +500,7 @@ body {
     
     function togglePw(inputId) {
       const input = document.getElementById(inputId);
-      if (input.type === 'password') input.type = 'text';
-      else input.type = 'password';
+      input.type = (input.type === 'password') ? 'text' : 'password';
     }
     
     function checkStrength(val) {
@@ -510,7 +508,6 @@ body {
       const fill = document.getElementById('strength-fill');
       const text = document.getElementById('strength-text');
       wrap.classList.toggle('show', val.length > 0);
-      
       if (val.length < 6) {
         fill.style.width = '30%'; fill.style.background = 'var(--aa)'; text.innerText = 'Senha fraca';
       } else {
@@ -572,12 +569,9 @@ body {
       
       qData.options.forEach((opt, index) => {
         const isSelected = answers[currentQ] === index;
-        
         const div = document.createElement('div');
         div.className = `option ${classes[index]} ${isSelected ? 'selected' : ''}`;
-        
         div.onclick = () => selectOption(index);
-        
         div.innerHTML = `
           <div class="opt-letter">${letters[index]}</div>
           <div class="opt-text">${opt.t}</div>
@@ -614,7 +608,6 @@ body {
     function finishQuiz() {
       document.getElementById('progress-fill').style.width = '100%';
       document.getElementById('prog-pct').innerText = '100%';
-      
       setTimeout(() => {
         showScreen('screen-result');
         calculateResult();
@@ -626,7 +619,6 @@ body {
       initQuiz();
     }
 
-    /* CONTROLES DO MODAL (CÉREBRO FLUTUANTE) */
     function openDisorders() { 
       document.getElementById('modal-disorders').style.display = 'flex'; 
     }
@@ -644,10 +636,8 @@ body {
       document.querySelectorAll('.dis-panel').forEach((p, i) => p.classList.toggle('active', i === index));
     }
 
-    /* CALCULAR E LISTAR MÚLTIPLOS TRANSTORNOS DETECTADOS */
     function calculateResult() {
       const detected = [];
-      
       answers.forEach((selectedIndex, qIndex) => {
         if (selectedIndex !== undefined) {
           const type = questions[qIndex].options[selectedIndex].type;
@@ -665,14 +655,7 @@ body {
       if (detected.length > 0) {
         iconEl.innerHTML = "&#9888;&#65039;"; 
         titleEl.innerText = "Sinais Detectados";
-        
-        let listaTranstornos = "";
-        if (detected.length === 1) {
-          listaTranstornos = detected[0];
-        } else {
-          listaTranstornos = detected.slice(0, -1).join(", ") + " e " + detected.slice(-1);
-        }
-
+        let listaTranstornos = detected.length === 1 ? detected[0] : detected.slice(0, -1).join(", ") + " e " + detected.slice(-1);
         descEl.innerHTML = `Identificamos traços relacionados a: <strong>${listaTranstornos}</strong>.<br><br>Lembre-se de que este questionário é apenas uma ferramenta de rastreio inicial e não substitui um diagnóstico clínico especializado realizado por neuropsicólogos ou médicos.`;
       } else {
         iconEl.innerHTML = "&#10024;"; 
