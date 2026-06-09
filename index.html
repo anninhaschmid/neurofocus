@@ -47,12 +47,11 @@ body {
   background-size: 24px 24px;
 }
 
-/* ── SCREENS (CORRIGIDO) ── */
+/* ── SCREENS ── */
 .screen { display: none; position: relative; z-index: 1; min-height: 100vh; }
-/* Usamos block por padrão para não forçar comportamento flex horizontal em tudo */
 .screen.active { display: block; } 
 
-/* Telas específicas que REALMENTE precisam de comportamento flex */
+/* Telas que precisam de comportamento flex */
 .auth-screen.active { display: flex; align-items: center; justify-content: center; padding: 24px; }
 .main-screen.active { display: flex; flex-direction: column; align-items: stretch; }
 
@@ -163,12 +162,10 @@ body {
   border-radius: 4px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── QUESTION CARD (MELHORADO) ── */
+/* ── QUESTION CARD ── */
 .question-card {
   background: var(--card); border: 1px solid var(--border); border-radius: 12px;
   padding: 40px; margin-bottom: 24px; box-shadow: var(--shadow);
-  
-  /* Evita interações físicas enquanto invisível */
   visibility: hidden; 
   opacity: 0; transform: translateY(15px);
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
@@ -211,69 +208,109 @@ body {
 .btn-next { background: var(--text-dark); color: var(--bg); }
 .btn-next:hover:not(:disabled) { background: var(--white); transform: translateY(-1px); }
 .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
-.btn-submit { background: var(--av); color: var(--white); }
-.btn-submit:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
 
 /* ── RESULT ── */
 #result-wrap { display: none; animation: fadeIn 0.6s ease both; }
 .result-card {
   background: var(--card); border: 1px solid var(--border); border-radius: 12px;
   padding: 56px 40px; text-align: center; margin-bottom: 24px; box-shadow: var(--shadow);
-  border-top: 4px solid var(--border); 
 }
-.rc-visual { border-top-color: var(--av); }
-.rc-auditivo { border-top-color: var(--aa); }
-.rc-cines { border-top-color: var(--ac); }
 
 .result-icon { font-size: 3.5rem; display: block; margin-bottom: 20px; animation: scaleIn 0.5s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-.result-badge { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
-.rb-visual { color: var(--av); } .rb-auditivo { color: var(--aa); } .rb-cines { color: var(--ac); }
-
+.result-badge { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; color: var(--av); }
 .result-title { font-family: 'Lora', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; color: var(--text-dark); margin-bottom: 16px; }
 .result-desc { font-size: 1rem; color: var(--text); line-height: 1.7; max-width: 560px; margin: 0 auto 32px; }
-
-.score-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-.score-pill { display: flex; align-items: center; gap: 8px; background: var(--card2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; font-weight: 500; color: var(--text-dark); }
-.pill-dot { width: 10px; height: 10px; border-radius: 50%; }
-
-.section-title { font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; color: var(--text-dark); margin: 40px 0 20px; text-align: left; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-.tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-.tip-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: left; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-.tip-icon { font-size: 1.5rem; margin-bottom: 12px; display: block; }
-.tip-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
-.tip-text { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
-
 .result-actions { display: flex; gap: 16px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
 .btn-restart { background: var(--surface); border: 1px solid var(--border2); color: var(--text-dark); font-weight: 600; }
 .btn-restart:hover { background: var(--card2); border-color: var(--text); }
 
-.history-section { margin-top: 48px; }
-.history-list { display: flex; flex-direction: column; gap: 12px; }
-.history-item {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-  padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+/* ── NOVO CARD DE TRANSTORNOS (GRID UNIFICADO) ── */
+.learning-disorders-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  margin-top: 48px;
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.8s ease both;
 }
-.hi-left { display: flex; flex-direction: column; gap: 4px; }
-.hi-date { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
-.hi-result { color: var(--text-dark); font-weight: 700; font-size: 0.95rem; }
-.hi-badge { font-size: 0.7rem; padding: 4px 12px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-.hb-visual   { background: rgba(59, 130, 246, 0.15); color: var(--av); border: 1px solid rgba(59, 130, 246, 0.3); }
-.hb-auditivo { background: rgba(245, 158, 11, 0.15); color: var(--aa); border: 1px solid rgba(245, 158, 11, 0.3); }
-.hb-cines     { background: rgba(16, 185, 129, 0.15); color: var(--ac); border: 1px solid rgba(16, 185, 129, 0.3); }
+.card-header-dis {
+  text-align: left;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+.card-badge-dis {
+  display: inline-flex;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: var(--av);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.card-header-dis h2 {
+  font-family: 'Lora', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.card-header-dis p {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.disorders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+.disorder-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.disorder-item:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+.disorder-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.disorder-icon { font-size: 1.3rem; }
+.disorder-item h3 { font-size: 1.15rem; font-weight: 600; color: var(--text-dark); }
+.disorder-desc { font-size: 0.9rem; color: var(--text); line-height: 1.5; margin-bottom: 16px; }
+.disorder-identify {
+  background: var(--card2);
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  line-height: 1.5;
+  border-left: 3px solid var(--muted);
+}
+.disorder-identify strong {
+  color: var(--white);
+  display: block;
+  margin-bottom: 4px;
+}
 
-/* ── TOAST ── */
-.toast {
-  position: fixed; bottom: 32px; left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--white); border: none; color: var(--bg);
-  border-radius: 6px; padding: 14px 24px; font-size: 0.9rem; font-weight: 600;
-  opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 999;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4); white-space: nowrap; text-align: center;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.toast.terror { background: #EF4444; color: var(--white); }
-.toast.tsuccess { background: var(--ac); color: var(--white); }
+/* Indicadores de cores sutis por transtorno */
+.disorder-item:nth-child(1) { border-top: 3px solid var(--av); }
+.disorder-item:nth-child(2) { border-top: 3px solid var(--aa); }
+.disorder-item:nth-child(3) { border-top: 3px solid var(--ac); }
+.disorder-item:nth-child(4) { border-top: 3px solid #EC4899; }
 
 /* ── ANIMATIONS ── */
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -288,8 +325,10 @@ body {
   .nav { flex-wrap: wrap; }
   .btn { flex: 1; text-align: center; width: 100%; }
   .topbar { padding: 16px 20px; }
+  .learning-disorders-card { padding: 24px 16px; border-radius: 0; border-left: none; border-right: none; }
+  .disorders-grid { grid-template-columns: 1fr; }
 }
-<style>
+</style>
 </head>
 <body>
   <div id="screen-login" class="screen auth-screen active">
