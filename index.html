@@ -383,7 +383,6 @@
       </div>
     </div>
   </div>
-// BOTAO ENTRADA E SAIDA DO USUARIO
   <div id="screen-result" class="screen main-screen">
     <div class="topbar">
       <div class="topbar-brand">neurofocus<span>.</span></div>
@@ -407,8 +406,6 @@
       </div>
     </div>
   </div>
-
-  //BOTÃO SCREEN TRANSTORNOS DE APRENDIZAGEM
   <button class="fab-disorders" id="fab-btn" onclick="openDisorders()" aria-label="Transtornos de aprendizagem">&#129504;</button>
 
   <div class="modal-overlay" id="modal-disorders" onclick="overlayClick(event)">
@@ -421,7 +418,7 @@
         </div>
         <button class="modal-close" onclick="closeDisorders()" aria-label="Fechar">&#10005;</button>
       </div>
-// BOTÃO TRANSTORNOS
+      
       <div class="dis-tabs" role="tablist">
         <button class="dis-tab active" role="tab" onclick="switchTab(0)">&#129518; Discalculia</button>
         <button class="dis-tab" role="tab" onclick="switchTab(1)">&#9997;&#65039; Disgrafia</button>
@@ -501,7 +498,6 @@
     </div>
   </div>
 
-  // FUNÇÃO DATABASE BANCO DE DADOS
   <script>
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
