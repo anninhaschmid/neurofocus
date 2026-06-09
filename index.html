@@ -636,8 +636,9 @@ body {
       document.querySelectorAll('.dis-panel').forEach((p, i) => p.classList.toggle('active', i === index));
     }
 
-    function calculateResult() {
+  function calculateResult() {
       const detected = [];
+      
       answers.forEach((selectedIndex, qIndex) => {
         if (selectedIndex !== undefined) {
           const type = questions[qIndex].options[selectedIndex].type;
@@ -653,20 +654,53 @@ body {
       const descEl = document.getElementById('result-desc');
 
       if (detected.length > 0) {
-        iconEl.innerHTML = "&#9888;&#65039;"; 
-        titleEl.innerText = "Sinais Detectados";
-        let listaTranstornos = detected.length === 1 ? detected[0] : detected.slice(0, -1).join(", ") + " e " + detected.slice(-1);
-        descEl.innerHTML = `Identificamos traços relacionados a: <strong>${listaTranstornos}</strong>.<br><br>Lembre-se de que este questionário é apenas uma ferramenta de rastreio inicial e não substitui um diagnóstico clínico especializado realizado por neuropsicólogos ou médicos.`;
+        iconEl.innerHTML = '&#128269;'; 
+        titleEl.innerText = "Indícios Detectados";
+        descEl.innerHTML = "Com base nas suas respostas, notamos sinais associados a:<br><br>" + 
+          detected.map(d => `<strong>${d}</strong>`).join(', ') + 
+          ".<br><br>Sugerimos buscar uma avaliação pedagógica ou clínica especializada.";
       } else {
-        iconEl.innerHTML = "&#10024;"; 
-        titleEl.innerText = "Nenhum sinal evidente";
-        descEl.innerText = "Com base nas suas respostas, não foram detectados sinais significativos de transtornos de aprendizagem comuns. Você apresenta um padrão de aprendizado equilibrado nas áreas avaliadas.";
+        iconEl.innerHTML = '&#127881;';
+        titleEl.innerText = "Nenhum indício forte";
+        descEl.innerText = "Suas respostas não indicam traços fortes dos transtornos específicos avaliados.";
       }
     }
+
+    function restartQuiz() {
+      initQuiz();
+      showScreen('screen-quiz');
+    }
+
+    /* ── FUNÇÕES DO MODAL DO CÉREBRO (Adicione estas) ── */
+    function openDisorders() {
+      document.getElementById('modal-disorders').style.display = 'flex';
+    }
+
+    function closeDisorders() {
+      document.getElementById('modal-disorders').style.display = 'none';
+    }
+
+    function overlayClick(event) {
+      if (event.target.id === 'modal-disorders') {
+        closeDisorders();
+      }
+    }
+
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.dis-tab');
+      const panels = document.querySelectorAll('.dis-panel');
+      
+      tabs.forEach((tab, i) => {
+        if (i === index) {
+          tab.classList.add('active');
+          panels[i].classList.add('active');
+        } else {
+          tab.classList.remove('active');
+          panels[i].classList.remove('active');
+        }
+      });
+    }
   </script>
-</body>
-</html>
-  
 
   
     
