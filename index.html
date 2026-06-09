@@ -1,835 +1,762 @@
  <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Neurofocus - Perfil de Aprendizagem</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Perfil de Aprendizagem</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght=0,600;0,700;1,600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-/* ── Definição de variáveis globais (Custom Properties) para consistência do tema claro (Ligth Mode) e cores de destaque */ ── */
-:root {
-  --bg: #0B0F19;
-  --surface: #151B2C;
-  --card: #111827;
-  --card2: #1F2937;
-  --border: #1F2937;
-  --border2: #374151;
-  --av: #3B82F6;
-  --aa: #F59E0B;
-  --ac: #10B981;
-  --text: #9CA3AF;
-  --text-dark: #F9FAFB;
-  --muted: #6B7280;
-  --white: #FFFFFF;
-  --radius: 8px;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
+  :root {
+    --bg: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    --glass: rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.15);
+    --accent: #a78bfa;
+    --accent2: #60a5fa;
+    --accent3: #34d399;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --danger: #f87171;
+    --radius: 20px;
+  }
 
-html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+    overflow-x: hidden;
+  }
 
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
+  .screen { display: none; min-height: 100vh; padding: 20px; align-items: center; justify-content: center; }
+  .screen.active { display: flex; flex-direction: column; }
 
-/* ── SCREENS ── */
-.screen { display: none; position: relative; z-index: 1; min-height: 100vh; }
-.screen.active { display: block; }
-.auth-screen.active { display: flex; align-items: center; justify-content: center; padding: 24px; }
-.main-screen.active { display: flex; flex-direction: column; align-items: stretch; }
+  /* Background blobs */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::before { width: 500px; height: 500px; background: #7c3aed; top: -100px; left: -100px; }
+  body::after  { width: 400px; height: 400px; background: #2563eb; bottom: -80px; right: -80px; }
 
-/* ── CARDS DE AUTENTICAÇÃO (LOGIN / CADASTRO) ── */
-.auth-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 48px 40px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: var(--shadow);
-  animation: slideUp 0.5s ease-out both;
-}
-.auth-logo { text-align: center; margin-bottom: 32px; }
-.auth-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3);
-  color: var(--av); border-radius: 4px; padding: 6px 12px;
-  font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
-}
-.auth-logo h2 { font-family: 'Lora', serif; font-size: 1.8rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
-.auth-logo p { font-size: 0.9rem; color: var(--muted); }
+  .card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius);
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.5s ease forwards;
+  }
 
-/* ── FORMULARIO ── */
-.form-group { margin-bottom: 20px; }
-.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
-.form-input {
-  width: 100%; background: var(--surface); border: 1px solid var(--border2); border-radius: 6px;
-  padding: 12px 14px; font-size: 0.95rem; color: var(--text-dark);
-  font-family: 'Inter', sans-serif; outline: none; transition: all 0.2s;
-}
-  /* ── Efeito visual quando o usuário clica/foca no campo de texto ── */
-.form-input:focus { border-color: var(--av); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); }
-.form-input.err { border-color: #EF4444; }
-.form-input::placeholder { color: #4B5563; }
-.field-err { font-size: 0.75rem; color: #EF4444; margin-top: 6px; display: none; font-weight: 500; }
-.field-err.show { display: block; }
-.pw-wrap { position: relative; }
-.pw-wrap .form-input { padding-right: 44px; }
-.pw-eye {
-  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-  background: none; border: none; cursor: pointer; color: var(--muted);
-  font-size: 1.1rem; line-height: 1; transition: color 0.2s; padding: 0;
-}
-.pw-eye:hover { color: var(--text-dark); }
-.btn-auth {
-  width: 100%; padding: 14px; border-radius: 6px; border: none;
-  font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer;
-  transition: all 0.2s; background: var(--text-dark); color: var(--bg); margin-top: 8px;
-}
-  /* Botões de autenticação */
-.btn-auth:hover { background: var(--white); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,255,255,0.1); }
-.btn-auth:active { transform: translateY(0); }
-.btn-auth:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-  /* Links para alternar entre Login e Cadastro */
-.auth-switch { text-align: center; margin-top: 24px; font-size: 0.85rem; color: var(--muted); }
-.auth-switch a { color: var(--av); text-decoration: none; font-weight: 600; cursor: pointer; }
-.auth-switch a:hover { text-decoration: underline; }
-.divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; color: #4B5563; font-size: 0.8rem; text-transform: uppercase; font-weight: 500; }
-.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-/* ── TOPBAR (BARRA SUPERIOR) ── */
-.topbar {
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 32px;
-}
-.topbar-brand { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
-.topbar-brand span { color: var(--av); }
-.topbar-right { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; font-weight: 500; color: var(--text-dark); }
-.avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--card2); border: 1px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.8rem; font-weight: 700; color: var(--text-dark); flex-shrink: 0;
-}
-.btn-logout {
-  background: transparent; border: 1px solid var(--border2); color: var(--text);
-  border-radius: 6px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
-  font-family: 'Inter', sans-serif; transition: all 0.2s;
-}
-.btn-logout:hover { border-color: var(--text-dark); color: var(--text-dark); background: var(--card2); }
+  h1 { font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
+  h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; color: var(--accent); }
+  p  { color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
 
-/* CONTAINER DO CONTEÚDO CENTRAL */
-.main-content { max-width: 760px; width: 100%; margin: 0 auto; padding: 60px 24px 80px; flex: 1; }
+  .logo { text-align: center; margin-bottom: 28px; }
+  .logo-icon {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 12px;
+  }
 
-/* ── CABEÇALHO DO QUIZ ── */
-.quiz-header { text-align: center; margin-bottom: 56px; animation: fadeIn 0.6s ease both; }
-.tag {
-  display: inline-block; font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text);
-  background: var(--card2); border: 1px solid var(--border); border-radius: 4px; padding: 6px 14px; margin-bottom: 20px;
-}
-.quiz-header h1 {
-  font-family: 'Lora', serif; font-size: clamp(2rem, 5vw, 2.8rem);
-  font-weight: 700; line-height: 1.2; color: var(--text-dark); margin-bottom: 16px;
-}
-.quiz-header h1 em { font-style: italic; color: var(--av); }
-.quiz-header p { font-size: 1rem; color: var(--text); max-width: 540px; margin: 0 auto; line-height: 1.6; }
+  label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; margin-top: 16px; }
 
-/* ── BARRA DE PROGRESSO ── */
-.progress-wrap { margin-bottom: 40px; animation: fadeIn 0.6s 0.1s ease both; }
-.progress-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
-.progress-track { height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
-.progress-fill {
-  height: 100%; width: 0%; background: var(--text-dark);
-  border-radius: 4px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.2s;
+  }
+  input:focus { border-color: var(--accent); }
+  input::placeholder { color: var(--muted); }
 
-/* ── CARD DE PERGUNTAS ── */
-.question-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-  padding: 40px; margin-bottom: 24px; box-shadow: var(--shadow);
-  visibility: hidden; opacity: 0; transform: translateY(15px);
-  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-}
-.question-card.visible { visibility: visible; opacity: 1; transform: translateY(0); }
-.q-num { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 16px; display: block; }
-.q-text { font-family: 'Lora', serif; font-size: 1.25rem; font-weight: 600; color: var(--text-dark); line-height: 1.5; margin-bottom: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 14px;
+    border: none; border-radius: 12px; cursor: pointer;
+    font-size: 1rem; font-weight: 600; transition: all 0.2s;
+    margin-top: 20px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-danger {
+    background: rgba(248,113,113,0.15);
+    border: 1px solid rgba(248,113,113,0.3);
+    color: var(--danger);
+    margin-top: 10px;
+  }
 
-  /* Opções de resposta em lista vertical */
-.options { display: flex; flex-direction: column; gap: 12px; }
-.option {
-  display: flex; align-items: center; gap: 16px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;
-  cursor: pointer; transition: all 0.2s ease; position: relative; user-select: none;
-}
-.option:hover { border-color: var(--border2); background: var(--card2); }
-.opt-letter {
-  min-width: 36px; height: 36px; border-radius: 6px; display: flex; align-items: center;
-  justify-content: center; font-size: 0.85rem; font-weight: 600; background: var(--card2); color: var(--text); border: 1px solid var(--border); transition: all 0.2s;
-}
-.opt-text { font-size: 0.95rem; color: var(--text); line-height: 1.5; }
-.option:hover .opt-text { color: var(--text-dark); }
+  .toggle-link {
+    text-align: center; margin-top: 18px; font-size: 0.9rem; color: var(--muted);
+  }
+  .toggle-link span { color: var(--accent); cursor: pointer; text-decoration: underline; }
 
-  /* Classes aplicadas via JavaScript quando uma opção é selecionada (muda a cor baseado no tipo) */
-.option.selected { border-color: var(--text-dark); background: var(--card2); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-.opt-a.selected { border-color: var(--av); background: rgba(59, 130, 246, 0.1); }
-.opt-b.selected { border-color: var(--aa); background: rgba(245, 158, 11, 0.1); }
-.opt-c.selected { border-color: var(--ac); background: rgba(16, 185, 129, 0.1); }
-.opt-a.selected .opt-letter { background: var(--av); color: var(--white); border-color: var(--av); }
-.opt-b.selected .opt-letter { background: var(--aa); color: var(--white); border-color: var(--aa); }
-.opt-c.selected .opt-letter { background: var(--ac); color: var(--white); border-color: var(--ac); }
-.opt-a.selected .opt-text, .opt-b.selected .opt-text, .opt-c.selected .opt-text { color: var(--text-dark); font-weight: 500; }
+  .error-msg { color: var(--danger); font-size: 0.85rem; margin-top: 8px; min-height: 18px; }
 
-/* ── BOTÕES DE NAVEGAÇÃO ── */
-.nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; gap: 16px; }
-.btn { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; padding: 14px 28px; border-radius: 6px; border: none; cursor: pointer; transition: all 0.2s; }
-.btn-back { background: var(--card2); border: 1px solid var(--border); color: var(--text-dark); }
-.btn-back:hover { background: var(--border2); }
-.btn-next { background: var(--text-dark); color: var(--bg); }
-.btn-next:hover:not(:disabled) { background: var(--white); transform: translateY(-1px); }
-.btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
+  /* Quiz */
+  .quiz-header { text-align: center; margin-bottom: 28px; }
+  .progress-bar {
+    width: 100%; height: 6px; background: rgba(255,255,255,0.1);
+    border-radius: 99px; overflow: hidden; margin-bottom: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .progress-label { font-size: 0.8rem; color: var(--muted); text-align: right; }
 
-/* ── TELA DE RESULTADOS ── */
-#result-wrap { display: none; animation: fadeIn 0.6s ease both; }
-.result-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-  padding: 56px 40px; text-align: center; margin-bottom: 24px; box-shadow: var(--shadow);
-}
-.result-icon { font-size: 3.5rem; display: block; margin-bottom: 20px; animation: scaleIn 0.5s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-.result-badge { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; color: var(--av); }
-.result-title { font-family: 'Lora', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; color: var(--text-dark); margin-bottom: 16px; }
-.result-desc { font-size: 1rem; color: var(--text); line-height: 1.7; max-width: 560px; margin: 0 auto 32px; }
-.result-actions { display: flex; gap: 16px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
-.btn-restart { background: var(--surface); border: 1px solid var(--border2); color: var(--text-dark); font-weight: 600; }
-.btn-restart:hover { background: var(--card2); border-color: var(--text); }
+  .question-text { font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5; }
 
-/* ── FAB BUTTON (BOTÃO FLUTUANTE DE INFORMAÇÕES) ── */
-.fab-disorders {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--card2);
-  border: 1px solid var(--border2);
-  color: var(--text-dark);
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  z-index: 20;
-}
-.fab-disorders:hover {
-  transform: scale(1.1);
-  border-color: var(--av);
-  box-shadow: 0 6px 24px rgba(59,130,246,0.25);
-}
+  .option {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+  .option:hover { background: rgba(167,139,250,0.1); border-color: var(--accent); }
+  .option.selected { background: rgba(167,139,250,0.2); border-color: var(--accent); }
+  .option-icon { font-size: 1.4rem; }
+  .option-text { font-size: 0.95rem; line-height: 1.4; }
 
-/* ── MODAL OVERLAY (FUNDO DO MODAL) ── */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
+  /* Results */
+  .result-card { max-width: 560px; text-align: center; }
+  .result-badge {
+    width: 90px; height: 90px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 2.4rem; margin: 0 auto 20px;
+  }
+  .badge-visual   { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+  .badge-auditivo { background: linear-gradient(135deg, #0369a1, #60a5fa); }
+  .badge-kinestesico { background: linear-gradient(135deg, #065f46, #34d399); }
 
-/* ── CAIXA DO MODAL ── */
-.modal-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  width: 100%;
-  max-width: 680px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
-  animation: slideUp 0.35s ease both;
-}
+  .profile-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+  .profile-desc { color: var(--muted); margin-bottom: 24px; }
 
-/* ── CORPO DO MODAL ── */
-.modal-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 28px 28px 20px;
-  border-bottom: 1px solid var(--border);
-}
-.modal-head-left h3 {
-  font-family: 'Lora', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 4px;
-}
-.modal-head-left p {
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-.modal-close {
-  background: var(--card2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s;
-}
-.modal-close:hover { color: var(--text-dark); border-color: var(--border2); background: var(--border); }
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: left; margin-bottom: 24px; }
+  .tip-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 0.85rem;
+  }
+  .tip-item .tip-icon { font-size: 1.2rem; margin-bottom: 6px; }
 
-/* ── TABS ── */
-.dis-tabs {
-  display: flex;
-  gap: 4px;
-  padding: 16px 20px 0;
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-}
-.dis-tab {
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--muted);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 10px 14px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-  margin-bottom: -1px;
-}
-.dis-tab:hover { color: var(--text-dark); }
-.dis-tab.active { color: var(--av); border-bottom-color: var(--av); }
+  .disorders-btn {
+    background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(251,191,36,0.3);
+    color: #fbbf24;
+    width: 100%; padding: 13px;
+    border-radius: 12px; cursor: pointer;
+    font-size: 0.95rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s; margin-bottom: 10px;
+  }
+  .disorders-btn:hover { background: rgba(251,191,36,0.18); }
 
-/* ── PAINÉIS DE CONTEÚDO DO MODAL ── */
-.dis-panels { padding: 24px; }
-.dis-panel { display: none; animation: fadeIn 0.3s ease both; }
-.dis-panel.active { display: block; }
+  /* Dashboard */
+  .dash-card { max-width: 560px; }
+  .user-banner {
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px; padding: 16px; margin-bottom: 20px;
+  }
+  .avatar {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 700; flex-shrink: 0;
+  }
+  .user-info .user-name { font-weight: 700; font-size: 1.05rem; }
+  .user-info .user-email { color: var(--muted); font-size: 0.85rem; }
 
-/* ── PANEL HERO ── */
-.dis-hero {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-.dis-emoji { font-size: 2.5rem; line-height: 1; flex-shrink: 0; }
-.dis-hero-text h4 {
-  font-family: 'Lora', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 8px;
-}
-.dis-hero-text p { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+  .history-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
-/* ── PANEL BLOCK ── */
-.dis-grid { display: flex; flex-direction: column; gap: 12px; }
-.dis-block {
-  background: var(--card2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px 18px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-.dis-block-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
-.dis-block-title {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-.dis-block-text { font-size: 0.9rem; color: var(--text-dark); line-height: 1.6; }
+  .history-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .history-left { display: flex; align-items: center; gap: 12px; }
+  .history-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-visual      { background: var(--accent); }
+  .dot-auditivo    { background: var(--accent2); }
+  .dot-kinestesico { background: var(--accent3); }
+  .history-profile { font-weight: 600; }
+  .history-date    { font-size: 0.8rem; color: var(--muted); }
+  .history-badge   { font-size: 0.75rem; padding: 4px 10px; border-radius: 99px; font-weight: 600; }
+  .badge-v { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .badge-a { background: rgba(96,165,250,0.15);  color: var(--accent2); }
+  .badge-k { background: rgba(52,211,153,0.15);  color: var(--accent3); }
 
-/* Customização de cores de bordas esquerdas baseada na ordem dos painéis dos transtornos */
-.dis-panel:nth-child(1) .dis-hero { border-left: 3px solid var(--av); }
-.dis-panel:nth-child(2) .dis-hero { border-left: 3px solid var(--aa); }
-.dis-panel:nth-child(3) .dis-hero { border-left: 3px solid var(--ac); }
-.dis-panel:nth-child(4) .dis-hero { border-left: 3px solid #EC4899; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .stat-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 14px; text-align: center;
+  }
+  .stat-num { font-size: 1.6rem; font-weight: 700; }
+  .stat-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
 
-/* ── ANIMATIONS ── */
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+    z-index: 100; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
 
-/* ── RESPONSIVE ── */
-@media(max-width: 520px) {
-  .auth-card { padding: 32px 24px; border-radius: 0; border: none; box-shadow: none; border-bottom: 1px solid var(--border); }
-  .question-card { padding: 24px 20px; }
-  .result-card { padding: 40px 20px; }
-  .nav { flex-wrap: wrap; }
-  .btn { flex: 1; text-align: center; width: 100%; }
-  .topbar { padding: 16px 20px; }
-  .modal-box { border-radius: 12px; }
-  .modal-head { padding: 20px 16px 16px; }
-  .dis-panels { padding: 16px; }
-  .fab-disorders { bottom: 20px; right: 20px; }
-}
+  .modal-box {
+    background: linear-gradient(135deg, rgba(15,12,41,0.95), rgba(48,43,99,0.95));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 36px;
+    width: 100%; max-width: 540px;
+    max-height: 85vh; overflow-y: auto;
+    animation: fadeUp 0.35s ease;
+  }
+  .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+  .modal-title { font-size: 1.3rem; font-weight: 700; }
+  .close-btn {
+    background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border);
+    color: var(--text); border-radius: 8px; width: 34px; height: 34px;
+    cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.2s;
+  }
+  .close-btn:hover { background: rgba(255,255,255,0.16); }
+
+  .disorder-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px; padding: 18px; margin-bottom: 14px;
+  }
+  .disorder-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .disorder-icon { font-size: 1.4rem; }
+  .disorder-name { font-weight: 700; font-size: 1rem; }
+  .disorder-tag  { font-size: 0.72rem; padding: 3px 8px; border-radius: 99px; margin-left: auto; font-weight: 600; }
+  .disorder-p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 0; }
+
+  .tag-red    { background: rgba(239,68,68,0.15);  color: #ef4444; }
+  .tag-blue   { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .tag-yellow { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .tag-purple { background: rgba(167,139,250,0.15); color: #a78bfa; }
+
+  .nav-bar {
+    display: flex; gap: 8px; justify-content: center;
+    margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .nav-btn {
+    padding: 8px 18px; border-radius: 99px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600; border: 1px solid var(--glass-border);
+    background: var(--glass); color: var(--muted); transition: all 0.2s;
+  }
+  .nav-btn.active { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border-color: transparent; }
+
+  @media (max-width: 520px) {
+    .card { padding: 28px 20px; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: repeat(3, 1fr); }
+    h1 { font-size: 1.5rem; }
+  }
 </style>
 </head>
 <body>
-  <!-- LOGIN -->
-</head>
-<body>
-  <section id="screen-login" class="screen auth-screen active" aria-labelledby="login-title">
-    <article class="auth-card">
-      
-      <header class="auth-logo">
-        <span class="auth-badge">&#127891; Perfil de Aprendizagem</span>
-        <h2 id="login-title">Bem-vindo!</h2>
-        <p>Entre na sua conta para continuar</p>
-      </header>
 
-      <form onsubmit="event.preventDefault(); doLogin();">
-        <div class="form-group">
-          <label class="form-label" for="login-email">E-mail</label>
-          <input class="form-input" type="email" id="login-email" placeholder="seu@email.com" required autocomplete="email"/>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" for="login-pw">Senha</label>
-          <div class="pw-wrap">
-            <input class="form-input" type="password" id="login-pw" placeholder="••••••••" required autocomplete="current-password"/>
-            <button type="button" class="pw-eye" onclick="togglePw('login-pw')" aria-label="Mostrar senha">&#128065;</button>
-          </div>
-        </div>
-        
-        <button type="submit" class="btn-auth" id="btn-do-login">Entrar</button>
-      </form>
-
-      <div class="divider" aria-hidden="true">ou</div>
-      
-      <footer class="auth-switch">
-        Não tem conta? <a href="#" onclick="event.preventDefault(); showScreen('screen-register');">Cadastre-se grátis</a>
-      </footer>
-
-    </article>
-  </section>
-
-  <section id="screen-register" class="screen auth-screen" aria-labelledby="register-title">
-    <article class="auth-card">
-      
-      <header class="auth-logo">
-        <span class="auth-badge">&#127891; Perfil de Aprendizagem</span>
-        <h2 id="register-title">Criar conta</h2>
-        <p>Descubra como você aprende melhor</p>
-      </header>
-
-      <form onsubmit="event.preventDefault(); doRegister();">
-        <div class="form-group">
-          <label class="form-label" for="reg-name">Nome completo</label>
-          <input class="form-input" type="text" id="reg-name" placeholder="Seu nome" required autocomplete="name"/>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" for="reg-email">E-mail</label>
-          <input class="form-input" type="email" id="reg-email" placeholder="seu@email.com" required autocomplete="email"/>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" for="reg-pw">Senha</label>
-          <div class="pw-wrap">
-            <input class="form-input" type="password" id="reg-pw" placeholder="Mínimo 6 caracteres" required autocomplete="new-password" oninput="checkStrength(this.value)"/>
-            <button type="button" class="pw-eye" onclick="togglePw('reg-pw')" aria-label="Mostrar senha">&#128065;</button>
-          </div>
-          
-          <div class="strength-wrap" id="strength-wrap" aria-live="polite">
-            <div class="strength-track"><div class="strength-fill" id="strength-fill"></div></div>
-            <span class="strength-text" id="strength-text"></span>
-          </div>
-        </div>
-        
-        <button type="submit" class="btn-auth" id="btn-do-register">Criar conta</button>
-      </form>
-
-      <footer class="auth-switch">
-        Já tem conta? <a href="#" onclick="event.preventDefault(); showScreen('screen-login');">Fazer login</a>
-      </footer>
-    </article>
-  </section>
-
-  <section id="screen-quiz" class="screen main-screen">
-    
-    <header class="topbar">
-      <div class="topbar-brand">neurofocus<span>.</span></div>
-      <div class="topbar-right">
-        <div class="avatar" aria-hidden="true">🙂</div>
-        <span>Usuário</span>
-        <button class="btn-logout" onclick="doLogout()">Sair</button>
-      </div>
-    </header>
-
-    <main class="main-content">
-      <header class="quiz-header">
-        <span class="tag">Diagnóstico Educacional</span>
-        <h1>Qual é o seu<br/><em>Perfil de Aprendizagem?</em></h1>
-        <p>Perguntas rápidas para identificar possíveis sinais de transtornos de aprendizagem.</p>
-      </header>
-
-      <div class="progress-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-meta">
-          <span id="prog-label">Pergunta 1 de 3</span>
-          <span id="prog-pct">0%</span>
-        </div>
-        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-      </div>
-
-      <article class="question-card" id="question-card">
-        <span class="q-num" id="q-num">Pergunta 1</span>
-        <h2 class="q-text" id="q-text"></h2>
-        
-        <div class="options" id="options-list" role="radiogroup"></div>
-      </article>
-
-      <nav class="nav" aria-label="Navegação do Quiz">
-        <button class="btn btn-back" id="btn-back" onclick="goBack()">&#8592; Anterior</button>
-        <button class="btn btn-next" id="btn-next" onclick="goNext()" disabled>Próxima &#8594;</button>
-      </nav>
-    </main>
-  </section>
-
-  <section id="screen-result" class="screen main-screen">
-    
-    <header class="topbar">
-      <div class="topbar-brand">neurofocus<span>.</span></div>
-      <div class="topbar-right">
-        <div class="avatar" aria-hidden="true">🙂</div>
-        <span>Usuário</span>
-        <button class="btn-logout" onclick="doLogout()">Sair</button>
-      </div>
-    </header>
-
-    //FUNCAO PRINCIPAL MAIN
-    <main class="main-content">
-      <div id="result-wrap">
-        <article class="result-card" id="result-card">
-          <span class="result-icon" id="result-icon" aria-hidden="true">🎯</span>
-          <span class="result-badge" id="result-badge">Resultado do Diagnóstico</span>
-          <h2 class="result-title" id="result-title">Analisando...</h2>
-          <p class="result-desc" id="result-desc">Nossa IA está processando suas respostas.</p>
-        </article>
-        
-        <nav class="result-actions">
-          <button class="btn btn-restart" onclick="restartQuiz()">&#8617; Refazer questionário</button>
-        </nav>
-      </div>
-    </main>
-  </section>
-
-  <button class="fab-disorders" id="fab-btn" onclick="openDisorders()" aria-label="Abrir dicionário de transtornos de aprendizagem">
-    &#129504;
-  </button>
-
-  <dialog class="modal-overlay" id="modal-disorders" onclick="overlayClick(event)">
-    <div class="modal-box" role="document">
-
-      <header class="modal-head">
-        <div class="modal-head-left">
-          <h3 id="modal-title">Transtornos de Aprendizagem</h3>
-          <p>Entenda cada condição, seus sinais e estratégias de apoio</p>
-        </div>
-        <button class="modal-close" onclick="closeDisorders()" aria-label="Fechar janela">&#10005;</button>
-      </header>
-
-      <nav class="dis-tabs" role="tablist" aria-label="Selecione o transtorno">
-        <button class="dis-tab active" role="tab" aria-selected="true" onclick="switchTab(0)">&#129518; Discalculia</button>
-        <button class="dis-tab" role="tab" aria-selected="false" onclick="switchTab(1)">&#9997;&#65039; Disgrafia</button>
-        <button class="dis-tab" role="tab" aria-selected="false" onclick="switchTab(2)">&#128218; Dislexia</button>
-        <button class="dis-tab" role="tab" aria-selected="false" onclick="switchTab(3)">&#9889; TDAH</button>
-      </nav>
-
-      <section class="dis-panels">
-        
-        <article class="dis-panel active" role="tabpanel">
-          <header class="dis-hero">
-            <span class="dis-emoji" aria-hidden="true">&#129518;</span>
-            <div class="dis-hero-text">
-              <h4>Discalculia</h4>
-              <p>Transtorno específico de aprendizagem que afeta a capacidade de compreender e trabalhar com números e conceitos matemáticos.</p>
-            </div>
-          </header>
-          <div class="dis-grid">
-            <div class="dis-block">
-              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
-              <div>
-                <h5 class="dis-block-title">Como identificar</h5>
-                <p class="dis-block-text">Dificuldade em reconhecer números, fazer cálculos básicos e medir distâncias ou tempo.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="dis-panel" role="tabpanel">
-          <header class="dis-hero">
-            <span class="dis-emoji" aria-hidden="true">&#9997;&#65039;</span>
-            <div class="dis-hero-text">
-              <h4>Disgrafia</h4>
-              <p>Transtorno que afeta a habilidade de escrever à mão de forma legível e fluente.</p>
-            </div>
-          </header>
-          <div class="dis-grid">
-            <div class="dis-block">
-              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
-              <div>
-                <h5 class="dis-block-title">Como identificar</h5>
-                <p class="dis-block-text">Letra difícil de ler, tamanho irregular das letras, dor ou tensão ao escrever.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="dis-panel" role="tabpanel">
-          <header class="dis-hero">
-            <span class="dis-emoji" aria-hidden="true">&#128218;</span>
-            <div class="dis-hero-text">
-              <h4>Dislexia</h4>
-              <p>Afeta a leitura e a decodificação de palavras. Pessoas com dislexia têm dificuldade em associar letras a sons.</p>
-            </div>
-          </header>
-          <div class="dis-grid">
-            <div class="dis-block">
-              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
-              <div>
-                <h5 class="dis-block-title">Como identificar</h5>
-                <p class="dis-block-text">Leitura lenta, inversão ou omissão de letras e sílabas, dificuldade em rimar.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="dis-panel" role="tabpanel">
-          <header class="dis-hero">
-            <span class="dis-emoji" aria-hidden="true">&#9889;</span>
-            <div class="dis-hero-text">
-              <h4>TDAH</h4>
-              <p>É um transtorno do neurodesenvolvimento que afeta a atenção, o controle de impulsos e o nível de atividade motora.</p>
-            </div>
-          </header>
-          <div class="dis-grid">
-            <div class="dis-block">
-              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
-              <div>
-                <h5 class="dis-block-title">Como identificar</h5>
-                <p class="dis-block-text">Dificuldade em manter o foco, inquietação excessiva, impulsividade e desorganização, perdendo objetos frequentemente.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-      </section>
+<!-- ═══════════════════ LOGIN SCREEN ═══════════════════ -->
+<div id="screen-login" class="screen active">
+  <div class="card">
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
+      <h1>LearnProfile</h1>
+      <p style="margin:4px 0 0;">Descubra como você aprende melhor</p>
     </div>
-  </dialog>
+    <label>E-mail</label>
+    <input type="email" id="login-email" placeholder="seu@email.com" />
+    <label>Senha</label>
+    <input type="password" id="login-pass" placeholder="••••••••" />
+    <div class="error-msg" id="login-error"></div>
+    <button class="btn btn-primary" onclick="doLogin()">🚀 Entrar</button>
+    <div class="toggle-link">Não tem conta? <span onclick="showScreen('screen-register')">Criar conta</span></div>
+  </div>
+</div>
 
-  <script>
-  
-  </script>
-</body>
-</html>
+<!-- ═══════════════════ REGISTER SCREEN ═══════════════════ -->
+<div id="screen-register" class="screen">
+  <div class="card">
+    <div class="logo">
+      <div class="logo-icon">✨</div>
+      <h1>Criar Conta</h1>
+      <p style="margin:4px 0 0;">Junte-se e descubra seu perfil</p>
+    </div>
+    <label>Nome completo</label>
+    <input type="text" id="reg-name" placeholder="Seu nome" />
+    <label>E-mail</label>
+    <input type="email" id="reg-email" placeholder="seu@email.com" />
+    <label>Senha</label>
+    <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres" />
+    <div class="error-msg" id="reg-error"></div>
+    <button class="btn btn-primary" onclick="doRegister()">✅ Criar Conta</button>
+    <button class="btn btn-outline" onclick="showScreen('screen-login')">← Voltar ao login</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ QUIZ SCREEN ═══════════════════ -->
+<div id="screen-quiz" class="screen">
+  <div class="card" style="max-width:520px;">
+    <div class="quiz-header">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label"></div>
+    </div>
+    <div id="question-container"></div>
+    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none;">Próxima →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ RESULT SCREEN ═══════════════════ -->
+<div id="screen-result" class="screen">
+  <div class="card result-card">
+    <p style="text-align:center;font-size:0.85rem;color:var(--muted);margin-bottom:8px;">SEU PERFIL DE APRENDIZAGEM</p>
+    <div id="result-badge" class="result-badge"></div>
+    <div class="profile-name" id="result-name"></div>
+    <p class="profile-desc" id="result-desc"></p>
+    <div class="tips-grid" id="tips-grid"></div>
+    <button class="disorders-btn" onclick="openModal()">⚠️ Transtornos de Aprendizagem</button>
+    <button class="btn btn-secondary" onclick="goToDash()">📊 Ver Meu Perfil</button>
+    <button class="btn btn-outline" onclick="startQuiz()">🔄 Refazer Quiz</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ DASHBOARD SCREEN ═══════════════════ -->
+<div id="screen-dash" class="screen">
+  <div class="card dash-card">
+    <div class="nav-bar">
+      <button class="nav-btn active" onclick="showDashTab(this,'tab-overview')">Visão Geral</button>
+      <button class="nav-btn" onclick="showDashTab(this,'tab-history')">Histórico</button>
+      <button class="nav-btn" onclick="showDashTab(this,'tab-about')">Sobre Você</button>
+    </div>
+
+    <div id="tab-overview">
+      <div class="user-banner">
+        <div class="avatar" id="dash-avatar"></div>
+        <div class="user-info">
+          <div class="user-name" id="dash-name"></div>
+          <div class="user-email" id="dash-email"></div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">Testes realizados</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-profile">—</div><div class="stat-lbl">Perfil dominante</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-streak">🔥 1</div><div class="stat-lbl">Sessão atual</div></div>
+      </div>
+      <button class="btn btn-primary" onclick="startQuiz()">🎯 Fazer Novo Teste</button>
+      <button class="disorders-btn" style="margin-top:10px;" onclick="openModal()">⚠️ Transtornos de Aprendizagem</button>
+      <button class="btn btn-danger" onclick="doLogout()">Sair da Conta</button>
+    </div>
+
+    <div id="tab-history" style="display:none;">
+      <div class="history-title">Resultados anteriores</div>
+      <div id="history-list"></div>
+      <button class="btn btn-primary" onclick="startQuiz()" style="margin-top:8px;">+ Novo Teste</button>
+    </div>
+
+    <div id="tab-about" style="display:none;">
+      <div id="about-content"></div>
+      <button class="disorders-btn" style="margin-top:8px;" onclick="openModal()">⚠️ Transtornos de Aprendizagem</button>
+      <button class="btn btn-outline" style="margin-top:6px;" onclick="startQuiz()">🔄 Refazer Quiz</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MODAL DISORDERS ═══════════════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">🧩 Transtornos de Aprendizagem</div>
+        <p style="margin:4px 0 0;font-size:0.85rem;color:var(--muted);">Conheça os principais transtornos e como identificá-los</p>
+      </div>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="disorder-item">
+      <div class="disorder-head">
+        <span class="disorder-icon">🔢</span>
+        <span class="disorder-name">Discalculia</span>
+        <span class="disorder-tag tag-blue">Matemática</span>
+      </div>
+      <p class="disorder-p">Dificuldade persistente com números, operações matemáticas e conceitos numéricos. A pessoa pode ter dificuldade em memorizar tabuadas, compreender sequências e resolver problemas com cálculos básicos.</p>
+    </div>
+
+    <div class="disorder-item">
+      <div class="disorder-head">
+        <span class="disorder-icon">✍️</span>
+        <span class="disorder-name">Disgrafia</span>
+        <span class="disorder-tag tag-purple">Escrita</span>
+      </div>
+      <p class="disorder-p">Dificuldade com a escrita manual, afetando a caligrafia e a organização espacial no papel. A cópia de textos é lenta, as letras ficam irregulares e há esforço excessivo para escrever.</p>
+    </div>
+
+    <div class="disorder-item">
+      <div class="disorder-head">
+        <span class="disorder-icon">📖</span>
+        <span class="disorder-name">Dislexia</span>
+        <span class="disorder-tag tag-red">Leitura</span>
+      </div>
+      <p class="disorder-p">Dificuldade na decodificação de palavras escritas, afetando a leitura fluente e a soletração. Não está relacionada à inteligência — pessoas com dislexia podem ser altamente criativas e talentosas.</p>
+    </div>
+
+    <div class="disorder-item">
+      <div class="disorder-head">
+        <span class="disorder-icon">⚡</span>
+        <span class="disorder-name">TDAH</span>
+        <span class="disorder-tag tag-yellow">Atenção</span>
+      </div>
+      <p class="disorder-p">Transtorno do Déficit de Atenção com Hiperatividade. Caracteriza-se por dificuldade de manter o foco, impulsividade e, em alguns casos, hiperatividade. Afeta aprendizagem, organização e relacionamentos sociais.</p>
+    </div>
+
+    <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:8px;">Se identificar características acima, consulte um neuropsicólogo ou psicopedagogo.</p>
+  </div>
+</div>
 
 <script>
-  /* ── Exibe a tela escolhida escondendo todas as outras através da classe 'active' ── */
-  function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    if (id === 'screen-quiz') {
-      const qCard = document.getElementById('question-card');
-      qCard.classList.remove('visible');
-      setTimeout(() => qCard.classList.add('visible'), 100);
-    }
+// ── DATA ──────────────────────────────────────────────────
+const QUESTIONS = [
+  {
+    text: "Como você prefere aprender algo novo?",
+    options: [
+      { icon: "🗺️", text: "Lendo mapas, diagramas ou assistindo vídeos explicativos", type: "V" },
+      { icon: "🎧", text: "Ouvindo explicações, podcasts ou debatendo com alguém", type: "A" },
+      { icon: "🛠️", text: "Praticando diretamente, fazendo experimentos e tentando na prática", type: "K" },
+    ]
+  },
+  {
+    text: "Quando você precisa lembrar de uma informação importante, como você age?",
+    options: [
+      { icon: "📝", text: "Escrevo, desenho ou faço um esquema colorido", type: "V" },
+      { icon: "🗣️", text: "Repito em voz alta ou explico para alguém", type: "A" },
+      { icon: "👆", text: "Associo a uma ação física ou experiência que já vivi", type: "K" },
+    ]
+  },
+  {
+    text: "Em uma reunião ou aula, o que mais ajuda a manter sua atenção?",
+    options: [
+      { icon: "📊", text: "Slides, gráficos, imagens e apresentações visuais", type: "V" },
+      { icon: "🎤", text: "Discussões, perguntas ao professor e conteúdo narrado", type: "A" },
+      { icon: "🤝", text: "Atividades em grupo, dinâmicas e simulações práticas", type: "K" },
+    ]
+  },
+  {
+    text: "Como você costuma resolver um problema difícil?",
+    options: [
+      { icon: "🖼️", text: "Visualizando o problema, desenhando ou criando diagramas", type: "V" },
+      { icon: "🧏", text: "Conversando sobre ele em voz alta, mesmo que sozinho", type: "A" },
+      { icon: "🏃", text: "Tentando várias abordagens práticas até encontrar a solução", type: "K" },
+    ]
+  },
+];
+
+const PROFILES = {
+  V: {
+    name: "Visual",
+    emoji: "👁️",
+    badgeClass: "badge-visual",
+    desc: "Você aprende melhor por meio de imagens, diagramas, cores e representações espaciais. Sua mente processa informações de forma pictórica.",
+    tips: [
+      { icon: "🗺️", text: "Use mapas mentais e diagramas" },
+      { icon: "🎨", text: "Destaque textos com cores" },
+      { icon: "📽️", text: "Prefira vídeos a áudios" },
+      { icon: "📋", text: "Organize em tabelas e listas visuais" },
+    ],
+    dotClass: "dot-visual", badgeSmall: "badge-v", badgeLabel: "Visual"
+  },
+  A: {
+    name: "Auditivo",
+    emoji: "👂",
+    badgeClass: "badge-auditivo",
+    desc: "Você aprende melhor ouvindo explicações, participando de discussões e repetindo informações em voz alta. Sons e palavras são seu forte.",
+    tips: [
+      { icon: "🎧", text: "Grave e ouça anotações" },
+      { icon: "🗣️", text: "Explique conteúdos em voz alta" },
+      { icon: "🎙️", text: "Use podcasts educativos" },
+      { icon: "👥", text: "Participe de grupos de estudo" },
+    ],
+    dotClass: "dot-auditivo", badgeSmall: "badge-a", badgeLabel: "Auditivo"
+  },
+  K: {
+    name: "Cinestésico",
+    emoji: "🤲",
+    badgeClass: "badge-kinestesico",
+    desc: "Você aprende melhor praticando, experimentando e vivenciando. A ação física e a experiência direta são essenciais para fixar o conhecimento.",
+    tips: [
+      { icon: "🛠️", text: "Faça projetos práticos" },
+      { icon: "🚶", text: "Estude caminhando ou em movimento" },
+      { icon: "🎮", text: "Use simulações e jogos educativos" },
+      { icon: "✍️", text: "Escreva enquanto aprende" },
+    ],
+    dotClass: "dot-kinestesico", badgeSmall: "badge-k", badgeLabel: "Cinestésico"
   }
-  // Funções de simulação de autenticação (redirecionam direto para o quiz)
-  function doLogin()    { showScreen('screen-quiz'); initQuiz(); }
-  function doRegister() { showScreen('screen-quiz'); initQuiz(); }
-  function doLogout()   { showScreen('screen-login'); }
+};
 
-  // Alterna o tipo de input entre 'password' e 'text' para exibir/esconder caracteres da senha
-  function togglePw(inputId) {
-    const input = document.getElementById(inputId);
-    input.type = (input.type === 'password') ? 'text' : 'password';
-  }
-// Validador simples de segurança e tamanho da senha
-  function checkStrength(val) {
-    const wrap = document.getElementById('strength-wrap');
-    const fill = document.getElementById('strength-fill');
-    const text = document.getElementById('strength-text');
-    wrap.classList.toggle('show', val.length > 0);
-    if (val.length < 6) {
-      fill.style.width = '30%'; fill.style.background = 'var(--aa)'; text.innerText = 'Senha fraca';
-    } else {
-      fill.style.width = '100%'; fill.style.background = 'var(--av)'; text.innerText = 'Senha forte';
-    }
-  }
+// ── STATE ─────────────────────────────────────────────────
+let currentUser = null;   // { name, email, pass }
+let users = JSON.parse(localStorage.getItem('lp_users') || '[]');
+let currentQ = 0;
+let answers = [];
+let selectedOption = null;
 
-  // Array de Objetos contendo a Base de Dados de perguntas, alternativas e o mapeamento dos transtornos
-  const questions = [
-    {
-      q: quando voce precisa aprender algo novo, voce prefere: [
-        { t: "ver imagens, diagramas ou video explicativos" },
-        { t: "ouvir uma explicacao ou aula falada", type: "Disgrafia" },
-        { t: "tentar fazer na pratica imediatamente", type: "Nenhum" }
-      ]
-    },
-    {
-      q: "Como você se sente ao ler um texto longo, como um artigo ou capítulo de livro?: [
-        { t: "Tenho extrema dificuldade,as letras me confudem", type: "Discalculia" },
-        { t: "consigo ler, mas as vezes troco palavras ou perco linhas", type: "nenhum" },
-        { t: "leio com boa facilidade e velocidade", type: "nenhum" }
-      ]
-    },
-    {
-      q: "Ao copiar um texto do quadro, de um livro ou tela, o que acontece?",
-      options: [
-        { t: "as vezes pulo linhas ou troco letras", type: "TDAH" },
-        { t: "perco o lugar constantemente, copio errado e demoro muito mais que os outros", type: "nenhum" },
-        { t: "copio com facilidade e sem erros", type: "nenhum" }
-      ]
-    }
-  ];
+// ── NAV ───────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
 
-  let currentQ = 0;
-  let answers  = [];
+// ── AUTH ──────────────────────────────────────────────────
+function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const err   = document.getElementById('login-error');
+  if (!email || !pass) { err.textContent = 'Preencha todos os campos.'; return; }
+  const user = users.find(u => u.email === email && u.pass === pass);
+  if (!user) { err.textContent = 'E-mail ou senha incorretos.'; return; }
+  err.textContent = '';
+  currentUser = user;
+  goToDash();
+}
 
-  // Inicializa o estado do questionário
-  function initQuiz() {
-    currentQ = 0;
-    answers  = [];
+function doRegister() {
+  const name  = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass  = document.getElementById('reg-pass').value;
+  const err   = document.getElementById('reg-error');
+  if (!name || !email || !pass) { err.textContent = 'Preencha todos os campos.'; return; }
+  if (pass.length < 6) { err.textContent = 'Senha deve ter ao menos 6 caracteres.'; return; }
+  if (users.find(u => u.email === email)) { err.textContent = 'E-mail já cadastrado.'; return; }
+  const newUser = { name, email, pass, history: [] };
+  users.push(newUser);
+  localStorage.setItem('lp_users', JSON.stringify(users));
+  err.textContent = '';
+  currentUser = newUser;
+  goToDash();
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-pass').value = '';
+  showScreen('screen-login');
+}
+
+// ── QUIZ ──────────────────────────────────────────────────
+function startQuiz() {
+  currentQ = 0; answers = []; selectedOption = null;
+  renderQuestion();
+  showScreen('screen-quiz');
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const total = QUESTIONS.length;
+  const pct = Math.round((currentQ / total) * 100);
+
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Pergunta ${currentQ + 1} de ${total}`;
+
+  const container = document.getElementById('question-container');
+  container.innerHTML = `<div class="question-text">${q.text}</div>` +
+    q.options.map((o, i) =>
+      `<div class="option" id="opt-${i}" onclick="selectOption(${i}, '${o.type}')">
+        <span class="option-icon">${o.icon}</span>
+        <span class="option-text">${o.text}</span>
+      </div>`
+    ).join('');
+
+  document.getElementById('next-btn').style.display = 'none';
+  selectedOption = null;
+}
+
+function selectOption(idx, type) {
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('opt-' + idx).classList.add('selected');
+  selectedOption = type;
+  document.getElementById('next-btn').style.display = 'flex';
+}
+
+function nextQuestion() {
+  if (!selectedOption) return;
+  answers.push(selectedOption);
+  currentQ++;
+  if (currentQ < QUESTIONS.length) {
     renderQuestion();
+  } else {
+    showResult();
   }
-// Renderiza estruturalmente e atualiza os dados da questão na tela
-  function renderQuestion() {
-    const qData = questions[currentQ];
-    document.getElementById('q-num').innerText  = `Pergunta ${currentQ + 1}`;
-    document.getElementById('q-text').innerText = qData.q;
+}
 
-    // Cálculo matemático e renderização da barra de progresso
-    const pct = Math.round((currentQ / questions.length) * 100);
-    document.getElementById('prog-label').innerText        = `Pergunta ${currentQ + 1} de ${questions.length}`;
-    document.getElementById('prog-pct').innerText          = `${pct}%`;
-    document.getElementById('progress-fill').style.width   = `${pct}%`;
+// ── RESULT ────────────────────────────────────────────────
+function showResult() {
+  const count = { V: 0, A: 0, K: 0 };
+  answers.forEach(a => count[a]++);
+  const dominant = Object.entries(count).sort((a,b) => b[1]-a[1])[0][0];
+  const p = PROFILES[dominant];
 
-    // Limpa o container e monta os elementos HTML das opções de resposta dinamicamente
-    const optsContainer = document.getElementById('options-list');
-    optsContainer.innerHTML = '';
-    const classes = ['opt-a', 'opt-b', 'opt-c'];
-    const letters = ['A', 'B', 'C'];
+  document.getElementById('result-badge').className = `result-badge ${p.badgeClass}`;
+  document.getElementById('result-badge').textContent = p.emoji;
+  document.getElementById('result-name').textContent = `Aprendiz ${p.name}`;
+  document.getElementById('result-desc').textContent = p.desc;
 
-    qData.options.forEach((opt, index) => {
-      const isSelected = answers[currentQ] === index;
-      const div = document.createElement('div');
-      div.className = `option ${classes[index]} ${isSelected ? 'selected' : ''}`;
-      div.onclick = () => selectOption(index);
-      div.innerHTML = `<div class="opt-letter">${letters[index]}</div><div class="opt-text">${opt.t}</div>`;
-      optsContainer.appendChild(div);
-    });
+  document.getElementById('tips-grid').innerHTML = p.tips.map(t =>
+    `<div class="tip-item"><div class="tip-icon">${t.icon}</div>${t.text}</div>`
+  ).join('');
 
-    // Controla o comportamento dos botões Anterior e Próxima/Finalizar
-    document.getElementById('btn-back').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
-    document.getElementById('btn-next').disabled = answers[currentQ] === undefined;
-    document.getElementById('btn-next').innerText = currentQ === questions.length - 1 ? 'Finalizar' : 'Próxima →';
-  }
-
-  // Grava a opção selecionada pelo usuário e atualiza a interface visual do card
-  function selectOption(index) { answers[currentQ] = index; renderQuestion(); }
-
-  // Avança para a próxima questão ou finaliza caso seja a última
-  function goNext() {
-    if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); }
-    else finishQuiz();
+  // Save to history
+  if (currentUser) {
+    const entry = {
+      profile: dominant,
+      date: new Date().toLocaleDateString('pt-BR'),
+      timestamp: Date.now()
+    };
+    currentUser.history = currentUser.history || [];
+    currentUser.history.unshift(entry);
+    const idx = users.findIndex(u => u.email === currentUser.email);
+    if (idx !== -1) { users[idx] = currentUser; localStorage.setItem('lp_users', JSON.stringify(users)); }
   }
 
-  // Volta uma questão
-  function goBack() { if (currentQ > 0) { currentQ--; renderQuestion(); } }
+  showScreen('screen-result');
+}
 
-  // Finaliza a barra em 100% e redireciona o usuário para a tela de resultados
-  function finishQuiz() {
-    document.getElementById('progress-fill').style.width = '100%';
-    document.getElementById('prog-pct').innerText = '100%';
-    setTimeout(() => { showScreen('screen-result'); calculateResult(); }, 400);
+// ── DASHBOARD ─────────────────────────────────────────────
+function goToDash() {
+  if (!currentUser) { showScreen('screen-login'); return; }
+  const initials = currentUser.name.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('dash-avatar').textContent = initials;
+  document.getElementById('dash-name').textContent = currentUser.name;
+  document.getElementById('dash-email').textContent = currentUser.email;
+
+  const hist = currentUser.history || [];
+  document.getElementById('stat-total').textContent = hist.length;
+
+  if (hist.length > 0) {
+    const freq = { V:0, A:0, K:0 };
+    hist.forEach(h => freq[h.profile]++);
+    const dom = Object.entries(freq).sort((a,b) => b[1]-a[1])[0][0];
+    document.getElementById('stat-profile').textContent = PROFILES[dom].name;
+  } else {
+    document.getElementById('stat-profile').textContent = '—';
   }
 
-  // Reseta o formulário permitindo nova execução do fluxo
-  function restartQuiz() { initQuiz(); showScreen('screen-quiz'); }
+  renderHistory();
+  renderAbout();
+  showDashTab(document.querySelector('.nav-btn'), 'tab-overview');
+  showScreen('screen-dash');
+}
 
-  // Processa as respostas para verificar quais transtornos foram mapeados
-  function calculateResult() {
-    const detected = [];
-    answers.forEach((selectedIndex, qIndex) => {
-      if (selectedIndex !== undefined) {
-        const type = questions[qIndex].options[selectedIndex].type;
-        if (type !== "Nenhum" && !detected.includes(type)) detected.push(type);
-      }
-    });
-
-    document.getElementById('result-wrap').style.display = 'block';
-    const iconEl  = document.getElementById('result-icon');
-    const titleEl = document.getElementById('result-title');
-    const descEl  = document.getElementById('result-desc');
-
-    // Monta o layout da tela final baseado na detecção ou ausência de indícios
-    if (detected.length > 0) {
-      iconEl.innerHTML  = '&#128269;';
-      titleEl.innerText = "Indícios Detectados";
-      descEl.innerHTML  = "Com base nas suas respostas, notamos sinais associados a:<br><br>" +
-        detected.map(d => `<strong>${d}</strong>`).join(', ') +
-        ".<br><br>Sugerimos buscar uma avaliação pedagógica ou clínica especializada.";
-    } else {
-      iconEl.innerHTML  = '&#127881;';
-      titleEl.innerText = "Nenhum indício forte";
-      descEl.innerText  = "Suas respostas não indicam traços fortes dos transtornos específicos avaliados.";
-    }
+function renderHistory() {
+  const hist = currentUser.history || [];
+  const list = document.getElementById('history-list');
+  if (hist.length === 0) {
+    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px 0;">Nenhum teste realizado ainda.</p>';
+    return;
   }
-// Controle de abertura, fechamento e clique externo para fechar o Modal informativo
-  function openDisorders()  { document.getElementById('modal-disorders').style.display = 'flex'; }
-  function closeDisorders() { document.getElementById('modal-disorders').style.display = 'none'; }
-  function overlayClick(e)  { if (e.target.id === 'modal-disorders') closeDisorders(); }
+  list.innerHTML = hist.slice(0, 10).map(h => {
+    const p = PROFILES[h.profile];
+    return `<div class="history-item">
+      <div class="history-left">
+        <div class="history-dot ${p.dotClass}"></div>
+        <div>
+          <div class="history-profile">Aprendiz ${p.name}</div>
+          <div class="history-date">${h.date}</div>
+        </div>
+      </div>
+      <span class="history-badge ${p.badgeSmall}">${p.emoji} ${p.badgeLabel}</span>
+    </div>`;
+  }).join('');
+}
 
-  // Alterna o painel de visualização ativo das abas internas do Modal de Transtornos
-  // (Esta função foi fechada e corrigida adequadamente aqui)
-  function switchTab(index) {
-    document.querySelectorAll('.dis-tab').forEach((t, i)   => t.classList.toggle('active', i === index));
-    document.querySelectorAll('.dis-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+function renderAbout() {
+  const hist = currentUser.history || [];
+  const about = document.getElementById('about-content');
+  if (hist.length === 0) {
+    about.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px 0;">Faça o quiz para ver seu perfil detalhado.</p>';
+    return;
   }
+  const freq = { V:0, A:0, K:0 };
+  hist.forEach(h => freq[h.profile]++);
+  const dom = Object.entries(freq).sort((a,b) => b[1]-a[1])[0][0];
+  const p = PROFILES[dom];
+  about.innerHTML = `
+    <div style="text-align:center;margin-bottom:20px;">
+      <div class="result-badge ${p.badgeClass}" style="margin:0 auto 12px;">${p.emoji}</div>
+      <div style="font-size:1.3rem;font-weight:700;">Aprendiz ${p.name}</div>
+      <p>${p.desc}</p>
+    </div>
+    <div class="tips-grid">${p.tips.map(t => `<div class="tip-item"><div class="tip-icon">${t.icon}</div>${t.text}</div>`).join('')}</div>
+  `;
+}
+
+function showDashTab(btn, tabId) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['tab-overview','tab-history','tab-about'].forEach(id => {
+    document.getElementById(id).style.display = id === tabId ? 'block' : 'none';
+  });
+}
+
+// ── MODAL ─────────────────────────────────────────────────
+function openModal()  { document.getElementById('modal-overlay').classList.add('active'); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+function closeModalOutside(e) { if (e.target === document.getElementById('modal-overlay')) closeModal(); }
 </script>
 </body>
 </html>
-
-  
     
 
   
