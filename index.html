@@ -404,225 +404,275 @@ body {
 </head>
 <body>
   <!-- LOGIN -->
-  <div id="screen-login" class="screen auth-screen active">
-    <div class="auth-card">
-      <div class="auth-logo">
-        <div class="auth-badge">&#127891; Perfil de Aprendizagem</div>
-        <h2>Bem-vindo!</h2>
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neurofocus - Perfil de Aprendizagem</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"/>
+  
+  <style>
+    /* Cole o seu CSS completo aqui */
+  </style>
+</head>
+<body>
+
+  <section id="screen-login" class="screen auth-screen active" aria-labelledby="login-title">
+    <article class="auth-card">
+      
+      <header class="auth-logo">
+        <span class="auth-badge">&#127891; Perfil de Aprendizagem</span>
+        <h2 id="login-title">Bem-vindo!</h2>
         <p>Entre na sua conta para continuar</p>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="login-email">E-mail</label>
-        <input class="form-input" type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="login-pw">Senha</label>
-        <div class="pw-wrap">
-          <input class="form-input" type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password"/>
-          <button type="button" class="pw-eye" id="eye-login-pw" onclick="togglePw('login-pw')" aria-label="Mostrar senha">&#128065;</button>
-        </div>
-      </div>
-      <button class="btn-auth" id="btn-do-login" onclick="doLogin()">Entrar</button>
-      <div class="divider">ou</div>
-      <div class="auth-switch">Não tem conta? <a onclick="showScreen('screen-register')">Cadastre-se grátis</a></div>
-    </div>
-  </div>
+      </header>
 
-  <!-- REGISTER -->
-  <div id="screen-register" class="screen auth-screen">
-    <div class="auth-card">
-      <div class="auth-logo">
-        <div class="auth-badge">&#127891; Perfil de Aprendizagem</div>
-        <h2>Criar conta</h2>
+      <form onsubmit="event.preventDefault(); doLogin();">
+        <div class="form-group">
+          <label class="form-label" for="login-email">E-mail</label>
+          <input class="form-input" type="email" id="login-email" placeholder="seu@email.com" required autocomplete="email"/>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="login-pw">Senha</label>
+          <div class="pw-wrap">
+            <input class="form-input" type="password" id="login-pw" placeholder="••••••••" required autocomplete="current-password"/>
+            <button type="button" class="pw-eye" onclick="togglePw('login-pw')" aria-label="Mostrar senha">&#128065;</button>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-auth" id="btn-do-login">Entrar</button>
+      </form>
+
+      <div class="divider" aria-hidden="true">ou</div>
+      
+      <footer class="auth-switch">
+        Não tem conta? <a href="#" onclick="event.preventDefault(); showScreen('screen-register');">Cadastre-se grátis</a>
+      </footer>
+
+    </article>
+  </section>
+
+  <section id="screen-register" class="screen auth-screen" aria-labelledby="register-title">
+    <article class="auth-card">
+      
+      <header class="auth-logo">
+        <span class="auth-badge">&#127891; Perfil de Aprendizagem</span>
+        <h2 id="register-title">Criar conta</h2>
         <p>Descubra como você aprende melhor</p>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="reg-name">Nome completo</label>
-        <input class="form-input" type="text" id="reg-name" placeholder="Seu nome" autocomplete="name"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="reg-email">E-mail</label>
-        <input class="form-input" type="email" id="reg-email" placeholder="seu@email.com" autocomplete="email"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="reg-pw">Senha</label>
-        <div class="pw-wrap">
-          <input class="form-input" type="password" id="reg-pw" placeholder="Mínimo 6 caracteres" autocomplete="new-password" oninput="checkStrength(this.value)"/>
-          <button type="button" class="pw-eye" id="eye-reg-pw" onclick="togglePw('reg-pw')" aria-label="Mostrar senha">&#128065;</button>
-        </div>
-        <div class="strength-wrap" id="strength-wrap">
-          <div class="strength-track"><div class="strength-fill" id="strength-fill"></div></div>
-          <span class="strength-text" id="strength-text"></span>
-        </div>
-      </div>
-      <button class="btn-auth" id="btn-do-register" onclick="doRegister()">Criar conta</button>
-      <div class="auth-switch">Já tem conta? <a onclick="showScreen('screen-login')">Fazer login</a></div>
-    </div>
-  </div>
+      </header>
 
-  <!-- QUIZ -->
-  <div id="screen-quiz" class="screen main-screen">
-    <div class="topbar">
+      <form onsubmit="event.preventDefault(); doRegister();">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Nome completo</label>
+          <input class="form-input" type="text" id="reg-name" placeholder="Seu nome" required autocomplete="name"/>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="reg-email">E-mail</label>
+          <input class="form-input" type="email" id="reg-email" placeholder="seu@email.com" required autocomplete="email"/>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="reg-pw">Senha</label>
+          <div class="pw-wrap">
+            <input class="form-input" type="password" id="reg-pw" placeholder="Mínimo 6 caracteres" required autocomplete="new-password" oninput="checkStrength(this.value)"/>
+            <button type="button" class="pw-eye" onclick="togglePw('reg-pw')" aria-label="Mostrar senha">&#128065;</button>
+          </div>
+          
+          <div class="strength-wrap" id="strength-wrap" aria-live="polite">
+            <div class="strength-track"><div class="strength-fill" id="strength-fill"></div></div>
+            <span class="strength-text" id="strength-text"></span>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-auth" id="btn-do-register">Criar conta</button>
+      </form>
+
+      <footer class="auth-switch">
+        Já tem conta? <a href="#" onclick="event.preventDefault(); showScreen('screen-login');">Fazer login</a>
+      </footer>
+
+    </article>
+  </section>
+
+  <section id="screen-quiz" class="screen main-screen">
+    
+    <header class="topbar">
       <div class="topbar-brand">neurofocus<span>.</span></div>
       <div class="topbar-right">
-        <div class="avatar">🙂</div>
+        <div class="avatar" aria-hidden="true">🙂</div>
         <span>Usuário</span>
         <button class="btn-logout" onclick="doLogout()">Sair</button>
       </div>
-    </div>
-    <div class="main-content">
-      <div class="quiz-header">
-        <div class="tag">Diagnóstico Educacional</div>
+    </header>
+
+    <main class="main-content">
+      <header class="quiz-header">
+        <span class="tag">Diagnóstico Educacional</span>
         <h1>Qual é o seu<br/><em>Perfil de Aprendizagem?</em></h1>
         <p>Perguntas rápidas para identificar possíveis sinais de transtornos de aprendizagem.</p>
-      </div>
-      <div class="progress-wrap">
+      </header>
+
+      <div class="progress-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-meta">
           <span id="prog-label">Pergunta 1 de 3</span>
           <span id="prog-pct">0%</span>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
       </div>
-      <div class="question-card" id="question-card">
-        <div class="q-num" id="q-num">Pergunta 1</div>
-        <div class="q-text" id="q-text"></div>
-        <div class="options" id="options-list"></div>
-      </div>
-      <div class="nav">
+
+      <article class="question-card" id="question-card">
+        <span class="q-num" id="q-num">Pergunta 1</span>
+        <h2 class="q-text" id="q-text"></h2>
+        
+        <div class="options" id="options-list" role="radiogroup"></div>
+      </article>
+
+      <nav class="nav" aria-label="Navegação do Quiz">
         <button class="btn btn-back" id="btn-back" onclick="goBack()">&#8592; Anterior</button>
         <button class="btn btn-next" id="btn-next" onclick="goNext()" disabled>Próxima &#8594;</button>
-      </div>
-    </div>
-  </div>
+      </nav>
+    </main>
+  </section>
 
-  <!-- RESULT -->
-  <div id="screen-result" class="screen main-screen">
-    <div class="topbar">
+  <section id="screen-result" class="screen main-screen">
+    
+    <header class="topbar">
       <div class="topbar-brand">neurofocus<span>.</span></div>
       <div class="topbar-right">
-        <div class="avatar">🙂</div>
+        <div class="avatar" aria-hidden="true">🙂</div>
         <span>Usuário</span>
         <button class="btn-logout" onclick="doLogout()">Sair</button>
       </div>
-    </div>
-    <div class="main-content">
+    </header>
+
+    <main class="main-content">
       <div id="result-wrap">
-        <div class="result-card" id="result-card">
-          <span class="result-icon" id="result-icon"></span>
-          <div class="result-badge" id="result-badge">Resultado do Diagnóstico</div>
-          <h2 class="result-title" id="result-title"></h2>
-          <p class="result-desc" id="result-desc"></p>
-        </div>
-        <div class="result-actions">
+        <article class="result-card" id="result-card">
+          <span class="result-icon" id="result-icon" aria-hidden="true">🎯</span>
+          <span class="result-badge" id="result-badge">Resultado do Diagnóstico</span>
+          <h2 class="result-title" id="result-title">Analisando...</h2>
+          <p class="result-desc" id="result-desc">Nossa IA está processando suas respostas.</p>
+        </article>
+        
+        <nav class="result-actions">
           <button class="btn btn-restart" onclick="restartQuiz()">&#8617; Refazer questionário</button>
-        </div>
+        </nav>
       </div>
-    </div>
-  </div>
+    </main>
+  </section>
 
-  <!-- FAB -->
-  <button class="fab-disorders" id="fab-btn" onclick="openDisorders()" aria-label="Transtornos de aprendizagem">&#129504;</button>
+  <button class="fab-disorders" id="fab-btn" onclick="openDisorders()" aria-label="Abrir dicionário de transtornos de aprendizagem">
+    &#129504;
+  </button>
 
-  <!-- MODAL TRANSTORNOS -->
-  <div class="modal-overlay" id="modal-disorders" onclick="overlayClick(event)">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <dialog class="modal-overlay" id="modal-disorders" onclick="overlayClick(event)">
+    <div class="modal-box" role="document">
 
-      <div class="modal-head">
+      <header class="modal-head">
         <div class="modal-head-left">
           <h3 id="modal-title">Transtornos de Aprendizagem</h3>
           <p>Entenda cada condição, seus sinais e estratégias de apoio</p>
         </div>
-        <button class="modal-close" onclick="closeDisorders()" aria-label="Fechar">&#10005;</button>
-      </div>
+        <button class="modal-close" onclick="closeDisorders()" aria-label="Fechar janela">&#10005;</button>
+      </header>
 
-      <div class="dis-tabs" role="tablist">
-        <button class="dis-tab active" role="tab" onclick="switchTab(0)">&#129518; Discalculia</button>
-        <button class="dis-tab" role="tab" onclick="switchTab(1)">&#9997;&#65039; Disgrafia</button>
-        <button class="dis-tab" role="tab" onclick="switchTab(2)">&#128218; Dislexia</button>
-        <button class="dis-tab" role="tab" onclick="switchTab(3)">&#9889; TDAH</button>
-      </div>
+      <nav class="dis-tabs" role="tablist" aria-label="Selecione o transtorno">
+        <button class="dis-tab active" role="tab" aria-selected="true" onclick="switchTab(0)">&#129518; Discalculia</button>
+        <button class="dis-tab" role="tab" aria-selected="false" onclick="switchTab(1)">&#9997;&#65039; Disgrafia</button>
+        <button class="dis-tab" role="tab" aria-selected="false" onclick="switchTab(2)">&#128218; Dislexia</button>
+        <button class="dis-tab" role="tab" aria-selected="false" onclick="switchTab(3)">&#9889; TDAH</button>
+      </nav>
 
-      <div class="dis-panels">
-        <!-- Discalculia -->
-        <div class="dis-panel active">
-          <div class="dis-hero">
-            <span class="dis-emoji">&#129518;</span>
+      <section class="dis-panels">
+        
+        <article class="dis-panel active" role="tabpanel">
+          <header class="dis-hero">
+            <span class="dis-emoji" aria-hidden="true">&#129518;</span>
             <div class="dis-hero-text">
               <h4>Discalculia</h4>
               <p>Transtorno específico de aprendizagem que afeta a capacidade de compreender e trabalhar com números e conceitos matemáticos.</p>
             </div>
-          </div>
+          </header>
           <div class="dis-grid">
             <div class="dis-block">
-              <div class="dis-block-icon">&#128270;</div>
+              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
               <div>
-                <div class="dis-block-title">Como identificar</div>
-                <div class="dis-block-text">Dificuldade em reconhecer números, fazer cálculos básicos e medir distâncias ou tempo.</div>
+                <h5 class="dis-block-title">Como identificar</h5>
+                <p class="dis-block-text">Dificuldade em reconhecer números, fazer cálculos básicos e medir distâncias ou tempo.</p>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Disgrafia -->
-        <div class="dis-panel">
-          <div class="dis-hero">
-            <span class="dis-emoji">&#9997;&#65039;</span>
+        </article>
+        
+        <article class="dis-panel" role="tabpanel">
+          <header class="dis-hero">
+            <span class="dis-emoji" aria-hidden="true">&#9997;&#65039;</span>
             <div class="dis-hero-text">
               <h4>Disgrafia</h4>
               <p>Transtorno que afeta a habilidade de escrever à mão de forma legível e fluente.</p>
             </div>
-          </div>
+          </header>
           <div class="dis-grid">
             <div class="dis-block">
-              <div class="dis-block-icon">&#128270;</div>
+              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
               <div>
-                <div class="dis-block-title">Como identificar</div>
-                <div class="dis-block-text">Letra difícil de ler, tamanho irregular das letras, dor ou tensão ao escrever.</div>
+                <h5 class="dis-block-title">Como identificar</h5>
+                <p class="dis-block-text">Letra difícil de ler, tamanho irregular das letras, dor ou tensão ao escrever.</p>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Dislexia -->
-        <div class="dis-panel">
-          <div class="dis-hero">
-            <span class="dis-emoji">&#128218;</span>
+        </article>
+        
+        <article class="dis-panel" role="tabpanel">
+          <header class="dis-hero">
+            <span class="dis-emoji" aria-hidden="true">&#128218;</span>
             <div class="dis-hero-text">
               <h4>Dislexia</h4>
               <p>Afeta a leitura e a decodificação de palavras. Pessoas com dislexia têm dificuldade em associar letras a sons.</p>
             </div>
-          </div>
+          </header>
           <div class="dis-grid">
             <div class="dis-block">
-              <div class="dis-block-icon">&#128270;</div>
+              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
               <div>
-                <div class="dis-block-title">Como identificar</div>
-                <div class="dis-block-text">Leitura lenta, inversão ou omissão de letras e sílabas, dificuldade em rimar.</div>
+                <h5 class="dis-block-title">Como identificar</h5>
+                <p class="dis-block-text">Leitura lenta, inversão ou omissão de letras e sílabas, dificuldade em rimar.</p>
               </div>
             </div>
           </div>
-        </div>
-        <!-- TDAH -->
-        <div class="dis-panel">
-          <div class="dis-hero">
-            <span class="dis-emoji">&#9889;</span>
+        </article>
+        
+        <article class="dis-panel" role="tabpanel">
+          <header class="dis-hero">
+            <span class="dis-emoji" aria-hidden="true">&#9889;</span>
             <div class="dis-hero-text">
               <h4>TDAH</h4>
               <p>É um transtorno do neurodesenvolvimento que afeta a atenção, o controle de impulsos e o nível de atividade motora.</p>
             </div>
-          </div>
+          </header>
           <div class="dis-grid">
             <div class="dis-block">
-              <div class="dis-block-icon">&#128270;</div>
+              <span class="dis-block-icon" aria-hidden="true">&#128270;</span>
               <div>
-                <div class="dis-block-title">Como identificar</div>
-                <div class="dis-block-text">Dificuldade em manter o foco, inquietação excessiva, impulsividade e desorganização, perdendo objetos frequentemente.</div>
+                <h5 class="dis-block-title">Como identificar</h5>
+                <p class="dis-block-text">Dificuldade em manter o foco, inquietação excessiva, impulsividade e desorganização, perdendo objetos frequentemente.</p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </article>
 
+      </section>
     </div>
-  </div>
+  </dialog>
+
+  <script>
+  
+  </script>
+</body>
+</html>
 
 <script>
   /* ── Exibe a tela escolhida escondendo todas as outras através da classe 'active' ── */
