@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Maria Silva",
+    "email": "maria@email.com",
+    "pass": "123456",
+    "history": [
+      {
+        "profile": "V",
+        "date": "15/06/2026",
+        "timestamp": 1750000000000
+      },
+      {
+        "profile": "K",
+        "date": "10/06/2026",
+        "timestamp": 1749500000000
+      }
+    ]
+  },
+  {
+    "name": "João Pereira",
+    "email": "joao@email.com",
+    "pass": "senha123",
+    "history": [
+      {
+        "profile": "A",
+        "date": "14/06/2026",
+        "timestamp": 1749900000000
+      }
+    ]
+  },
+  {
+    "name": "Ana Souza",
+    "email": "ana@email.com",
+    "pass": "abc123",
+    "history": []
+  }
+]
