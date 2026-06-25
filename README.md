@@ -1,4 +1,4 @@
-# 🎓 Aprende. - Perfil de Aprendizagem
+# 🎓 Neurofocus. - Perfil de Aprendizagem
 
 O **Aprende.** é uma aplicação web interativa projetada para ajudar estudantes a descobrirem seu estilo predominante de aprendizagem: **Visual, Auditivo ou Cinestésico**. Através de um quiz rápido e intuitivo, o usuário recebe um diagnóstico personalizado e dicas práticas de estudo.
 
